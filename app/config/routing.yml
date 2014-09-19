@@ -1,0 +1,4 @@
+dashboard:
+    resource: "@BrouwkuypDashboardBundle/Resources/config/routing.yml"
+    prefix:   /
+
