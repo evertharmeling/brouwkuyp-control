@@ -2,13 +2,13 @@
 
 namespace Brouwkuyp\Bundle\DashboardBundle\Command;
 
-use Symfony\Component\Console\Command\Command;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class BrewCommand extends Command
+class BrewCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
@@ -21,5 +21,9 @@ class BrewCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<info>We gaan starten met brouwen!</info>');
+
+        $producer = $this->getContainer()->get('old_sound_rabbit_mq.brouwkuyp_producer');
+
+        $producer->publish('pumpon', 'relay.change');
     }
 }

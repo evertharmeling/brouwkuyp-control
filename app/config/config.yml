@@ -67,3 +67,21 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host: localhost
+            port: 5672
+            user: guest
+            password: guest
+    producers:
+        brouwkuyp:
+            connection: default
+            exchange_options: { name: 'relay', type: topic }
+    consumers:
+       brouwkuyp:
+           connection:       default
+           exchange_options: { name: 'temperatures', type: direct }
+           queue_options:    { name: 'temperatures' }
+           callback:         brouwkuyp.rabbit_mq.consumer.temperature
