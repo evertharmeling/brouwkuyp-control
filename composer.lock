@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7f47b14b6803820fe1121a189148d32a",
+    "hash": "0c0a0901ee133b2a942f82863d1fdc9f",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1058,16 +1058,16 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v5.2.1",
+            "version": "v5.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "2b9af56cc676c338d52fca4c657e5bdff73bb7af"
+                "reference": "e02f71a35436af4bd58a1bd90116089e632e29e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/2b9af56cc676c338d52fca4c657e5bdff73bb7af",
-                "reference": "2b9af56cc676c338d52fca4c657e5bdff73bb7af",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/e02f71a35436af4bd58a1bd90116089e632e29e1",
+                "reference": "e02f71a35436af4bd58a1bd90116089e632e29e1",
                 "shasum": ""
             },
             "require": {
@@ -1093,13 +1093,11 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
+                    "name": "Chris Corbyn"
                 },
                 {
-                    "name": "Chris Corbyn"
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Swiftmailer, free feature-rich PHP mailer",
@@ -1108,7 +1106,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2014-06-13 11:44:54"
+            "time": "2014-09-20 07:17:36"
         },
         {
             "name": "symfony/assetic-bundle",
@@ -1175,22 +1173,22 @@
         },
         {
             "name": "symfony/icu",
-            "version": "v1.2.2",
+            "version": "v1.1.2",
             "target-dir": "Symfony/Component/Icu",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Icu.git",
-                "reference": "d4d85d6055b87f394d941b45ddd3a9173e1e3d2a"
+                "reference": "229730a14ccac63bb3c5d9f0494fcd27140c0dd3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Icu/zipball/d4d85d6055b87f394d941b45ddd3a9173e1e3d2a",
-                "reference": "d4d85d6055b87f394d941b45ddd3a9173e1e3d2a",
+                "url": "https://api.github.com/repos/symfony/Icu/zipball/229730a14ccac63bb3c5d9f0494fcd27140c0dd3",
+                "reference": "229730a14ccac63bb3c5d9f0494fcd27140c0dd3",
                 "shasum": ""
             },
             "require": {
                 "ext-intl": "*",
-                "lib-icu": ">=4.4",
+                "lib-icu": ">=3.8",
                 "php": ">=5.3.3",
                 "symfony/intl": "~2.3"
             },
@@ -1220,7 +1218,7 @@
                 "icu",
                 "intl"
             ],
-            "time": "2014-07-25 09:58:17"
+            "time": "2014-07-25 10:00:11"
         },
         {
             "name": "symfony/monolog-bundle",
