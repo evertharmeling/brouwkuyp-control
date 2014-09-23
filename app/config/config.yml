@@ -71,17 +71,17 @@ swiftmailer:
 old_sound_rabbit_mq:
     connections:
         default:
-            host: localhost
-            port: 5672
-            user: guest
-            password: guest
+            host:               localhost
+            port:               5672
+            user:               guest
+            password:           guest
     producers:
         brouwkuyp:
-            connection: default
-            exchange_options: { name: 'relay', type: topic }
+            connection:         default
+            exchange_options:   { name: 'amq.topic', type: topic }
     consumers:
-       brouwkuyp:
-           connection:       default
-           exchange_options: { name: 'temperatures', type: direct }
-           queue_options:    { name: 'temperatures' }
-           callback:         brouwkuyp.rabbit_mq.consumer.temperature
+        brouwkuyp:
+            connection:         default
+            exchange_options:   { name: 'amq.topic', type: topic }
+            queue_options:      { name: 'topic' }
+            callback:           brouwkuyp.rabbit_mq.consumer.temperature
