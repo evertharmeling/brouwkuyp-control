@@ -2,10 +2,9 @@
 
 namespace Brouwkuyp\Bundle\DashboardBundle\Consumer;
 
-use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 
-class TemperatureConsumer implements ConsumerInterface
+class TemperatureConsumer
 {
     public function execute(AMQPMessage $msg)
     {
