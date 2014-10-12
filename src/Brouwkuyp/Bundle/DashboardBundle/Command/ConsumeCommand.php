@@ -29,12 +29,12 @@ class ConsumeCommand extends ContainerAwareCommand
 
         $connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
         $channel = $connection->channel();
-        $channel->exchange_declare('brouwkuyp', 'topic', false, false, false);
+        $channel->exchange_declare('topic', 'topic', false, false, false);
 
         list($queueName) = $channel->queue_declare('', false, false, true, false);
 
         // listen to all in brewery.#
-        $channel->queue_bind($queueName, 'brouwkuyp', 'brewery.#');
+        $channel->queue_bind($queueName, 'amq.topic', 'brewery.#');
 
         $callback = function (AMQPMessage $msg) use ($output) {
             $output->writeln(sprintf("<info>Message received: </info> %s : %s", $msg->delivery_info['routing_key'], $msg->body));
