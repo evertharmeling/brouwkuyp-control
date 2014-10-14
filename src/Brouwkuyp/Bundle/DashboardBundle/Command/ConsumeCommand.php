@@ -2,6 +2,8 @@
 
 namespace Brouwkuyp\Bundle\DashboardBundle\Command;
 
+use Brouwkuyp\Bundle\DashboardBundle\Entity\Log;
+use Doctrine\ORM\EntityManager;
 use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -25,6 +27,8 @@ class ConsumeCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var EntityManager $em */
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $output->writeln('<info>We are gonna receive messages!</info>');
 
         $connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
@@ -36,7 +40,16 @@ class ConsumeCommand extends ContainerAwareCommand
         // listen to all in brewery.#
         $channel->queue_bind($queueName, 'amq.topic', 'brewery.#');
 
-        $callback = function (AMQPMessage $msg) use ($output) {
+        $callback = function (AMQPMessage $msg) use ($output, $em) {
+
+            $log = new Log();
+            $log
+                ->setTopic($msg->delivery_info['routing_key'])
+                ->setValue($msg->body)
+            ;
+            $em->persist($log);
+            $em->flush();
+
             $output->writeln(sprintf("<info>Message received: </info> %s : %s", $msg->delivery_info['routing_key'], $msg->body));
         };
 

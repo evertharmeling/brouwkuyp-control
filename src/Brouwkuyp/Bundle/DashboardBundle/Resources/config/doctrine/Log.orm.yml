@@ -1,0 +1,25 @@
+Brouwkuyp\Bundle\DashboardBundle\Entity\Log:
+    type:   entity
+    table:  log
+    repositoryClass: Brouwkuyp\Bundle\CoreBundle\Repository\LogRepository
+
+    id:
+        id:
+            type:           integer
+            generator:
+                strategy:   AUTO
+
+    fields:
+        topic:
+            type:       string
+            length:     120
+        value:
+            type:       string
+            length:     20
+
+        createdAt:
+            column:     created_at
+            type:       datetime
+            gedmo:
+                timestampable:
+                    on:     create
