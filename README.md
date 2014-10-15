@@ -37,5 +37,8 @@ Push to github
 `git push origin develop`
 
 Create pull request on github.com
+<<<<<<< HEAD
 
 >>>>>>> Updated README.md
+=======
+>>>>>>> Updated README
