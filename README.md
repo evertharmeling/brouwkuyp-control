@@ -7,7 +7,7 @@ To start brewing, run following command:
 
 `app/console brouwkuyp:brew`
 
-To consume message sent by the brew command be sure to have the consume command running via:
+To consume messages sent by the Arduino, be sure to have the consume command running via:
 
 `app/console brouwkuyp:consume`
 
@@ -15,7 +15,7 @@ To consume message sent by the brew command be sure to have the consume command 
 
 `http://brouwkuyp.dev/app_dev.php`
 
-## Development
+## Development commands
 
 Get up to date:
 `git pull --rebase upstream develop`
@@ -28,3 +28,12 @@ Update database, view changes
 
 Update database
 `app/console doc:sch:update --force`
+
+Commit changes
+`git add -A`
+`git commit` or `git commit -m 'commit message'`
+
+Push to github
+`git push origin develop`
+
+Create pull request on github.com
