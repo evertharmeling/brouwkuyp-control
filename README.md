@@ -22,12 +22,6 @@ To consume messages sent by the Arduino, be sure to have the consume command run
 `app/console assetic:dump`
 
 Get up to date:
-
-`git pull --rebase upstream develop`
-
-Generate entities
-
-Get up to date:
 `git pull --rebase upstream develop`
 
 Generate entities
