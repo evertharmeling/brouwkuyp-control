@@ -1,0 +1,15 @@
+Brouwkuyp\Bundle\DashboardBundle\Entity\Recipe:
+    type:   entity
+    table:  recipe
+    repositoryClass: Brouwkuyp\Bundle\CoreBundle\Repository\RecipeRepository
+
+    id:
+        id:
+            type:           integer
+            generator:
+                strategy:   AUTO
+
+    fields:
+        name:
+            type:       string
+            length:     120
