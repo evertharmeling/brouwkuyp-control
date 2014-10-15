@@ -14,3 +14,7 @@ To consume message sent by the brew command be sure to have the consume command 
 ## Dashboard
 
 `http://brouwkuyp.dev/app_dev.php`
+
+## Development
+
+`app/console doc:gen:entities BrouwkuypDashboardBundle --no-backup`
