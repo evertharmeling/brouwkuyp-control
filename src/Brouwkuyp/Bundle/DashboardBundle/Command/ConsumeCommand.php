@@ -33,7 +33,6 @@ class ConsumeCommand extends ContainerAwareCommand
 
         $connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
         $channel = $connection->channel();
-        $channel->exchange_declare('topic', 'topic', false, false, false);
 
         list($queueName) = $channel->queue_declare('', false, false, true, false);
 
