@@ -27,24 +27,23 @@ Get up to date:
 
 Generate entities
 
+Get up to date:
+`git pull --rebase upstream develop`
+
+Generate entities
 `app/console doc:gen:entities BrouwkuypDashboardBundle --no-backup`
 
 Update database, view changes
-
 `app/console doc:sch:update --dump-sql`
 
 Update database
-
 `app/console doc:sch:update --force`
 
 Commit changes
-
 `git add -A`
-
 `git commit` or `git commit -m 'commit message'`
 
 Push to github
-
 `git push origin develop`
 
 Create pull request on github.com
