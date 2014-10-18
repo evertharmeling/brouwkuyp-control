@@ -3,6 +3,7 @@
 namespace Brouwkuyp\Bundle\ServiceBundle\Tests\Manager;
 
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
+use Monolog\Logger;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
@@ -25,9 +26,9 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testPublish()
     {
-        $routingKey = 'brewery.brewhouse01.masher.mlt.curr_temp';
+        $routingKey = 'brewery.brewhouse01.masher.set_temp';
 
-        $message = new AMQPMessage(80);
+        $message = new AMQPMessage(62);
         $this->manager->publish($message, $routingKey);
     }
 }

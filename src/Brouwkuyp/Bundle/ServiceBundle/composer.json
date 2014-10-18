@@ -20,11 +20,16 @@
         "symfony/yaml": "~2.4",
         "doctrine/common": "~2.4",
 <<<<<<< HEAD
+<<<<<<< HEAD
         "videlalvaro/php-amqplib": "2.4.*",
         "psr/log": "1.0.*"
 =======
         "videlalvaro/php-amqplib": "2.4.*"
 >>>>>>> Configured PHPUnit + Refactored ConsumeCommand
+=======
+        "videlalvaro/php-amqplib": "2.4.*",
+        "psr/log": "1.0.*"
+>>>>>>> Refactored to BrewControlManager
     },
     "require-dev": {
         "phpunit/phpunit": "4.3.*"

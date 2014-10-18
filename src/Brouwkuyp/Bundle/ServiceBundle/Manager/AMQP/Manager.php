@@ -16,7 +16,7 @@ class Manager
 {
     const MESSAGE_TYPE  = 'topic';
     const CHANNEL_NAME  = 'amq.topic';
-    const TOPIC_NAME    = 'php-client';
+    const TOPIC_NAME    = 'brouwkuyp';
 
     /**
      * @var AMQPStreamConnection
@@ -53,7 +53,7 @@ class Manager
 
     /**
      * @param AMQPMessage $message
-     * @param string      $routingKey
+     * @param string $routingKey
      */
     public function publish(AMQPMessage $message, $routingKey = '')
     {
@@ -66,9 +66,9 @@ class Manager
 
     /**
      * @param callable $callback
-     * @param string   $routingKey, default to all ('#')
+     * @param string $routingKey
      */
-    public function consume(callable $callback, $routingKey = '#')
+    public function consume(callable $callback, $routingKey = '')
     {
         $this->channel->queue_bind($this->queueName, self::CHANNEL_NAME, $routingKey);
         $this->channel->basic_consume($this->queueName, '', false, true, false, false, $callback);

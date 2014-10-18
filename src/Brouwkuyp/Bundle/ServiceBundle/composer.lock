@@ -5,10 +5,14 @@
         "This file is @generated automatically"
     ],
 <<<<<<< HEAD
+<<<<<<< HEAD
     "hash": "30b88825434c7a752fff7b680d9323e0",
 =======
     "hash": "029ce18a1b36526a893f8a052933c4e1",
 >>>>>>> Configured PHPUnit + Refactored ConsumeCommand
+=======
+    "hash": "30b88825434c7a752fff7b680d9323e0",
+>>>>>>> Refactored to BrewControlManager
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -411,6 +415,9 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Refactored to BrewControlManager
             "name": "psr/log",
             "version": "1.0.0",
             "source": {
@@ -449,8 +456,11 @@
             "time": "2012-12-21 11:40:51"
         },
         {
+<<<<<<< HEAD
 =======
 >>>>>>> Configured PHPUnit + Refactored ConsumeCommand
+=======
+>>>>>>> Refactored to BrewControlManager
             "name": "symfony/config",
             "version": "v2.5.5",
             "target-dir": "Symfony/Component/Config",
