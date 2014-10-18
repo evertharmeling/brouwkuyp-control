@@ -31,10 +31,14 @@ class BrouwkuypServiceExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+<<<<<<< HEAD
 <<<<<<< HEAD:src/Brouwkuyp/Bundle/ServiceBundle/DependencyInjection/BrouwkuypServiceExtension.php
         $loader->load('services.yml');
         $loader->load('services_amqp.yml');
 =======
 >>>>>>> Major refactoring:src/Brouwkuyp/Bundle/ServiceBundle/DependencyInjection/BrouwkuypServiceExtension.php
+=======
+        $loader->load('services.yml');
+>>>>>>> First setup AMQP classes
     }
 }
