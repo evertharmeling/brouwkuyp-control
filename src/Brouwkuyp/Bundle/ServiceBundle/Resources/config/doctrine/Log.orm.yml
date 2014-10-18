@@ -1,7 +1,7 @@
-Brouwkuyp\Bundle\BrewBundle\Entity\Log:
+Brouwkuyp\Bundle\ServiceBundle\Entity\Log:
     type:   entity
     table:  log
-    repositoryClass: Brouwkuyp\Bundle\CoreBundle\Repository\LogRepository
+    repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\LogRepository
 
     id:
         id:

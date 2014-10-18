@@ -1,6 +1,6 @@
 <?php
 
-namespace Brouwkuyp\Bundle\DashboardBundle\DependencyInjection;
+namespace Brouwkuyp\Bundle\LogicBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class BrouwkuypDashboardExtension extends Extension
+class BrouwkuypLogicExtension extends Extension
 {
     /**
      * {@inheritDoc}
@@ -23,5 +23,6 @@ class BrouwkuypDashboardExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.yml');
     }
 }

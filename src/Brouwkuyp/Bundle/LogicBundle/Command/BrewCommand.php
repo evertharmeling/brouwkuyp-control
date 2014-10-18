@@ -1,6 +1,6 @@
 <?php
 
-namespace Brouwkuyp\Bundle\BrewBundle\Command;
+namespace Brouwkuyp\Bundle\LogicBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;

@@ -1,0 +1,5 @@
+parameters:
+#    dashboard.example.class: Brouwkuyp\Bundle\Example
+
+services:
+

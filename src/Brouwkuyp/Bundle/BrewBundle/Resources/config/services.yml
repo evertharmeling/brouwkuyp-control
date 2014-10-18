@@ -1,7 +1,0 @@
-parameters:
-#    dashboard.example.class: Brouwkuyp\Bundle\Example
-
-services:
-
-    brouwkuyp.rabbit_mq.consumer.temperature:
-        class: Brouwkuyp\Bundle\BrewBundle\Consumer\TemperatureConsumer

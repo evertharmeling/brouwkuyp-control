@@ -17,7 +17,9 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-            new Brouwkuyp\Bundle\BrewBundle\BrouwkuypBrewBundle(),
+            new Brouwkuyp\Bundle\DashboardBundle\BrouwkuypDashboardBundle(),
+            new Brouwkuyp\Bundle\LogicBundle\BrouwkuypLogicBundle(),
+            new Brouwkuyp\Bundle\ServiceBundle\BrouwkuypServiceBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

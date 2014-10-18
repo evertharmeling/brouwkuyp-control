@@ -1,7 +1,7 @@
-Brouwkuyp\Bundle\BrewBundle\Entity\MasterRecipe:
+Brouwkuyp\Bundle\ServiceBundle\Entity\MasterRecipe:
     type:   entity
     table:  masterrecipe
-    repositoryClass: Brouwkuyp\Bundle\CoreBundle\Repository\MasterRecipeRepository
+    repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\MasterRecipeRepository
 
     id:
         id:
