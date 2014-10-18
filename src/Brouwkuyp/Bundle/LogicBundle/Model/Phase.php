@@ -3,9 +3,9 @@
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
 /**
- * MasterRecipe
+ * Operation
  */
-class MasterRecipe
+class Operation
 {
     /**
      * @var string
