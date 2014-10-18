@@ -1,6 +1,6 @@
 <?php
 
-namespace Brouwkuyp\Bundle\DashboardBundle\Consumer;
+namespace Brouwkuyp\Bundle\BrewBundle\Consumer;
 
 use PhpAmqpLib\Message\AMQPMessage;
 

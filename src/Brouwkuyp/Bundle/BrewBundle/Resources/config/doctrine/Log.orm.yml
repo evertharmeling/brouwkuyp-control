@@ -1,4 +1,4 @@
-Brouwkuyp\Bundle\DashboardBundle\Entity\Log:
+Brouwkuyp\Bundle\BrewBundle\Entity\Log:
     type:   entity
     table:  log
     repositoryClass: Brouwkuyp\Bundle\CoreBundle\Repository\LogRepository

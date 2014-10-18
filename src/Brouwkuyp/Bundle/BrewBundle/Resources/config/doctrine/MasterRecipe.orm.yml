@@ -1,4 +1,4 @@
-Brouwkuyp\Bundle\DashboardBundle\Entity\MasterRecipe:
+Brouwkuyp\Bundle\BrewBundle\Entity\MasterRecipe:
     type:   entity
     table:  masterrecipe
     repositoryClass: Brouwkuyp\Bundle\CoreBundle\Repository\MasterRecipeRepository
