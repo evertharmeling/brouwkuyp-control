@@ -2,8 +2,6 @@
 
 namespace Brouwkuyp\Bundle\BrewBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * MasterRecipe
  */
@@ -19,11 +17,10 @@ class MasterRecipe
      */
     private $name;
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -33,7 +30,7 @@ class MasterRecipe
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string       $name
      * @return MasterRecipe
      */
     public function setName($name)
@@ -46,7 +43,7 @@ class MasterRecipe
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
