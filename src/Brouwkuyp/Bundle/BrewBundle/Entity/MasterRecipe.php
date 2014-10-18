@@ -5,9 +5,9 @@ namespace Brouwkuyp\Bundle\DashboardBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Recipe
+ * MasterRecipe
  */
-class Recipe
+class MasterRecipe
 {
     /**
      * @var integer
@@ -34,7 +34,7 @@ class Recipe
      * Set name
      *
      * @param string $name
-     * @return Recipe
+     * @return MasterRecipe
      */
     public function setName($name)
     {
