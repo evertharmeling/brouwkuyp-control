@@ -1,6 +1,6 @@
 <?php
 
-namespace Brouwkuyp\Bundle\BrewBundle\DependencyInjection;
+namespace Brouwkuyp\Bundle\DashboardBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
