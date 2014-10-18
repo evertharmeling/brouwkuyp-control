@@ -5,7 +5,7 @@ namespace Brouwkuyp\Bundle\LogicBundle\Model;
 /**
  * Log
  *
- * @author Evert Harmeling <evert.harmeling@freshheads.com>
+ * @author Evert Harmeling <evertharmeling@gmail.com>
  */
 class Log
 {
