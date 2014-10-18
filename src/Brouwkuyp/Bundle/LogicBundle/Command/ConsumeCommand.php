@@ -4,7 +4,7 @@ namespace Brouwkuyp\Bundle\LogicBundle\Command;
 
 use Brouwkuyp\Bundle\ServiceBundle\Entity\Log;
 use Doctrine\ORM\EntityManager;
-use PhpAmqpLib\Connection\AMQPConnection;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -31,7 +31,7 @@ class ConsumeCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $output->writeln('<info>We are gonna receive messages!</info>');
 
-        $connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
+        $connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
         $channel = $connection->channel();
 
         list($queueName) = $channel->queue_declare('', false, false, true, false);
