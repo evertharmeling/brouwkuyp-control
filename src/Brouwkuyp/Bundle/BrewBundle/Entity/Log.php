@@ -30,7 +30,7 @@ class Log
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -40,7 +40,7 @@ class Log
     /**
      * Set topic
      *
-     * @param string $topic
+     * @param  string $topic
      * @return Log
      */
     public function setTopic($topic)
@@ -53,7 +53,7 @@ class Log
     /**
      * Get topic
      *
-     * @return string 
+     * @return string
      */
     public function getTopic()
     {
@@ -63,7 +63,7 @@ class Log
     /**
      * Set value
      *
-     * @param string $value
+     * @param  string $value
      * @return Log
      */
     public function setValue($value)
@@ -76,7 +76,7 @@ class Log
     /**
      * Get value
      *
-     * @return string 
+     * @return string
      */
     public function getValue()
     {
@@ -86,7 +86,7 @@ class Log
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param  \DateTime $createdAt
      * @return Log
      */
     public function setCreatedAt(\DateTime $createdAt)
@@ -99,7 +99,7 @@ class Log
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {

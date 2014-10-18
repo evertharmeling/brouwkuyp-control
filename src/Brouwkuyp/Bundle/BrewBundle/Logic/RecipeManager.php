@@ -1,11 +1,9 @@
 <?php
 
-
 /**
  * RecipeManager
  */
 class RecipeManager
 {
 
-    
 }
