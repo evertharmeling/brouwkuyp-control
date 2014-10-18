@@ -1,3 +1,3 @@
 home:
     path:     /
-    defaults: { _controller: BrouwkuypDashboardBundle:Main:index }
+    defaults: { _controller: BrouwkuypBrewBundle:Main:index }

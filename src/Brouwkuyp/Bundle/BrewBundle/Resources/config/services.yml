@@ -4,4 +4,4 @@ parameters:
 services:
 
     brouwkuyp.rabbit_mq.consumer.temperature:
-        class: Brouwkuyp\Bundle\DashboardBundle\Consumer\TemperatureConsumer
+        class: Brouwkuyp\Bundle\BrewBundle\Consumer\TemperatureConsumer

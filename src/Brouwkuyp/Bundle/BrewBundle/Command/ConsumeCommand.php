@@ -1,8 +1,8 @@
 <?php
 
-namespace Brouwkuyp\Bundle\DashboardBundle\Command;
+namespace Brouwkuyp\Bundle\BrewBundle\Command;
 
-use Brouwkuyp\Bundle\DashboardBundle\Entity\Log;
+use Brouwkuyp\Bundle\BrewBundle\Entity\Log;
 use Doctrine\ORM\EntityManager;
 use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Message\AMQPMessage;

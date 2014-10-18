@@ -1,6 +1,6 @@
 <?php
 
-namespace Brouwkuyp\Bundle\DashboardBundle\DependencyInjection;
+namespace Brouwkuyp\Bundle\BrewBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

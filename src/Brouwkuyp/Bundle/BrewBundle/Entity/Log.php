@@ -1,6 +1,6 @@
 <?php
 
-namespace Brouwkuyp\Bundle\DashboardBundle\Entity;
+namespace Brouwkuyp\Bundle\BrewBundle\Entity;
 
 /**
  * Log
