@@ -1,9 +1,13 @@
 <?php
 
+<<<<<<< HEAD
 <<<<<<< HEAD:src/Brouwkuyp/Bundle/LogicBundle/Model/MasterRecipe.php
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 =======
 namespace Brouwkuyp\Bundle\BrewBundle\Entity;
+=======
+namespace Brouwkuyp\Bundle\LogicBundle\Model;
+>>>>>>> Added new models
 
 <<<<<<< HEAD:src/Brouwkuyp/Bundle/LogicBundle/Model/MasterRecipe.php
 use Doctrine\ORM\Mapping as ORM;
