@@ -18,13 +18,13 @@ class RecipeControlManager
     /**
      * Loads MasterRecipe from database and creates ControlRecipe
      *
-     * @param integer $id            
+     * @param integer $id
      */
     public function load($id)
     {
         if ($id == null) {
             // Check database for active control recipe
-        } else if ($id === 1) {
+        } elseif ($id === 1) {
             $this->loadRecipeDubbel();
         } else {
             // Load recipe from database

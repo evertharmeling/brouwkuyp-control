@@ -8,7 +8,7 @@ namespace Brouwkuyp\Bundle\ServiceBundle\Manager;
 abstract class BrewControlManager implements BrewControlManagerInterface
 {
     /**
-     * @param float $value
+     * @param  float $value
      * @return mixed
      */
     abstract public function setMashTemperature($value);

@@ -5,7 +5,7 @@ namespace Brouwkuyp\Bundle\LogicBundle\Model;
 /**
  * Operation
  */
-class Operation
+class Phase
 {
     /**
      * @var string

@@ -12,30 +12,30 @@ class ControlRecipe
      * @var string
      */
     protected $name;
-    
+
     /**
      *
      * @var Procedure
      */
     protected $procedure;
-    
+
     /**
-     * 
+     *
      */
-    public function __construct(){
-        
+    public function __construct()
+    {
     }
 
     /**
      * Set name
      *
-     * @param string $name            
+     * @param  string       $name
      * @return MasterRecipe
      */
     public function setName($name)
     {
         $this->name = $name;
-        
+
         return $this;
     }
 
@@ -59,12 +59,12 @@ class ControlRecipe
     public function execute()
     {
         if (! is_null($this->procedure)) {
-            if(! $this->procedure->isFinished()){
+            if (! $this->procedure->isFinished()) {
                 $this->procedure->execute();
-            }else{
+            } else {
                 // Procedure not started
             }
-        }else{
+        } else {
             throw new \Exception("No procedure for this Recipe");
         }
     }

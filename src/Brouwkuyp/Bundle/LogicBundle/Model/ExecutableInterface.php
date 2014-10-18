@@ -12,10 +12,10 @@ interface ExecutableInterface
      * Executes current stage/step
      */
     public function execute();
-    
+
     /**
      * Returns state
-     * 
+     *
      * @return bool
      */
     public function isFinished();

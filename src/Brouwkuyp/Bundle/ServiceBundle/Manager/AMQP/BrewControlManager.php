@@ -4,7 +4,6 @@ namespace Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP;
 
 use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManager as BaseBrewControlManager;
 use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\TemperatureMessage;
-use PhpAmqpLib\Message\AMQPMessage;
 
 /**
  * @author Evert Harmeling <evertharmeling@gmail.com>
@@ -28,7 +27,7 @@ class BrewControlManager extends BaseBrewControlManager
     }
 
     /**
-     * @param float $value
+     * @param  float      $value
      * @return mixed|void
      */
     public function setMashTemperature($value)
