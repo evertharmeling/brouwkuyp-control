@@ -1,8 +1,12 @@
 <<<<<<< HEAD:src/Brouwkuyp/Bundle/ServiceBundle/Resources/config/doctrine/Log.orm.yml
+<<<<<<< HEAD:src/Brouwkuyp/Bundle/ServiceBundle/Resources/config/doctrine/Log.orm.yml
 Brouwkuyp\Bundle\ServiceBundle\Entity\Log:
 =======
 Brouwkuyp\Bundle\BrewBundle\Entity\Log:
 >>>>>>> Renamed bundle namespaces:src/Brouwkuyp/Bundle/BrewBundle/Resources/config/doctrine/Log.orm.yml
+=======
+Brouwkuyp\Bundle\ServiceBundle\Entity\Log:
+>>>>>>> Major refactoring:src/Brouwkuyp/Bundle/ServiceBundle/Resources/config/doctrine/Log.orm.yml
     type:   entity
     table:  log
     repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\LogRepository

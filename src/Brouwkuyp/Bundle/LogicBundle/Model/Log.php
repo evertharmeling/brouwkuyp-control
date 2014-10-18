@@ -1,15 +1,11 @@
 <?php
 
-<<<<<<< HEAD:src/Brouwkuyp/Bundle/LogicBundle/Model/Log.php
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
-=======
-namespace Brouwkuyp\Bundle\BrewBundle\Entity;
->>>>>>> Renamed bundle namespaces:src/Brouwkuyp/Bundle/BrewBundle/Entity/Log.php
 
 /**
  * Log
  *
- * @author Evert Harmeling <evertharmeling@gmail.com>
+ * @author Evert Harmeling <evert.harmeling@freshheads.com>
  */
 class Log
 {
@@ -29,13 +25,7 @@ class Log
     protected $createdAt;
 
     /**
-<<<<<<< HEAD:src/Brouwkuyp/Bundle/LogicBundle/Model/Log.php
      * @return \DateTime
-=======
-     * Get id
-     *
-     * @return integer
->>>>>>> Ran php-cs-fixer:src/Brouwkuyp/Bundle/BrewBundle/Entity/Log.php
      */
     public function getCreatedAt()
     {
@@ -43,13 +33,7 @@ class Log
     }
 
     /**
-<<<<<<< HEAD:src/Brouwkuyp/Bundle/LogicBundle/Model/Log.php
-     * @param  \DateTime $createdAt
-=======
-     * Set topic
-     *
-     * @param  string $topic
->>>>>>> Ran php-cs-fixer:src/Brouwkuyp/Bundle/BrewBundle/Entity/Log.php
+     * @param \DateTime $createdAt
      * @return Log
      */
     public function setCreatedAt(\DateTime $createdAt)
@@ -60,11 +44,6 @@ class Log
     }
 
     /**
-<<<<<<< HEAD:src/Brouwkuyp/Bundle/LogicBundle/Model/Log.php
-=======
-     * Get topic
-     *
->>>>>>> Ran php-cs-fixer:src/Brouwkuyp/Bundle/BrewBundle/Entity/Log.php
      * @return string
      */
     public function getTopic()
@@ -73,13 +52,7 @@ class Log
     }
 
     /**
-<<<<<<< HEAD:src/Brouwkuyp/Bundle/LogicBundle/Model/Log.php
-     * @param  string $topic
-=======
-     * Set value
-     *
-     * @param  string $value
->>>>>>> Ran php-cs-fixer:src/Brouwkuyp/Bundle/BrewBundle/Entity/Log.php
+     * @param string $topic
      * @return Log
      */
     public function setTopic($topic)
@@ -90,11 +63,6 @@ class Log
     }
 
     /**
-<<<<<<< HEAD:src/Brouwkuyp/Bundle/LogicBundle/Model/Log.php
-=======
-     * Get value
-     *
->>>>>>> Ran php-cs-fixer:src/Brouwkuyp/Bundle/BrewBundle/Entity/Log.php
      * @return string
      */
     public function getValue()
@@ -103,13 +71,7 @@ class Log
     }
 
     /**
-<<<<<<< HEAD:src/Brouwkuyp/Bundle/LogicBundle/Model/Log.php
-     * @param  string $value
-=======
-     * Set createdAt
-     *
-     * @param  \DateTime $createdAt
->>>>>>> Ran php-cs-fixer:src/Brouwkuyp/Bundle/BrewBundle/Entity/Log.php
+     * @param string $value
      * @return Log
      */
     public function setValue($value)
@@ -118,17 +80,4 @@ class Log
 
         return $this;
     }
-<<<<<<< HEAD:src/Brouwkuyp/Bundle/LogicBundle/Model/Log.php
-=======
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
->>>>>>> Ran php-cs-fixer:src/Brouwkuyp/Bundle/BrewBundle/Entity/Log.php
 }

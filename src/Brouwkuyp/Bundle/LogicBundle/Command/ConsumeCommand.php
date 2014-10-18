@@ -1,6 +1,7 @@
 <?php
 
 <<<<<<< HEAD:src/Brouwkuyp/Bundle/LogicBundle/Command/ConsumeCommand.php
+<<<<<<< HEAD:src/Brouwkuyp/Bundle/LogicBundle/Command/ConsumeCommand.php
 namespace Brouwkuyp\Bundle\LogicBundle\Command;
 
 use Brouwkuyp\Bundle\ServiceBundle\Entity\Log;
@@ -10,6 +11,11 @@ namespace Brouwkuyp\Bundle\BrewBundle\Command;
 
 use Brouwkuyp\Bundle\BrewBundle\Entity\Log;
 >>>>>>> Renamed bundle namespaces:src/Brouwkuyp/Bundle/BrewBundle/Command/ConsumeCommand.php
+=======
+namespace Brouwkuyp\Bundle\LogicBundle\Command;
+
+use Brouwkuyp\Bundle\ServiceBundle\Entity\Log;
+>>>>>>> Major refactoring:src/Brouwkuyp/Bundle/LogicBundle/Command/ConsumeCommand.php
 use Doctrine\ORM\EntityManager;
 use PhpAmqpLib\Message\AMQPMessage;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
