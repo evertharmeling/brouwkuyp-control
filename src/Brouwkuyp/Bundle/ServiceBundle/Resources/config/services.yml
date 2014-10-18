@@ -1,4 +1,5 @@
 services:
+
     brouwkuyp_service.amqp.connection:
         class: PhpAmqpLib\Connection\AMQPStreamConnection
         arguments:
