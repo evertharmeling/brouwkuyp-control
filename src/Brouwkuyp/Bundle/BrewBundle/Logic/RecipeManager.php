@@ -1,9 +1,0 @@
-<?php
-
-/**
- * RecipeManager
- */
-class RecipeManager
-{
-
-}

@@ -1,12 +1,12 @@
 <?php
 
-namespace Brouwkuyp\Bundle\BrewBundle\Command;
+namespace Brouwkuyp\Bundle\LogicBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/** 
+/**
  * BrewCommand
  *
  * @author Evert Harmeling <evert.harmeling@freshheads.com>

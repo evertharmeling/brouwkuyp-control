@@ -1,6 +1,6 @@
 <?php
 
-namespace Brouwkuyp\Bundle\BrewBundle\Entity;
+namespace Brouwkuyp\Bundle\LogicBundle\Entity;
 
 /**
  * MasterRecipe
@@ -8,24 +8,9 @@ namespace Brouwkuyp\Bundle\BrewBundle\Entity;
 class MasterRecipe
 {
     /**
-     * @var integer
-     */
-    private $id;
-
-    /**
      * @var string
      */
-    private $name;
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+    protected $name;
 
     /**
      * Set name
