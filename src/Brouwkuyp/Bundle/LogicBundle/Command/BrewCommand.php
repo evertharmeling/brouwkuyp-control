@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /** 
  * BrewCommand
  *
- * @author Evert Harmeling <evert.harmeling@freshheads.com>
+ * @author Evert Harmeling <evertharmeling@gmail.com>
  */
 class BrewCommand extends ContainerAwareCommand
 {

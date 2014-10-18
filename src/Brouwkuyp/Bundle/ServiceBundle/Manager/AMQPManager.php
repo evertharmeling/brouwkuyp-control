@@ -6,6 +6,9 @@ use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
+/**
+ * @author Evert Harmeling <evertharmeling@gmail.com>
+ */
 class AMQPManager
 {
     const MESSAGE_TYPE  = 'topic';
