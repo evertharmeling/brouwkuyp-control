@@ -5,9 +5,12 @@ namespace Brouwkuyp\Bundle\LogicBundle\Model;
 =======
 namespace Brouwkuyp\Bundle\BrewBundle\Entity;
 
+<<<<<<< HEAD:src/Brouwkuyp/Bundle/LogicBundle/Model/MasterRecipe.php
 use Doctrine\ORM\Mapping as ORM;
 >>>>>>> Renamed bundle namespaces:src/Brouwkuyp/Bundle/BrewBundle/Entity/MasterRecipe.php
 
+=======
+>>>>>>> Ran php-cs-fixer:src/Brouwkuyp/Bundle/BrewBundle/Entity/MasterRecipe.php
 /**
  * MasterRecipe
  */
@@ -16,7 +19,21 @@ class MasterRecipe
     /**
      * @var string
      */
+<<<<<<< HEAD:src/Brouwkuyp/Bundle/LogicBundle/Model/MasterRecipe.php
     protected $name;
+=======
+    private $name;
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+>>>>>>> Ran php-cs-fixer:src/Brouwkuyp/Bundle/BrewBundle/Entity/MasterRecipe.php
 
     /**
      * Set name
