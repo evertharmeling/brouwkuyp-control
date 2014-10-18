@@ -23,6 +23,9 @@ class RecipeControlManager
      */
     private $entityManager;
 
+    /**
+     * @param EntityManager $em
+     */
     public function __construct(EntityManager $em)
     {
         $this->entityManager = $em;
@@ -31,12 +34,14 @@ class RecipeControlManager
     /**
      * Loads MasterRecipe from database and creates ControlRecipe
      *
-     * @param integer $id            
+     * @param $id
+     * @throws \Exception
      */
     public function load($id)
     {
-        if ($id == 0) {
-            // Id 1 is the hardcoded recipe for a dubbel beer
+        if ($id == null) {
+            // Check database for active control recipe
+        } elseif ($id === 1) {
             $this->loadRecipeDubbel();
         } else {
             // Load recipe from database

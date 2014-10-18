@@ -19,12 +19,14 @@ interface ExecutableInterface
 
     /**
      * Returns started state
+     *
+     * @return bool
      */
     public function isStarted();
     
     /**
      * Returns finished state
-     * 
+     *
      * @return bool
      */
     public function isFinished();

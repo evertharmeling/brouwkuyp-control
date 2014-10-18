@@ -3,7 +3,6 @@
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface;
 
 /**
  * Procedure
@@ -19,7 +18,7 @@ class Procedure implements ExecutableInterface
      * @var string
      */
     protected $name;
-    
+
     /**
      * Collection of UnitProcedure
      *
@@ -63,13 +62,13 @@ class Procedure implements ExecutableInterface
     /**
      * Set name
      *
-     * @param string $name            
+     * @param  string       $name
      * @return Procedure
      */
     public function setName($name)
     {
         $this->name = $name;
-        
+
         return $this;
     }
 
@@ -107,7 +106,7 @@ class Procedure implements ExecutableInterface
      */
     public function execute()
     {
-        if ($this->started) {
+        if ($this->isStarted()) {
             // Start the next unit procedure?
             if ($this->unitProcedures->current()->isFinished()) {
                 // Go to next unit procedure if possible
@@ -127,5 +126,25 @@ class Procedure implements ExecutableInterface
         } else {
             throw new \Exception('Procedure not started');
         }
+    }
+
+    /**
+     * Returns started state
+     *
+     * @return bool
+     */
+    public function isStarted()
+    {
+        return $this->started;
+    }
+
+    /**
+     * Returns finished state
+     *
+     * @return bool
+     */
+    public function isFinished()
+    {
+        return $this->finished;
     }
 }

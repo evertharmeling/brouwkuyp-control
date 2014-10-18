@@ -33,7 +33,7 @@ class Log
     }
 
     /**
-     * @param \DateTime $createdAt
+     * @param  \DateTime $createdAt
      * @return Log
      */
     public function setCreatedAt(\DateTime $createdAt)
@@ -52,7 +52,7 @@ class Log
     }
 
     /**
-     * @param string $topic
+     * @param  string $topic
      * @return Log
      */
     public function setTopic($topic)
@@ -71,7 +71,7 @@ class Log
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return Log
      */
     public function setValue($value)

@@ -53,7 +53,7 @@ class Manager
 
     /**
      * @param AMQPMessage $message
-     * @param string $routingKey
+     * @param string      $routingKey
      */
     public function publish(AMQPMessage $message, $routingKey = '')
     {
@@ -66,7 +66,7 @@ class Manager
 
     /**
      * @param callable $callback
-     * @param string $routingKey
+     * @param string   $routingKey
      */
     public function consume(callable $callback, $routingKey = '')
     {

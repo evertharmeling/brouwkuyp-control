@@ -3,7 +3,6 @@
 namespace Brouwkuyp\Bundle\ServiceBundle\Tests\Manager;
 
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
-use Monolog\Logger;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 

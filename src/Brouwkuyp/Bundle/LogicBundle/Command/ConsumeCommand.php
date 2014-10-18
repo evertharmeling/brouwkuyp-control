@@ -5,7 +5,6 @@ namespace Brouwkuyp\Bundle\LogicBundle\Command;
 use Brouwkuyp\Bundle\ServiceBundle\Entity\Log;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
 use Doctrine\ORM\EntityManager;
-use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;

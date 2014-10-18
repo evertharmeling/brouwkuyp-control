@@ -18,7 +18,7 @@ class ControlRecipe
      * @var string
      */
     protected $name;
-    
+
     /**
      *
      * @var Procedure
@@ -33,6 +33,9 @@ class ControlRecipe
         $this->id = $id;
     }
 
+    /**
+     * Loads control recipe
+     */
     public function load()
     {
         $this->name = "test";
@@ -44,13 +47,13 @@ class ControlRecipe
     /**
      * Set name
      *
-     * @param string $name            
+     * @param  string       $name
      * @return MasterRecipe
      */
     public function setName($name)
     {
         $this->name = $name;
-        
+
         return $this;
     }
 
@@ -80,6 +83,9 @@ class ControlRecipe
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     public function execute()
     {
         if (! is_null($this->procedure)) {
