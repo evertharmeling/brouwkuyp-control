@@ -1,0 +1,11 @@
+<?php
+
+
+/**
+ * RecipeManager
+ */
+class RecipeManager
+{
+
+    
+}
