@@ -2,17 +2,18 @@
 
 namespace Brouwkuyp\Bundle\ServiceBundle\Tests\Manager;
 
-use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQPManager;
+use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
+use Monolog\Logger;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
 /**
  * @author Evert Harmeling <evertharmeling@gmail.com>
  */
-class AMQPManagerTest extends \PHPUnit_Framework_TestCase
+class ManagerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var AMQPManager
+     * @var Manager
      */
     private $manager;
 
@@ -20,7 +21,7 @@ class AMQPManagerTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->manager = new AMQPManager(new AMQPStreamConnection('localhost', 5672, 'guest', 'guest'));
+        $this->manager = new Manager(new AMQPStreamConnection('localhost', 5672, 'guest', 'guest'));
     }
 
     public function testPublish()

@@ -3,7 +3,7 @@
 namespace Brouwkuyp\Bundle\LogicBundle\Command;
 
 use Brouwkuyp\Bundle\ServiceBundle\Entity\Log;
-use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQPManager;
+use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
 use Doctrine\ORM\EntityManager;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -26,13 +26,18 @@ class ConsumeCommand extends ContainerAwareCommand
         ;
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return void
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $output->writeln('<info>We are gonna receive messages!</info>');
 
-        /** @var AMQPManager $manager */
+        /** @var Manager $manager */
         $manager = $this->getContainer()->get('brouwkuyp_service.amqp.manager');
 
         $callback = function (AMQPMessage $msg) use ($output, $em) {

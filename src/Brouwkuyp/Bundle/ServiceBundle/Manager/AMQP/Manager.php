@@ -1,15 +1,18 @@
 <?php
 
-namespace Brouwkuyp\Bundle\ServiceBundle\Manager;
+namespace Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP;
 
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Exception\AMQPRuntimeException;
 use PhpAmqpLib\Message\AMQPMessage;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * @author Evert Harmeling <evertharmeling@gmail.com>
  */
-class AMQPManager
+class Manager
 {
     const MESSAGE_TYPE  = 'topic';
     const CHANNEL_NAME  = 'amq.topic';
@@ -30,6 +33,14 @@ class AMQPManager
      */
     protected $queueName;
 
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * @param AMQPStreamConnection $conn
+     */
     public function __construct(AMQPStreamConnection $conn)
     {
         $this->conn = $conn;
@@ -44,16 +55,20 @@ class AMQPManager
      * @param AMQPMessage $message
      * @param string $routingKey
      */
-    public function publish(AMQPMessage $message, $routingKey)
+    public function publish(AMQPMessage $message, $routingKey = '')
     {
+        $this->getLogger()->info('amqp.publish', [
+            'route' => $routingKey,
+            'value' => $message->body
+        ]);
         $this->channel->basic_publish($message, self::CHANNEL_NAME, $routingKey);
     }
 
     /**
-     * @param $callback
+     * @param callable $callback
      * @param string $routingKey
      */
-    public function consume($callback, $routingKey = 'brewery.#')
+    public function consume(callable $callback, $routingKey = '')
     {
         $this->channel->queue_bind($this->queueName, self::CHANNEL_NAME, $routingKey);
         $this->channel->basic_consume($this->queueName, '', false, true, false, false, $callback);
@@ -68,6 +83,7 @@ class AMQPManager
     }
 
     /**
+     * @throws AMQPRuntimeException
      * @return mixed
      */
     public function wait()
@@ -82,5 +98,22 @@ class AMQPManager
     {
         $this->channel->close();
         $this->conn->close();
+    }
+
+    /**
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
+    public function getLogger()
+    {
+        if ($this->logger) {
+            return $this->logger;
+        }
+
+        return $this->logger = new NullLogger();
     }
 }

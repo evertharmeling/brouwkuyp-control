@@ -1,14 +1,1 @@
 services:
-
-    brouwkuyp_service.amqp.connection:
-        class: PhpAmqpLib\Connection\AMQPStreamConnection
-        arguments:
-            - localhost
-            - 5672
-            - guest
-            - guest
-
-    brouwkuyp_service.amqp.manager:
-        class: Brouwkuyp\Bundle\ServiceBundle\Manager\AMQPManager
-        arguments:
-            - @brouwkuyp_service.amqp.connection
