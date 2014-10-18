@@ -4,7 +4,11 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "hash": "30b88825434c7a752fff7b680d9323e0",
+=======
+    "hash": "029ce18a1b36526a893f8a052933c4e1",
+>>>>>>> Configured PHPUnit + Refactored ConsumeCommand
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -406,6 +410,7 @@
             "time": "2013-01-12 18:59:04"
         },
         {
+<<<<<<< HEAD
             "name": "psr/log",
             "version": "1.0.0",
             "source": {
@@ -444,6 +449,8 @@
             "time": "2012-12-21 11:40:51"
         },
         {
+=======
+>>>>>>> Configured PHPUnit + Refactored ConsumeCommand
             "name": "symfony/config",
             "version": "v2.5.5",
             "target-dir": "Symfony/Component/Config",
