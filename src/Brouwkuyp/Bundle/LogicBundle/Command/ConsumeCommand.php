@@ -3,6 +3,7 @@
 namespace Brouwkuyp\Bundle\LogicBundle\Command;
 
 use Brouwkuyp\Bundle\ServiceBundle\Entity\Log;
+use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQPManager;
 use Doctrine\ORM\EntityManager;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -31,34 +32,28 @@ class ConsumeCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $output->writeln('<info>We are gonna receive messages!</info>');
 
-        $connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
-        $channel = $connection->channel();
-
-        list($queueName) = $channel->queue_declare('', false, false, true, false);
-
-        // listen to all in brewery.#
-        $channel->queue_bind($queueName, 'amq.topic', 'brewery.#');
+        /** @var AMQPManager $manager */
+        $manager = $this->getContainer()->get('brouwkuyp_service.amqp.manager');
 
         $callback = function (AMQPMessage $msg) use ($output, $em) {
 
-            $log = new Log();
-            $log
-                ->setTopic($msg->delivery_info['routing_key'])
-                ->setValue($msg->body)
-            ;
-            $em->persist($log);
-            $em->flush();
+//            $log = new Log();
+//            $log
+//                ->setTopic($msg->delivery_info['routing_key'])
+//                ->setValue($msg->body)
+//            ;
+//            $em->persist($log);
+//            $em->flush();
 
             $output->writeln(sprintf("<info>Message received: </info> %s : %s", $msg->delivery_info['routing_key'], $msg->body));
         };
 
-        $channel->basic_consume($queueName, 'command.consume', false, true, false, false, $callback);
+        $manager->consume($callback);
 
-        while (count($channel->callbacks)) {
-            $channel->wait();
+        while ($manager->receive()) {
+            $manager->wait();
         }
 
-        $channel->close();
-        $connection->close();
+        $manager->close();
     }
 }
