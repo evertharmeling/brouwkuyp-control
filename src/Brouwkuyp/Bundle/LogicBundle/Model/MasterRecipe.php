@@ -1,6 +1,12 @@
 <?php
 
+<<<<<<< HEAD:src/Brouwkuyp/Bundle/LogicBundle/Model/MasterRecipe.php
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
+=======
+namespace Brouwkuyp\Bundle\BrewBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+>>>>>>> Renamed bundle namespaces:src/Brouwkuyp/Bundle/BrewBundle/Entity/MasterRecipe.php
 
 /**
  * MasterRecipe

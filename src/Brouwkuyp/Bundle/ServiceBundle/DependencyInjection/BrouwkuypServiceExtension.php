@@ -1,6 +1,10 @@
 <?php
 
+<<<<<<< HEAD:src/Brouwkuyp/Bundle/ServiceBundle/DependencyInjection/BrouwkuypServiceExtension.php
 namespace Brouwkuyp\Bundle\ServiceBundle\DependencyInjection;
+=======
+namespace Brouwkuyp\Bundle\BrewBundle\DependencyInjection;
+>>>>>>> Renamed bundle namespaces:src/Brouwkuyp/Bundle/BrewBundle/DependencyInjection/BrouwkuypDashboardExtension.php
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

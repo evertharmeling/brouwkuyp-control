@@ -1,6 +1,10 @@
 <?php
 
+<<<<<<< HEAD:src/Brouwkuyp/Bundle/LogicBundle/Command/BrewCommand.php
 namespace Brouwkuyp\Bundle\LogicBundle\Command;
+=======
+namespace Brouwkuyp\Bundle\BrewBundle\Command;
+>>>>>>> Renamed bundle namespaces:src/Brouwkuyp/Bundle/BrewBundle/Command/BrewCommand.php
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;

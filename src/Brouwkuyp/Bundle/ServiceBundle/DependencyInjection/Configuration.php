@@ -1,6 +1,10 @@
 <?php
 
+<<<<<<< HEAD:src/Brouwkuyp/Bundle/ServiceBundle/DependencyInjection/Configuration.php
 namespace Brouwkuyp\Bundle\ServiceBundle\DependencyInjection;
+=======
+namespace Brouwkuyp\Bundle\BrewBundle\DependencyInjection;
+>>>>>>> Renamed bundle namespaces:src/Brouwkuyp/Bundle/BrewBundle/DependencyInjection/Configuration.php
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

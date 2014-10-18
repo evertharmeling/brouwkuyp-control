@@ -1,6 +1,10 @@
 <?php
 
+<<<<<<< HEAD:src/Brouwkuyp/Bundle/LogicBundle/Model/Log.php
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
+=======
+namespace Brouwkuyp\Bundle\BrewBundle\Entity;
+>>>>>>> Renamed bundle namespaces:src/Brouwkuyp/Bundle/BrewBundle/Entity/Log.php
 
 /**
  * Log

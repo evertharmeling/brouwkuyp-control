@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/Brouwkuyp/Bundle/ServiceBundle/Resources/config/doctrine/MasterRecipe.orm.yml
 Brouwkuyp\Bundle\ServiceBundle\Entity\MasterRecipe:
+=======
+Brouwkuyp\Bundle\BrewBundle\Entity\MasterRecipe:
+>>>>>>> Renamed bundle namespaces:src/Brouwkuyp/Bundle/BrewBundle/Resources/config/doctrine/MasterRecipe.orm.yml
     type:   entity
     table:  masterrecipe
     repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\MasterRecipeRepository
