@@ -29,10 +29,25 @@ class Procedure implements ExecutableInterface
      * @var ArrayCollection
      */
     protected $unitProcedures;
+    
+    /**
+     * Current active UnitProcedure
+     * 
+     * @var UnitProcedure
+     */
+    protected $currentUnitProcedure;
+    
+    /**
+     * Flag that says if we are already started
+     * 
+     * @var bool
+     */
+    private $started;
 
     public function __construct()
     {
         $this->unitProcedures = new ArrayCollection();
+        $this->unitProcedures->add(new UnitProcedure());
     }
 
     /**
@@ -66,12 +81,48 @@ class Procedure implements ExecutableInterface
         return $this->name;
     }
 
-    public function execute()
+    public function start()
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 =======
+=======
+        if(!$this->started){
+            // Set flag that we are started
+            $this->started = true;
+            
+            // Store in database that we are started
+            
+            // Start first UnitProcedure
+            $this->currentUnitProcedure = $this->unitProcedures->first();
+            $this->currentUnitProcedure->start();
+        }
+>>>>>>> Extended RecipeControl
         
 >>>>>>> Added new models
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::execute()
+     */
+    public function execute()
+    {
+        if($this->started){
+            // Perform the current unit procedure
+            if($this->currentUnitProcedure->isFinished()){
+                // Go to next unit procedure
+                
+                // If last unit procedure is finished
+                // set the finished flag
+            }
+            if($this->currentUnitProcedure->isStarted()){
+                // Perform unit procedure
+                $this->currentUnitProcedure->execute();
+            }
+        }else{
+            throw new \Exception('Procedure not started');
+        }
     }
 }

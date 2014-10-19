@@ -5,7 +5,7 @@ namespace Brouwkuyp\Bundle\LogicBundle\Model;
 /**
  * UnitProcedure
  */
-class UnitProcedure
+class UnitProcedure implements ExecutableInterface
 {
     /**
      * @var string
@@ -33,5 +33,23 @@ class UnitProcedure
     public function getName()
     {
         return $this->name;
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::start()
+     */
+    public function start()
+    {
+        
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::execute()
+     */
+    public function execute()
+    {
+        
     }
 }

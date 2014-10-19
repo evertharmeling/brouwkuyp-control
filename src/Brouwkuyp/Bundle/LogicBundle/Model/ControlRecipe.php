@@ -23,6 +23,7 @@ class ControlRecipe
      */
     protected $procedure;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     /**
      *
@@ -31,12 +32,19 @@ class ControlRecipe
     {
 =======
     
+=======
+
+>>>>>>> Extended RecipeControl
     /**
-     * 
      */
+<<<<<<< HEAD
     public function __construct(){
         
 >>>>>>> Added new models
+=======
+    public function __construct()
+    {
+>>>>>>> Extended RecipeControl
     }
 
     /**
@@ -71,15 +79,49 @@ class ControlRecipe
     }
 
     /**
+     * Set Procedure for this Recipe
+     *
+     * @param Procedure $proc            
+     * @throws \Exception
+     */
+    public function setProcedure(Procedure $proc)
+    {
+        if (! is_null($this->procedure)) {
+            throw new \Exception("Recipe already has a Procedure");
+        } else {
+            $this->procedure = $proc;
+        }
+    }
+
+    /**
+     *
+     * @return \Brouwkuyp\Bundle\LogicBundle\Model\Procedure
+     */
+    public function getProcedure()
+    {
+        return $this->procedure;
+    }
+
+    /**
      * Start the procedure of this recipe
      */
     public function startProcedure()
     {
+        if (! is_null($this->procedure)) {
+            if (! $this->procedure->isFinished()) {
+                $this->procedure->start();
+            } else {
+                throw new \Exception('Procedure already finished');
+            }
+        } else {
+            throw new \Exception('No Procedure for this Recipe');
+        }
     }
 
     public function execute()
     {
         if (! is_null($this->procedure)) {
+<<<<<<< HEAD
 <<<<<<< HEAD
             if (! $this->procedure->isFinished()) {
                 $this->procedure->execute();
@@ -89,12 +131,19 @@ class ControlRecipe
         } else {
 =======
             if(! $this->procedure->isFinished()){
+=======
+            if (! $this->procedure->isFinished()) {
+>>>>>>> Extended RecipeControl
                 $this->procedure->execute();
-            }else{
-                // Procedure not started
+            } else {
+                // Procedure is finished
             }
+<<<<<<< HEAD
         }else{
 >>>>>>> Added new models
+=======
+        } else {
+>>>>>>> Extended RecipeControl
             throw new \Exception("No procedure for this Recipe");
         }
     }

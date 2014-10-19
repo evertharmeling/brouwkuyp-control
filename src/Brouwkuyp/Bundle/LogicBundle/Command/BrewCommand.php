@@ -13,8 +13,9 @@ namespace Brouwkuyp\Bundle\LogicBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Brouwkuyp\Bundle\LogicBundle\Manager\RecipeControlManager;
 
-/** 
+/**
  * BrewCommand
  *
  * @author Evert Harmeling <evertharmeling@gmail.com>
@@ -22,23 +23,48 @@ use Symfony\Component\Console\Output\OutputInterface;
 class BrewCommand extends ContainerAwareCommand
 {
     const SET_TEMP = 'brewery.brewhouse01.masher.set_temp';
+    /**
+     *
+     * @var RecipeControlManager
+     */
+    private $rcm;
 
     protected function configure()
     {
-        $this->setName ( 'brouwkuyp:brew' )->setDescription ( 'Start the brewery of beer!' );
+        $this->setName('brouwkuyp:brew')->setDescription('Start the brewing of beer!');
+        $this->addOption('recipe');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var EntityManager $em */
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-
-        $output->writeln ( '<info>Start loop</info>' );
         $loopCount = 100;
-        while ($loopCount > 0) {
+        /**
+         * @var EntityManager $em
+         */
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        
+        $output->writeln('');
+        $output->writeln('Creating RecipeControlManager');
+        $this->rcm = new RecipeControlManager($em);
+        
+        $output->writeln('Loading recipe: ' . $input->getOption('recipe'));
+        $this->rcm->load($input->getOption('recipe'));
+        
+        $output->writeln('<info>Start loop</info>');
+        $output->writeln('');
+        while ( $loopCount > 0 ) {
+            $output->writeln('Run: ' . $loopCount);
+            $this->runner();
             usleep(1000000);
-            $output->writeln(sprintf('<info>Loop: %s</info>', $loopCount));
-            $loopCount--;
+            $loopCount --;
         }
+        
+        $output->writeln('Saving recipe');
+        $this->rcm->save();
+    }
+
+    private function runner()
+    {
+        $this->rcm->execute();
     }
 }

@@ -7,9 +7,13 @@ namespace Brouwkuyp\Bundle\LogicBundle\Model;
  */
 interface ExecutableInterface
 {
-
     /**
-     * Executes current stage/step
+     * Starts stage
+     */
+    public function start();
+    
+    /**
+     * Executes stage
      */
     public function execute();
 <<<<<<< HEAD
@@ -20,7 +24,12 @@ interface ExecutableInterface
 =======
     
     /**
-     * Returns state
+     * Returns started state
+     */
+    public function isStarted();
+    
+    /**
+     * Returns finished state
      * 
 >>>>>>> Added new models
      * @return bool
