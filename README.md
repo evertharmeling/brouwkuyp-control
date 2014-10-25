@@ -13,9 +13,11 @@ To consume messages sent by the Arduino, be sure to have the consume command run
 
 ## Dashboard
 
-`http://brouwkuyp.dev/app_dev.php`
+`http://brouwkuyp-control.dev/app_dev.php`
 
 ## Development commands
+
+`app/console assets:install --symlink --relative`
 
 Get up to date:
 
