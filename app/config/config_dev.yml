@@ -31,6 +31,8 @@ monolog:
 
 assetic:
     use_controller: "%use_assetic_controller%"
+    bundles:
+        - BrouwkuypDashboardBundle
 
 #swiftmailer:
 #    delivery_address: me@example.com
