@@ -19,6 +19,8 @@ To consume messages sent by the Arduino, be sure to have the consume command run
 
 `app/console assets:install --symlink --relative`
 
+`app/console assetic:dump`
+
 Get up to date:
 
 `git pull --rebase upstream develop`
