@@ -6,7 +6,7 @@ var amqp = require('amqp');
 var _ = require('underscore');
 var util = require("util");
 
-// intialize connection with AMQP server
+// initialize connection with AMQP server
 var conn = amqp.createConnection({
         host: nconf.get('amqp:host'),
         port: nconf.get('amqp:port'),
@@ -26,7 +26,11 @@ conn.on('connect', function () {
 // on ready
 conn.on('ready', function () {
     // Use the default 'amq.topic' exchange
-    conn.queue('my-queue', { durable: true }, function (q) {
+    conn.queue(nconf.get('amqp:client'), {
+        durable: false,
+        exclusive: false,
+        noAck: true
+    }, function (q) {
         // Catch all messages
         q.bind(nconf.get('amqp:routingKey'));
 
