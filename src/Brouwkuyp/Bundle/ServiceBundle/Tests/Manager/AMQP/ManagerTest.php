@@ -25,9 +25,9 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testPublish()
     {
-        $routingKey = 'brewery.brewhouse01.masher.set_temp';
+        $routingKey = 'brewery.brewhouse01.masher.mlt.curr_temp';
 
-        $message = new AMQPMessage(62);
+        $message = new AMQPMessage(80);
         $this->manager->publish($message, $routingKey);
     }
 }
