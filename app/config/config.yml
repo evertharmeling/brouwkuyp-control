@@ -33,14 +33,21 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ ]
-    #java: /usr/bin/java
+    bundles:        [ BrouwkuypDashboardBundle ]
     filters:
         less:
             node:       /usr/local/bin/node
             node_paths: [/usr/local/lib/node_modules]
             apply_to:   "\.less$"
         cssrewrite: ~
+    assets:
+        bootstrap_css:
+            inputs:
+                - %kernel.root_dir%/../src/Brouwkuyp/Bundle/DashboardBundle/Resources/public/less/bootstrap.less
+            filters:
+                - less
+                - cssrewrite
+            output: css/bootstrap.css
 
 # Doctrine Configuration
 doctrine:

@@ -66,9 +66,9 @@ class Manager
 
     /**
      * @param callable $callback
-     * @param string   $routingKey
+     * @param string   $routingKey, default to all ('#')
      */
-    public function consume(callable $callback, $routingKey = '')
+    public function consume(callable $callback, $routingKey = '#')
     {
         $this->channel->queue_bind($this->queueName, self::CHANNEL_NAME, $routingKey);
         $this->channel->basic_consume($this->queueName, '', false, true, false, false, $callback);

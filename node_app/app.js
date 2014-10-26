@@ -2,6 +2,7 @@ var amqp = require('amqp');
 
 var conn = amqp.createConnection({ url: "amqp://guest:guest@localhost:5672" });
 
+console.log('Listening to queue messages...');
 // Wait for connection to become established.
 conn.on('ready', function () {
     // Use the default 'amq.topic' exchange

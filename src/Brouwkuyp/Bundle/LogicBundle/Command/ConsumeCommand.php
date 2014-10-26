@@ -52,7 +52,7 @@ class ConsumeCommand extends ContainerAwareCommand
             $output->writeln(sprintf("<info>Message received: </info> %s : %s", $msg->delivery_info['routing_key'], $msg->body));
         };
 
-        $manager->consume($callback);
+        $manager->consume($callback, 'brewery.#');
 
         while ($manager->receive()) {
             $manager->wait();
