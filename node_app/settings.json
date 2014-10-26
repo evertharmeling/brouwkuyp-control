@@ -5,7 +5,8 @@
         "port": 5672,
         "user": "guest",
         "pass": "guest",
+        "client": "node-client",
         "exchangeTopic": "amq.topic",
-        "routingKey": "brewery.#"
+        "routingKey": "node.#"
     }
 }

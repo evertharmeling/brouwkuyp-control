@@ -16,7 +16,7 @@ class Manager
 {
     const MESSAGE_TYPE  = 'topic';
     const CHANNEL_NAME  = 'amq.topic';
-    const TOPIC_NAME    = 'brouwkuyp';
+    const TOPIC_NAME    = 'php-client';
 
     /**
      * @var AMQPStreamConnection
