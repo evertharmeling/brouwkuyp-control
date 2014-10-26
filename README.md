@@ -20,6 +20,8 @@ To consume messages sent by the Arduino, be sure to have the consume command run
 `app/console assets:install --symlink --relative`
 `app/console assetic:dump`  // double check if previous command already gave the the correct styling...
 
+`app/console assetic:dump`
+
 Get up to date:
 
 `git pull --rebase upstream develop`

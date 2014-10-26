@@ -2,12 +2,15 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>{% block title %}Welcome!{% endblock %}</title>
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+    <title>{% block title %}Brouwkuyp-control{% endblock %}</title>
+    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
 <body>
-{% block content %}{% endblock %}
-<script src="{{ asset('js/bootstrap.js') }}"></script>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
 </body>
 </html>
