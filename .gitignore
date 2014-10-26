@@ -5,10 +5,11 @@
 /app/logs/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
-/build/
-/vendor/
 /bin/
+/build/
 /composer.phar
+/node_modules
+/vendor/
 .buildpath
 .project
 .settings

@@ -1,0 +1,10 @@
+{
+    "name": "brouwkuyp-control",
+    "private": true,
+    "dependencies": {
+        "amqp": "~0.2",
+        "underscore": "~1.7",
+        "nconf": "~0.6",
+        "util": "~0.10"
+    }
+}
