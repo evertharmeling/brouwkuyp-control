@@ -70,14 +70,20 @@ $(document).ready(function() {
     });
 
     function onConnect() {
-        var hlt = client.subscribe("/topic/brewery.brewhouse01.masher.hlt.curr_temp", function (d) {
+        client.subscribe("/topic/brewery.brewhouse01.masher.hlt.curr_temp", function (d) {
             addToGraph(0, parseFloat(d.body));
+            updateTemperature('hlt', parseFloat(d.body))
         });
-        var mlt = client.subscribe("/topic/brewery.brewhouse01.masher.mlt.curr_temp", function (d) {
+        client.subscribe("/topic/brewery.brewhouse01.masher.mlt.curr_temp", function (d) {
             addToGraph(1, parseFloat(d.body));
+            updateTemperature('mlt', parseFloat(d.body))
         });
-        var blt = client.subscribe("/topic/brewery.brewhouse01.masher.blt.curr_temp", function (d) {
+        client.subscribe("/topic/brewery.brewhouse01.masher.mlt.set_temp", function (d) {
+            updateTemperature('mlt', parseFloat(d.body), 'set')
+        });
+        client.subscribe("/topic/brewery.brewhouse01.masher.blt.curr_temp", function (d) {
             addToGraph(2, parseFloat(d.body));
+            updateTemperature('blt', parseFloat(d.body))
         });
     }
 
@@ -89,9 +95,14 @@ $(document).ready(function() {
         //console.log("STOMP DEBUG", m);
     }
 
-    function addToGraph(serie, temp) {
+    function addToGraph(sensor, temperature) {
         var date = new Date();
         var time = date.getTime();
-        $('#graph').highcharts().series[serie].addPoint([time, temp]);
+        $('#graph').highcharts().series[sensor].addPoint([time, temperature]);
+    }
+
+    function updateTemperature(sensor, temperature, action) {
+        action = typeof action !== 'undefined' ? action : 'curr';
+        $('#temp-' + action + '-' + sensor).text(temperature + ' °C');
     }
 });

@@ -2,5 +2,17 @@
 
 {% block content %}
     <h1>Brouwkuyp dashboard</h1>
-    <div id="graph" style="min-width: 310px; height: 540px; margin: 0 auto"></div>
+    <div id="graph" style="min-width: 310px; height: 700px; margin: 0 auto"></div>
+    <div class="row">
+        <div class="col-md-2">
+            <h3><small>HLT:</small></h3><h1 class="text-right"><span id="temp-curr-hlt"></span></h1>
+        </div>
+        <div class="col-md-2 col-md-offset-2">
+            <h3><small>MLT:</small></h3><h1 class="text-right"><span id="temp-curr-mlt"></span></h1>
+            <h3 class="text-right"><span id="temp-set-mlt"></span></h3>
+        </div>
+        <div class="col-md-2 col-md-offset-2">
+            <h3><small>BLT:</small></h3><h1 class="text-right"><span id="temp-curr-blt"></span></h1>
+        </div>
+    </div>
 {% endblock %}
