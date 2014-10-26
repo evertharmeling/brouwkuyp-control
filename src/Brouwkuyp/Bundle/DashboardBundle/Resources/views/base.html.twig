@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8" />
     <title>{% block title %}Brouwkuyp-control{% endblock %}</title>
-    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
+    {#<link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">#}
+    {#'bundles/brouwkuypdashboard/less/bootstrap.less'#}
+    {% stylesheets
+        '../src/Brouwkuyp/Bundle/DashboardBundle/Resources/public/less/bootstrap.less'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
 <body>
-    <div class="container">
+    <div class="container-fluid">
         {% block content %}{% endblock %}
     </div>
     <script src="{{ asset('js/jquery.js') }}"></script>
