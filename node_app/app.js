@@ -1,6 +1,6 @@
 var amqp = require('amqp');
 
-var conn = amqp.createConnection({url: "amqp://guest:guest@localhost:5672"});
+var conn = amqp.createConnection({ url: "amqp://guest:guest@localhost:5672" });
 
 // Wait for connection to become established.
 conn.on('ready', function () {
