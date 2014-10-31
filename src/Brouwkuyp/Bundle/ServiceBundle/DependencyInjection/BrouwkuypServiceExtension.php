@@ -1,14 +1,6 @@
 <?php
 
-<<<<<<< HEAD:src/Brouwkuyp/Bundle/ServiceBundle/DependencyInjection/BrouwkuypServiceExtension.php
-<<<<<<< HEAD:src/Brouwkuyp/Bundle/ServiceBundle/DependencyInjection/BrouwkuypServiceExtension.php
 namespace Brouwkuyp\Bundle\ServiceBundle\DependencyInjection;
-=======
-namespace Brouwkuyp\Bundle\BrewBundle\DependencyInjection;
->>>>>>> Renamed bundle namespaces:src/Brouwkuyp/Bundle/BrewBundle/DependencyInjection/BrouwkuypDashboardExtension.php
-=======
-namespace Brouwkuyp\Bundle\ServiceBundle\DependencyInjection;
->>>>>>> Major refactoring:src/Brouwkuyp/Bundle/ServiceBundle/DependencyInjection/BrouwkuypServiceExtension.php
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -31,14 +23,7 @@ class BrouwkuypServiceExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-<<<<<<< HEAD
-<<<<<<< HEAD:src/Brouwkuyp/Bundle/ServiceBundle/DependencyInjection/BrouwkuypServiceExtension.php
         $loader->load('services.yml');
         $loader->load('services_amqp.yml');
-=======
->>>>>>> Major refactoring:src/Brouwkuyp/Bundle/ServiceBundle/DependencyInjection/BrouwkuypServiceExtension.php
-=======
-        $loader->load('services.yml');
->>>>>>> First setup AMQP classes
     }
 }

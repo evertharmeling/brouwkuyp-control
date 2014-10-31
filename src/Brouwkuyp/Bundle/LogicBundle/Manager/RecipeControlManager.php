@@ -30,25 +30,15 @@ class RecipeControlManager
     /**
      * Loads MasterRecipe from database and creates ControlRecipe
      *
-<<<<<<< HEAD
-     * @param integer $id
-=======
      * @param integer $id            
->>>>>>> Added new models
      */
     public function load($id)
     {
         if ($id == null) {
             // Check database for active control recipe
-<<<<<<< HEAD
-<<<<<<< HEAD
         } elseif ($id === 1) {
-=======
-=======
             // If there is a recipe active, try to resume it
->>>>>>> Extended RecipeControl
         } else if ($id === 1) {
->>>>>>> Added new models
             $this->loadRecipeDubbel();
         } else {
             // Load recipe from database

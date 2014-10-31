@@ -1,7 +1,4 @@
 services:
-<<<<<<< HEAD
-=======
-
     brouwkuyp_service.amqp.connection:
         class: PhpAmqpLib\Connection\AMQPStreamConnection
         arguments:
@@ -14,4 +11,3 @@ services:
         class: Brouwkuyp\Bundle\ServiceBundle\Manager\AMQPManager
         arguments:
             - @brouwkuyp_service.amqp.connection
->>>>>>> First setup AMQP classes

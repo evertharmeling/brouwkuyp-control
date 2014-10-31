@@ -16,13 +16,7 @@ interface ExecutableInterface
      * Executes stage
      */
     public function execute();
-<<<<<<< HEAD
 
-    /**
-     * Returns state
-     *
-=======
-    
     /**
      * Returns started state
      */
@@ -31,7 +25,6 @@ interface ExecutableInterface
     /**
      * Returns finished state
      * 
->>>>>>> Added new models
      * @return bool
      */
     public function isFinished();

@@ -17,26 +17,10 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-<<<<<<< HEAD
-<<<<<<< HEAD
             new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
-=======
-<<<<<<< HEAD
->>>>>>> Renamed bundle namespaces
-=======
-<<<<<<< HEAD
->>>>>>> Major refactoring
             new Brouwkuyp\Bundle\DashboardBundle\BrouwkuypDashboardBundle(),
             new Brouwkuyp\Bundle\LogicBundle\BrouwkuypLogicBundle(),
-            new Brouwkuyp\Bundle\ServiceBundle\BrouwkuypServiceBundle()
-=======
-            new Brouwkuyp\Bundle\BrewBundle\BrouwkuypBrewBundle(),
->>>>>>> Renamed bundle namespaces
-=======
-            new Brouwkuyp\Bundle\DashboardBundle\BrouwkuypDashboardBundle(),
-            new Brouwkuyp\Bundle\LogicBundle\BrouwkuypLogicBundle(),
-            new Brouwkuyp\Bundle\ServiceBundle\BrouwkuypServiceBundle()
->>>>>>> Major refactoring
+            new Brouwkuyp\Bundle\ServiceBundle\BrouwkuypServiceBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -12,59 +12,31 @@ class ControlRecipe
      * @var string
      */
     protected $name;
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> Added new models
     /**
      *
      * @var Procedure
      */
     protected $procedure;
-<<<<<<< HEAD
-<<<<<<< HEAD
 
     /**
      *
      */
     public function __construct()
     {
-=======
-    
-=======
 
->>>>>>> Extended RecipeControl
-    /**
-     */
-<<<<<<< HEAD
-    public function __construct(){
-        
->>>>>>> Added new models
-=======
-    public function __construct()
-    {
->>>>>>> Extended RecipeControl
     }
 
     /**
      * Set name
      *
-<<<<<<< HEAD
      * @param  string       $name
-=======
-     * @param string $name            
->>>>>>> Added new models
      * @return MasterRecipe
      */
     public function setName($name)
     {
         $this->name = $name;
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> Added new models
         return $this;
     }
 
@@ -121,29 +93,12 @@ class ControlRecipe
     public function execute()
     {
         if (! is_null($this->procedure)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
             if (! $this->procedure->isFinished()) {
                 $this->procedure->execute();
             } else {
                 // Procedure not started
             }
         } else {
-=======
-            if(! $this->procedure->isFinished()){
-=======
-            if (! $this->procedure->isFinished()) {
->>>>>>> Extended RecipeControl
-                $this->procedure->execute();
-            } else {
-                // Procedure is finished
-            }
-<<<<<<< HEAD
-        }else{
->>>>>>> Added new models
-=======
-        } else {
->>>>>>> Extended RecipeControl
             throw new \Exception("No procedure for this Recipe");
         }
     }

@@ -3,10 +3,7 @@
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
-<<<<<<< HEAD
-=======
 use Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface;
->>>>>>> Added new models
 
 /**
  * Procedure
@@ -18,11 +15,7 @@ class Procedure implements ExecutableInterface
      * @var string
      */
     protected $name;
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> Added new models
     /**
      * Collection of UnitProcedure
      *
@@ -53,21 +46,13 @@ class Procedure implements ExecutableInterface
     /**
      * Set name
      *
-<<<<<<< HEAD
-     * @param  string       $name
-=======
      * @param string $name            
->>>>>>> Added new models
      * @return MasterRecipe
      */
     public function setName($name)
     {
         $this->name = $name;
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> Added new models
         return $this;
     }
 
@@ -83,11 +68,6 @@ class Procedure implements ExecutableInterface
 
     public function start()
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
-=======
         if(!$this->started){
             // Set flag that we are started
             $this->started = true;
@@ -98,9 +78,6 @@ class Procedure implements ExecutableInterface
             $this->currentUnitProcedure = $this->unitProcedures->first();
             $this->currentUnitProcedure->start();
         }
->>>>>>> Extended RecipeControl
-        
->>>>>>> Added new models
     }
     
     /**
