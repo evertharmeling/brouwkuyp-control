@@ -24,13 +24,14 @@ class BrewCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this->setName('brouwkuyp:brew')->setDescription('Start the brewing of beer!');
-        $this->addOption('recipe');
+        $this->addArgument('recipe', null, 'Recipe to load');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $loopCount = 100;
         /**
+         *
          * @var EntityManager $em
          */
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
@@ -39,8 +40,8 @@ class BrewCommand extends ContainerAwareCommand
         $output->writeln('Creating RecipeControlManager');
         $this->rcm = new RecipeControlManager($em);
         
-        $output->writeln('Loading recipe: ' . $input->getOption('recipe'));
-        $this->rcm->load($input->getOption('recipe'));
+        $output->writeln('Loading recipe: ' . $input->getArgument('recipe'));
+        $this->rcm->load($input->getArgument('recipe'));
         
         $output->writeln('<info>Start loop</info>');
         $output->writeln('');

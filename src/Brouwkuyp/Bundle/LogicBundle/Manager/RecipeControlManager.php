@@ -43,6 +43,11 @@ class RecipeControlManager
         } else {
             // Load recipe from database
         }
+        
+        if(is_null($this->recipe)){
+            throw new \Exception("Recipe could not be loaded");
+        }
+            
     }
 
     public function execute()
