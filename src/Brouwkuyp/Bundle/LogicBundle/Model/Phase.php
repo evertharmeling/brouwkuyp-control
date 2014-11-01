@@ -13,7 +13,7 @@ namespace Brouwkuyp\Bundle\LogicBundle\Model;
  * All other elements (procedures, unit procedures, and operations)
  * simply group, organize, and direct phases.
  */
-class Phase
+class Phase implements ExecutableInterface
 {
     /**
      * @var string

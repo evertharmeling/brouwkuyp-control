@@ -11,7 +11,7 @@ namespace Brouwkuyp\Bundle\LogicBundle\Model;
  * or biological change. Like unit procedures, the standard presumes 
  * only one operation is active on a particular unit at a time.
  */
-class Operation
+class Operation implements ExecutableInterface
 {
     /**
      * @var string

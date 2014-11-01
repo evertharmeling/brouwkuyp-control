@@ -2,6 +2,9 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface;
+
 /**
  * UnitProcedure
  *
@@ -29,30 +32,44 @@ class UnitProcedure implements ExecutableInterface
     
     /**
      * Unit that is controlled by this procedure
-     * 
+     *
      * @var Unit
      */
     protected $unit;
+    
+    /**
+     * Flag indicating that this UnitProcedure is started.
+     *
+     * @var bool
+     */
+    protected $started;
+    
+    /**
+     * Flag indicating that this UnitProcedure is performed and finished.
+     *
+     * @var bool
+     */
+    protected $finished;
 
     /**
+     * Constructs
      */
     public function __construct()
     {
         $this->operations = new ArrayCollection();
     }
-    
+
     /**
-     * 
      */
     public function load()
     {
         // Entity should load itself from a database
         // Load operations
-        $this->operations->add(new Operation(-1));
-        $this->operations->add(new Operation(-1));
-        $this->operations->add(new Operation(-1));
+        $this->operations->add(new Operation(- 1));
+        $this->operations->add(new Operation(- 1));
+        $this->operations->add(new Operation(- 1));
         
-        $this->unit = new Unit(-1);
+        $this->unit = new Unit(- 1);
     }
 
     /**
@@ -94,5 +111,25 @@ class UnitProcedure implements ExecutableInterface
      */
     public function execute()
     {
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isStarted()
+     */
+    public function isStarted()
+    {
+        return $this->started;
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isFinished()
+     */
+    public function isFinished()
+    {
+        return $this->finished;
     }
 }

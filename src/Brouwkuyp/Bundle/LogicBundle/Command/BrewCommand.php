@@ -43,21 +43,18 @@ class BrewCommand extends ContainerAwareCommand
         $output->writeln('Loading recipe: ' . $input->getArgument('recipe'));
         $this->rcm->load(intval($input->getArgument('recipe')));
         
+        $output->writeln('Starting recipe');
+        $this->rcm->start();
+        
         $output->writeln('<info>Start loop</info>');
         $output->writeln('');
         while ( $loopCount > 0 ) {
             $output->writeln('Run: ' . $loopCount);
-            $this->runner();
+            $this->rcm->execute();
             usleep(1000000);
             $loopCount --;
         }
         
-        $output->writeln('Saving recipe');
-        $this->rcm->save();
-    }
-
-    private function runner()
-    {
-        $this->rcm->execute();
+        $output->writeln('Done with recipe');
     }
 }

@@ -12,14 +12,16 @@ use Brouwkuyp\Bundle\LogicBundle\Model\Procedure;
 class RecipeControlManager
 {
     /**
-     *
-     * @var ControlRecipe
+     * Current ControlRecipe
+     * 
+     * @var \ControlRecipe
      */
     private $recipe;
     
     /**
+     * EntityManager
      *
-     * @var EntityManager
+     * @var \EntityManager
      */
     private $entityManager;
 
@@ -39,32 +41,27 @@ class RecipeControlManager
      */
     public function load($id)
     {
-        if ($id == null) {
-            // Check database for active control recipe
-        } elseif ($id === 1) {
-            $this->loadRecipeDubbel();
-        } else {
-            // Load recipe from database
-        }
+        // Load recipe 
+        $this->recipe = new ControlRecipe($id);
+        $this->recipe->load();
         
         if (is_null($this->recipe)) {
             throw new \Exception("Recipe could not be loaded");
         }
     }
-
-    public function execute()
-    {
-    }
-
-    public function save()
-    {
+    
+    /**
+     * Starts the recipe that is loaded
+     */
+    public function start(){
+        $this->recipe->start();
     }
 
     /**
-     * Temp test function
+     * Executes current active recipe
      */
-    private function loadRecipeDubbel()
+    public function execute()
     {
-        $this->recipe = new ControlRecipe(-1);
+        $this->recipe->execute();
     }
 }
