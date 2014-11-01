@@ -9,10 +9,16 @@ class ControlRecipe
 {
     /**
      *
+     * @var integer
+     */
+    protected $id;
+    
+    /**
+     *
      * @var string
      */
     protected $name;
-
+    
     /**
      *
      * @var Procedure
@@ -20,23 +26,31 @@ class ControlRecipe
     protected $procedure;
 
     /**
-     *
+     * Constructs
      */
-    public function __construct()
+    public function __construct($id = NULL)
     {
+        $this->id = $id;
+    }
 
+    public function load()
+    {
+        $this->name = "test";
+        $procedureId = -1;
+        $this->procedure = new Procedure($procedureId);
+        $this->procedure->load();
     }
 
     /**
      * Set name
      *
-     * @param  string       $name
+     * @param string $name            
      * @return MasterRecipe
      */
     public function setName($name)
     {
         $this->name = $name;
-
+        
         return $this;
     }
 
@@ -48,30 +62,6 @@ class ControlRecipe
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set Procedure for this Recipe
-     *
-     * @param Procedure $proc            
-     * @throws \Exception
-     */
-    public function setProcedure(Procedure $proc)
-    {
-        if (! is_null($this->procedure)) {
-            throw new \Exception("Recipe already has a Procedure");
-        } else {
-            $this->procedure = $proc;
-        }
-    }
-
-    /**
-     *
-     * @return \Brouwkuyp\Bundle\LogicBundle\Model\Procedure
-     */
-    public function getProcedure()
-    {
-        return $this->procedure;
     }
 
     /**

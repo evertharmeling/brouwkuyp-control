@@ -4,6 +4,12 @@ namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
 /**
  * Operation
+ * 
+ * An operation is an ordered set of phases carried to completion 
+ * within a single unit. Operations usually involve taking the 
+ * material being processed through some type of physical, chemical,
+ * or biological change. Like unit procedures, the standard presumes 
+ * only one operation is active on a particular unit at a time.
  */
 class Operation
 {
@@ -15,8 +21,8 @@ class Operation
     /**
      * Set name
      *
-     * @param  string       $name
-     * @return MasterRecipe
+     * @param string $name
+     * @return Operation
      */
     public function setName($name)
     {

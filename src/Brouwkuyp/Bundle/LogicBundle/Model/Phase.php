@@ -3,7 +3,15 @@
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
 /**
- * Operation
+ * Phase
+ * 
+ * A phase is the smallest element of procedural control that can
+ * accomplish process-oriented tasks. Phases perform unique and
+ * generally independent, basic process-oriented functions,
+ * such as charging an ingredient or agitating a tank. 
+ * Simply put, phases are the workhorses of recipes. 
+ * All other elements (procedures, unit procedures, and operations)
+ * simply group, organize, and direct phases.
  */
 class Phase
 {
@@ -16,7 +24,7 @@ class Phase
      * Set name
      *
      * @param  string       $name
-     * @return MasterRecipe
+     * @return Phase
      */
     public function setName($name)
     {

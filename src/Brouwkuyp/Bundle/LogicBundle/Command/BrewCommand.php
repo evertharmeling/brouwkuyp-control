@@ -41,7 +41,7 @@ class BrewCommand extends ContainerAwareCommand
         $this->rcm = new RecipeControlManager($em);
         
         $output->writeln('Loading recipe: ' . $input->getArgument('recipe'));
-        $this->rcm->load($input->getArgument('recipe'));
+        $this->rcm->load(intval($input->getArgument('recipe')));
         
         $output->writeln('<info>Start loop</info>');
         $output->writeln('');

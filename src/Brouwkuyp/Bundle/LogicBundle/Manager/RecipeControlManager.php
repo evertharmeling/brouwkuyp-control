@@ -18,10 +18,11 @@ class RecipeControlManager
     private $recipe;
     
     /**
+     *
      * @var EntityManager
      */
     private $entityManager;
-    
+
     public function __construct(EntityManager $em)
     {
         $this->entityManager = $em;
@@ -34,20 +35,16 @@ class RecipeControlManager
      */
     public function load($id)
     {
-        if ($id == null) {
-            // Check database for active control recipe
-        } elseif ($id === 1) {
-            // If there is a recipe active, try to resume it
-        } else if ($id === 1) {
+        if ($id == 0) {
+            // Id 1 is the hardcoded recipe for a dubbel beer
             $this->loadRecipeDubbel();
         } else {
             // Load recipe from database
         }
         
-        if(is_null($this->recipe)){
+        if (is_null($this->recipe)) {
             throw new \Exception("Recipe could not be loaded");
         }
-            
     }
 
     public function execute()
@@ -58,10 +55,11 @@ class RecipeControlManager
     {
     }
 
+    /**
+     * Temp test function
+     */
     private function loadRecipeDubbel()
     {
-        $this->recipe = new ControlRecipe();
-        $procedure = new Procedure();
-        $this->recipe->setProcedure($procedure);
+        $this->recipe = new ControlRecipe(-1);
     }
 }

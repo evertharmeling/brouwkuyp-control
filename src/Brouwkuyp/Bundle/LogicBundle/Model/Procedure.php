@@ -7,6 +7,10 @@ use Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface;
 
 /**
  * Procedure
+ *
+ * A procedure is the highest-level in the procedural control
+ * hierarchy. It defines the overall strategy for making a batch.
+ * It consists of an ordered set of unit procedures.
  */
 class Procedure implements ExecutableInterface
 {
@@ -15,7 +19,7 @@ class Procedure implements ExecutableInterface
      * @var string
      */
     protected $name;
-
+    
     /**
      * Collection of UnitProcedure
      *
@@ -24,22 +28,35 @@ class Procedure implements ExecutableInterface
     protected $unitProcedures;
     
     /**
-     * Current active UnitProcedure
-     * 
-     * @var UnitProcedure
-     */
-    protected $currentUnitProcedure;
-    
-    /**
-     * Flag that says if we are already started
-     * 
+     * Flag that signals if we are started
+     *
      * @var bool
      */
     private $started;
+    
+    /**
+     * Flag that signals that we are finished
+     *
+     * @var bool
+     */
+    private $finished;
 
+    /**
+     */
     public function __construct()
     {
         $this->unitProcedures = new ArrayCollection();
+    }
+
+    /**
+     * Loads the unitprocedures
+     */
+    public function load()
+    {
+        // Entity should load itself from a database 
+        // Load UnitProcedures
+        $this->unitProcedures->add(new UnitProcedure());
+        $this->unitProcedures->add(new UnitProcedure());
         $this->unitProcedures->add(new UnitProcedure());
     }
 
@@ -47,12 +64,12 @@ class Procedure implements ExecutableInterface
      * Set name
      *
      * @param string $name            
-     * @return MasterRecipe
+     * @return Procedure
      */
     public function setName($name)
     {
         $this->name = $name;
-
+        
         return $this;
     }
 
@@ -65,40 +82,49 @@ class Procedure implements ExecutableInterface
     {
         return $this->name;
     }
-
+    
+    /*
+     * (non-PHPdoc) @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::start()
+     */
     public function start()
     {
-        if(!$this->started){
+        if (! $this->started) {
             // Set flag that we are started
             $this->started = true;
             
             // Store in database that we are started
+            // Entity should store itself
             
             // Start first UnitProcedure
-            $this->currentUnitProcedure = $this->unitProcedures->first();
-            $this->currentUnitProcedure->start();
+            $this->unitProcedures->first()->start();
         }
     }
-    
+
     /**
      * (non-PHPdoc)
+     *
      * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::execute()
      */
     public function execute()
     {
-        if($this->started){
-            // Perform the current unit procedure
-            if($this->currentUnitProcedure->isFinished()){
-                // Go to next unit procedure
-                
-                // If last unit procedure is finished
-                // set the finished flag
+        if ($this->started) {
+            // Start the next unit procedure?
+            if ($this->unitProcedures->current()->isFinished()) {
+                // Go to next unit procedure if possible
+                if ($this->unitProcedures->next()) {
+                    $this->unitProcedures->current()->start();
+                } else {
+                    // If last unit procedure is finished
+                    // set the finished flag
+                    $this->finished = true;
+                }
             }
-            if($this->currentUnitProcedure->isStarted()){
+            // Execute
+            if ($this->unitProcedures->current()->isStarted()) {
                 // Perform unit procedure
                 $this->currentUnitProcedure->execute();
             }
-        }else{
+        } else {
             throw new \Exception('Procedure not started');
         }
     }
