@@ -1,6 +1,6 @@
 Brouwkuyp\Bundle\ServiceBundle\Entity\Phase:
     type: entity
-    tabel: phase
+    table: phase
     repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\PhaseRepository
 
     id: 
@@ -24,6 +24,3 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Phase:
         operation:
             targetEntity: Operation
             inversedBy: phases
-            joinColumn:
-                name: operation_id
-                referencedColumnName: id

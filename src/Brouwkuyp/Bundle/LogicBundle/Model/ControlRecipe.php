@@ -9,12 +9,6 @@ class ControlRecipe implements ExecutableInterface
 {
     /**
      *
-     * @var integer
-     */
-    protected $id;
-    
-    /**
-     *
      * @var string
      */
     protected $name;
@@ -26,20 +20,10 @@ class ControlRecipe implements ExecutableInterface
     protected $procedure;
 
     /**
-     * Constructs
-     */
-    public function __construct($id = null)
-    {
-        if (!is_null($id)) {
-            $this->id = $id;
-        }
-    }
-
-    /**
      * Set name
      *
      * @param string $name            
-     * @return MasterRecipe
+     * @return ControlRecipe
      */
     public function setName($name)
     {
@@ -57,14 +41,15 @@ class ControlRecipe implements ExecutableInterface
     {
         return $this->name;
     }
-    
-    /*
-     * (non-PHPdoc) @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::start()
+
+    /**
+     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::start()
+     * @throws \Exception
      */
     public function start()
     {
-        if (! is_null($this->procedure)) {
-            if (! $this->procedure->isFinished()) {
+        if (!is_null($this->procedure)) {
+            if (!$this->procedure->isFinished()) {
                 $this->procedure->start();
             } else {
                 throw new \Exception('Procedure already finished');
@@ -75,16 +60,13 @@ class ControlRecipe implements ExecutableInterface
     }
 
     /**
-     *
-     * (non-PHPdoc)
-     *
      * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::execute()
      * @throws \Exception
      */
     public function execute()
     {
-        if (! is_null($this->procedure)) {
-            if (! $this->procedure->isFinished()) {
+        if (!is_null($this->procedure)) {
+            if (!$this->procedure->isFinished()) {
                 $this->procedure->execute();
             } else {
                 throw new \Exception('Procedure not started');
@@ -95,34 +77,49 @@ class ControlRecipe implements ExecutableInterface
     }
 
     /**
-     * (non-PHPdoc)
-     *
      * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isStarted()
      */
     public function isStarted()
     {
-        $started = false;
-        if (! is_null($this->procedure)) {
-            $started = $this->procedure->isStarted();
-        } else {
-            $started = false;
+        if (!is_null($this->procedure)) {
+            return $this->procedure->isStarted();
         }
-        return $started;
+
+        return false;
     }
 
     /**
-     * (non-PHPdoc)
-     *
      * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isFinished()
      */
     public function isFinished()
     {
-        $finished = false;
-        if (! is_null($this->procedure)) {
-            $finished = $this->procedure->isFinished();
-        } else {
-            $finished = false;
+        if (!is_null($this->procedure)) {
+            return $this->procedure->isFinished();
         }
-        return $finished;
+
+        return false;
+    }
+
+    /**
+     * Set procedure
+     *
+     * @param Procedure $procedure
+     * @return ControlRecipe
+     */
+    public function setProcedure(Procedure $procedure = null)
+    {
+        $this->procedure = $procedure;
+
+        return $this;
+    }
+
+    /**
+     * Get procedure
+     *
+     * @return Procedure
+     */
+    public function getProcedure()
+    {
+        return $this->procedure;
     }
 }

@@ -1,6 +1,6 @@
 Brouwkuyp\Bundle\ServiceBundle\Entity\MasterRecipe:
-    type:   entity
-    table:  masterrecipe
+    type: entity
+    table: master_recipe
     repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\MasterRecipeRepository
 
     id:

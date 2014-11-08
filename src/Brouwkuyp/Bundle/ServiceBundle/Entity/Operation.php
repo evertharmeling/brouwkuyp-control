@@ -3,6 +3,7 @@
 namespace Brouwkuyp\Bundle\ServiceBundle\Entity;
 
 use Brouwkuyp\Bundle\LogicBundle\Model\Operation as BaseOperation;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Operation
@@ -21,21 +22,21 @@ class Operation extends BaseOperation
     protected $name;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var ArrayCollection
      */
-    protected $phase;
+    protected $phases;
 
     /**
-     * @var \Brouwkuyp\Bundle\ServiceBundle\Entity\UnitProcedure
+     * @var UnitProcedure
      */
-    protected $unitprocedure;
+    protected $unitProcedure;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->phase = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->phases = new ArrayCollection();
     }
 
     /**
@@ -74,12 +75,12 @@ class Operation extends BaseOperation
     /**
      * Add phase
      *
-     * @param \Brouwkuyp\Bundle\ServiceBundle\Entity\Phase $phase
+     * @param Phase $phase
      * @return Operation
      */
-    public function addPhase(\Brouwkuyp\Bundle\ServiceBundle\Entity\Phase $phase)
+    public function addPhase(Phase $phase)
     {
-        $this->phase[] = $phase;
+        $this->phases[] = $phase;
 
         return $this;
     }
@@ -87,43 +88,43 @@ class Operation extends BaseOperation
     /**
      * Remove phase
      *
-     * @param \Brouwkuyp\Bundle\ServiceBundle\Entity\Phase $phase
+     * @param Phase $phase
      */
-    public function removePhase(\Brouwkuyp\Bundle\ServiceBundle\Entity\Phase $phase)
+    public function removePhase(Phase $phase)
     {
-        $this->phase->removeElement($phase);
+        $this->phases->removeElement($phase);
     }
 
     /**
      * Get phase
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return ArrayCollection
      */
-    public function getPhase()
+    public function getPhases()
     {
-        return $this->phase;
+        return $this->phases;
     }
 
     /**
-     * Set unitprocedure
+     * Set UnitProcedure
      *
-     * @param \Brouwkuyp\Bundle\ServiceBundle\Entity\UnitProcedure $unitprocedure
+     * @param UnitProcedure $unitProcedure
      * @return Operation
      */
-    public function setUnitprocedure(\Brouwkuyp\Bundle\ServiceBundle\Entity\UnitProcedure $unitprocedure = null)
+    public function setUnitProcedure(\Brouwkuyp\Bundle\ServiceBundle\Entity\UnitProcedure $unitProcedure = null)
     {
-        $this->unitprocedure = $unitprocedure;
+        $this->unitProcedure = $unitProcedure;
 
         return $this;
     }
 
     /**
-     * Get unitprocedure
+     * Get UnitProcedure
      *
      * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\UnitProcedure 
      */
-    public function getUnitprocedure()
+    public function getUnitProcedure()
     {
-        return $this->unitprocedure;
+        return $this->unitProcedure;
     }
 }

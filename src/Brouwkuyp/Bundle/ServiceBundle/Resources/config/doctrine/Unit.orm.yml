@@ -1,6 +1,6 @@
 Brouwkuyp\Bundle\ServiceBundle\Entity\Unit:
     type: entity
-    tabel: unit
+    table: unit
     repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\UnitRepository
 
     id: 
@@ -13,3 +13,8 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Unit:
         name: 
             type:       string
             length:     120
+
+    oneToMany:
+        unitProcedures:
+            targetEntity: UnitProcedure
+            mappedBy: unit

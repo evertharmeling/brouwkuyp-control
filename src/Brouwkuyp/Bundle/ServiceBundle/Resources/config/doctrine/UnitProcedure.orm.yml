@@ -1,6 +1,6 @@
 Brouwkuyp\Bundle\ServiceBundle\Entity\UnitProcedure:
     type: entity
-    tabel: unitprocedure
+    table: unit_procedure
     repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\UnitProcedureRepository
 
     id: 
@@ -14,20 +14,14 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\UnitProcedure:
             type:       string
             length:     120
 
-    manyToOne:
-        procedure:
-            targetEntity: Procedure
-            inversedBy: unitprocedures
-            joinColumn:
-                name: procedure_id
-                referencedColumnName: id
-        unit:
-            targetEntity: Unit
-            joinColumn:
-                name: unit_id
-                referencedColumnName: id
-
     oneToMany:
         operation:
             targetEntity: Operation
-            mappedBy: unitprocedure
+            mappedBy: unitProcedure
+
+    manyToOne:
+        procedure:
+            targetEntity: Procedure
+            inversedBy: unitProcedures
+        unit:
+            targetEntity: Unit

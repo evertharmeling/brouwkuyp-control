@@ -3,6 +3,7 @@
 namespace Brouwkuyp\Bundle\ServiceBundle\Entity;
 
 use Brouwkuyp\Bundle\LogicBundle\Model\Procedure as BaseProcedure;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Procedure
@@ -21,21 +22,21 @@ class Procedure extends BaseProcedure
     protected $name;
 
     /**
-     * @var \Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe
+     * @var ControlRecipe
      */
-    protected $controlrecipe;
+    protected $controlRecipe;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var ArrayCollection
      */
-    protected $unitprocedure;
+    protected $unitProcedures;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->unitprocedure = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->unitProcedures = new ArrayCollection();
     }
 
     /**
@@ -72,14 +73,14 @@ class Procedure extends BaseProcedure
     }
 
     /**
-     * Set controlrecipe
+     * Set ControlRecipe
      *
-     * @param \Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe $controlrecipe
+     * @param ControlRecipe $controlRecipe
      * @return Procedure
      */
-    public function setControlrecipe(\Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe $controlrecipe = null)
+    public function setControlRecipe(ControlRecipe $controlRecipe = null)
     {
-        $this->controlrecipe = $controlrecipe;
+        $this->controlRecipe = $controlRecipe;
 
         return $this;
     }
@@ -87,43 +88,43 @@ class Procedure extends BaseProcedure
     /**
      * Get controlrecipe
      *
-     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe 
+     * @return ControlRecipe 
      */
-    public function getControlrecipe()
+    public function getControlRecipe()
     {
-        return $this->controlrecipe;
+        return $this->controlRecipe;
     }
 
     /**
-     * Add unitprocedure
+     * Add UnitProcedure
      *
-     * @param \Brouwkuyp\Bundle\ServiceBundle\Entity\UnitProcedure $unitprocedure
+     * @param UnitProcedure $unitProcedure
      * @return Procedure
      */
-    public function addUnitprocedure(\Brouwkuyp\Bundle\ServiceBundle\Entity\UnitProcedure $unitprocedure)
+    public function addUnitprocedure(UnitProcedure $unitProcedure)
     {
-        $this->unitprocedure[] = $unitprocedure;
+        $this->unitProcedures[] = $unitProcedure;
 
         return $this;
     }
 
     /**
-     * Remove unitprocedure
+     * Remove UnitProcedure
      *
-     * @param \Brouwkuyp\Bundle\ServiceBundle\Entity\UnitProcedure $unitprocedure
+     * @param UnitProcedure $unitProcedure
      */
-    public function removeUnitprocedure(\Brouwkuyp\Bundle\ServiceBundle\Entity\UnitProcedure $unitprocedure)
+    public function removeUnitProcedure(UnitProcedure $unitProcedure)
     {
-        $this->unitprocedure->removeElement($unitprocedure);
+        $this->unitProcedures->removeElement($unitProcedure);
     }
 
     /**
-     * Get unitprocedure
+     * Get UnitProcedure
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return ArrayCollection
      */
-    public function getUnitprocedure()
+    public function getUnitProcedures()
     {
-        return $this->unitprocedure;
+        return $this->unitProcedures;
     }
 }

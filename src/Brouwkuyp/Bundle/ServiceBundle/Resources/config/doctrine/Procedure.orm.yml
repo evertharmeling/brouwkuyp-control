@@ -1,6 +1,6 @@
 Brouwkuyp\Bundle\ServiceBundle\Entity\Procedure:
-    type:   entity
-    table:  procedure
+    type: entity
+    table: procedure
     repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\ProcedureRepository
 
     id:
@@ -15,11 +15,11 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Procedure:
             length:     120
 
     oneToOne:
-        controlrecipe:
+        controlRecipe:
             targetEntity: ControlRecipe
             mappedBy: procedure
 
     oneToMany:
-        unitprocedure:
+        unitProcedures:
             targetEntity: UnitProcedure
             mappedBy: procedure

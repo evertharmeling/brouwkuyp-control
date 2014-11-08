@@ -2,7 +2,7 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Manager;
 
-use Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe;
+use Brouwkuyp\Bundle\LogicBundle\Model\ControlRecipe;
 
 /**
  * BatchManager
