@@ -2,31 +2,34 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Manager;
 
+use Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe;
+
 /**
  * BatchManager
  * 
- * Control the chosen recipe and log all relavant information
+ * Control the chosen recipe and log all relevant information
  * during the batch.
  */
 class BatchManager
 {
-    
     /**
-     * @var \ControlRecipe recipe
+     * @var ControlRecipe
      */
     private $recipe;
-    
+
     /**
-     * @param \ControlRecipe $recipe
+     * @param ControlRecipe $recipe
      */
-    public function __construct(\ControlRecipe $recipe)
+    public function __construct(ControlRecipe $recipe)
     {
         $this->recipe = $recipe;
     }
+
     /**
      * Starts the recipe that is loaded
      */
-    public function start(){
+    public function start()
+    {
         $this->recipe->start();
     }
     

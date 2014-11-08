@@ -1,4 +1,6 @@
-parameters:
-#    dashboard.example.class: Brouwkuyp\Bundle\Example
-
 services:
+
+    brouwkuyp_logic.manager.recipe_control:
+        class:  Brouwkuyp\Bundle\LogicBundle\Manager\RecipeControlManager
+        arguments:
+            - @brouwkuyp_service.repository.control_recipe

@@ -28,21 +28,11 @@ class ControlRecipe implements ExecutableInterface
     /**
      * Constructs
      */
-    public function __construct($id = NULL)
+    public function __construct($id = null)
     {
-        if (! is_null($id)) {
+        if (!is_null($id)) {
             $this->id = $id;
         }
-    }
-
-    /**
-     * Loads control recipe
-     */
-    public function load()
-    {
-        // Load
-        $this->procedure = new Procedure(1);
-        $this->procedure->load();
     }
 
     /**
