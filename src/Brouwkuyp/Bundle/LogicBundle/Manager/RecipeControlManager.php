@@ -39,7 +39,7 @@ class RecipeControlManager
         $recipe = $this->controlRecipeRepository->find($id);
         
         if (!is_null($recipe)) {
-            // could convert the $recipe Entity to the $receipe Model (if we decide not to let the entity extend the model)
+            // could convert the $recipe Entity to the $recipe Model (if we decide not to let the entity extend the model)
         } else {
             throw new \Exception("Recipe could not be found or loaded");
         }

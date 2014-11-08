@@ -136,7 +136,7 @@ class Procedure implements ExecutableInterface
      */
     public function start()
     {
-        if (! $this->started) {
+        if (! $this->isStarted()) {
             // Set flag that we are started
             $this->started = true;
             
@@ -144,7 +144,9 @@ class Procedure implements ExecutableInterface
             // Entity should store itself
             
             // Start first UnitProcedure
-            $this->unitProcedures->first()->start();
+            if ($this->getUnitProcedures()->count()) {
+                $this->getUnitProcedures()->first()->start();
+            }
         }
     }
 
@@ -156,22 +158,27 @@ class Procedure implements ExecutableInterface
     public function execute()
     {
         if ($this->isStarted()) {
+            if (!$this->getCurrentUnitProcedure()) {
+                $this->finished = true;
+                return;
+            }
+
             // Start the next unit procedure?
-            if ($this->unitProcedures->current()->isFinished()) {
+            if ($this->getCurrentUnitProcedure()->isFinished()) {
                 // Go to next unit procedure if possible
-                if ($this->unitProcedures->next()) {
-                    $this->unitProcedures->current()->start();
+                if ($this->getUnitProcedures()->next()) {
+                    $this->getCurrentUnitProcedure()->start();
+
+                    // Execute
+                    if ($this->getCurrentUnitProcedure()->isStarted()) {
+                        // Perform unit procedure
+                        $this->$this->getCurrentUnitProcedure()->execute();
+                    }
                 } else {
                     // If last unit procedure is finished
                     // set the finished flag
                     $this->finished = true;
                 }
-            }
-            // Execute
-            if ($this->unitProcedures->current()->isStarted()) {
-                // Perform unit procedure
-                // @todo make getCurrentUnitProcedure function and property
-                $this->currentUnitProcedure->execute();
             }
         } else {
             throw new \Exception('Procedure not started');
@@ -198,5 +205,13 @@ class Procedure implements ExecutableInterface
     public function isFinished()
     {
         return $this->finished;
+    }
+
+    /**
+     * @return UnitProcedure|false
+     */
+    public function getCurrentUnitProcedure()
+    {
+        return $this->getUnitProcedures()->current();
     }
 }

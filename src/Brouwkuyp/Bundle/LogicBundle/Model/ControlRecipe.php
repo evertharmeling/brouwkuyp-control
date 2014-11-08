@@ -48,9 +48,9 @@ class ControlRecipe implements ExecutableInterface
      */
     public function start()
     {
-        if (!is_null($this->procedure)) {
-            if (!$this->procedure->isFinished()) {
-                $this->procedure->start();
+        if (!is_null($this->getProcedure())) {
+            if (!$this->getProcedure()->isFinished()) {
+                $this->getProcedure()->start();
             } else {
                 throw new \Exception('Procedure already finished');
             }
@@ -65,11 +65,11 @@ class ControlRecipe implements ExecutableInterface
      */
     public function execute()
     {
-        if (!is_null($this->procedure)) {
-            if (!$this->procedure->isFinished()) {
-                $this->procedure->execute();
+        if (!is_null($this->getProcedure())) {
+            if (!$this->getProcedure()->isFinished()) {
+                $this->getProcedure()->execute();
             } else {
-                throw new \Exception('Procedure not started');
+                // procedure finished!
             }
         } else {
             throw new \Exception('No procedure for this Recipe');
@@ -81,8 +81,8 @@ class ControlRecipe implements ExecutableInterface
      */
     public function isStarted()
     {
-        if (!is_null($this->procedure)) {
-            return $this->procedure->isStarted();
+        if (!is_null($this->getProcedure())) {
+            return $this->getProcedure()->isStarted();
         }
 
         return false;
