@@ -38,14 +38,6 @@ class ConsumeCommand extends ContainerAwareCommand
 
         /** @var Manager $manager */
         $manager = $this->getContainer()->get('brouwkuyp_service.amqp.manager');
-        $connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
-        $channel = $connection->channel();
-
-        list($queueName) = $channel->queue_declare('', false, false, true, false);
-
-        // listen to all in brewery.#
-        $channel->queue_bind($queueName, 'amq.topic', 'brewery.#');
-
         $callback = function (AMQPMessage $msg) use ($output, $em) {
 
 //            $log = new Log();
