@@ -22,17 +22,18 @@ class UnitProcedure implements ExecutableInterface
      * @var string
      */
     protected $name;
-    
+
     /**
-     * Collection of Operations
-     *
      * @var ArrayCollection
      */
     protected $operations;
-    
+
     /**
-     * Unit that is controlled by this procedure
-     *
+     * @var Procedure
+     */
+    protected $procedure;
+
+    /**
      * @var Unit
      */
     protected $unit;
@@ -60,19 +61,6 @@ class UnitProcedure implements ExecutableInterface
     }
 
     /**
-     */
-    public function load()
-    {
-        // Entity should load itself from a database
-        // Load operations
-        $this->operations->add(new Operation(- 1));
-        $this->operations->add(new Operation(- 1));
-        $this->operations->add(new Operation(- 1));
-        
-        $this->unit = new Unit(- 1);
-    }
-
-    /**
      * Set name
      *
      * @param string $name            
@@ -96,8 +84,85 @@ class UnitProcedure implements ExecutableInterface
     }
 
     /**
-     * (non-PHPdoc)
+     * Add operation
      *
+     * @param Operation $operation
+     * @return UnitProcedure
+     */
+    public function addOperation(Operation $operation)
+    {
+        $this->operations[] = $operation;
+
+        return $this;
+    }
+
+    /**
+     * Remove operation
+     *
+     * @param Operation $operation
+     */
+    public function removeOperation(Operation $operation)
+    {
+        $this->operations->removeElement($operation);
+    }
+
+    /**
+     * Get operation
+     *
+     * @return ArrayCollection
+     */
+    public function getOperations()
+    {
+        return $this->operations;
+    }
+
+    /**
+     * Set procedure
+     *
+     * @param Procedure $procedure
+     * @return UnitProcedure
+     */
+    public function setProcedure(Procedure $procedure = null)
+    {
+        $this->procedure = $procedure;
+
+        return $this;
+    }
+
+    /**
+     * Get procedure
+     *
+     * @return Procedure
+     */
+    public function getProcedure()
+    {
+        return $this->procedure;
+    }
+
+    /**
+     * Set unit
+     *
+     * @param Unit $unit
+     * @return UnitProcedure
+     */
+    public function setUnit(Unit $unit = null)
+    {
+        $this->unit = $unit;
+
+        return $this;
+    }
+
+    /**
+     * Get unit
+     *
+     * @return Unit
+     */
+    public function getUnit()
+    {
+        return $this->unit;
+    }
+
+    /**
      * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::start()
      */
     public function start()
@@ -105,8 +170,6 @@ class UnitProcedure implements ExecutableInterface
     }
 
     /**
-     * (non-PHPdoc)
-     *
      * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::execute()
      */
     public function execute()
@@ -114,8 +177,6 @@ class UnitProcedure implements ExecutableInterface
     }
 
     /**
-     * (non-PHPdoc)
-     *
      * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isStarted()
      */
     public function isStarted()
@@ -124,8 +185,6 @@ class UnitProcedure implements ExecutableInterface
     }
 
     /**
-     * (non-PHPdoc)
-     *
      * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isFinished()
      */
     public function isFinished()

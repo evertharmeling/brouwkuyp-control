@@ -34,7 +34,7 @@ class Log
      * @param  \DateTime $createdAt
      * @return Log
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
 

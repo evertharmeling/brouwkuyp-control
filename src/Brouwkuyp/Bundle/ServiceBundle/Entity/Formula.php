@@ -2,8 +2,6 @@
 
 namespace Brouwkuyp\Bundle\ServiceBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Formula
  */

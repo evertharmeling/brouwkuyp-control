@@ -15,7 +15,7 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\UnitProcedure:
             length:     120
 
     oneToMany:
-        operation:
+        operations:
             targetEntity: Operation
             mappedBy: unitProcedure
 

@@ -20,13 +20,6 @@ class Procedure implements ExecutableInterface
     protected $name;
 
     /**
-     * Collection of UnitProcedure
-     *
-     * @var ArrayCollection
-     */
-    protected $unitProcedures;
-    
-    /**
      * Flag that signals if we are started
      *
      * @var bool
@@ -41,22 +34,22 @@ class Procedure implements ExecutableInterface
     private $finished;
 
     /**
+     * @var ControlRecipe
+     */
+    protected $controlRecipe;
+
+    /**
+     * Collection of UnitProcedure
+     *
+     * @var ArrayCollection
+     */
+    protected $unitProcedures;
+
+    /**
      */
     public function __construct()
     {
         $this->unitProcedures = new ArrayCollection();
-    }
-
-    /**
-     * Loads the unitprocedures
-     */
-    public function load()
-    {
-        // Entity should load itself from a database
-        // Load UnitProcedures
-        $this->unitProcedures->add(new UnitProcedure());
-        $this->unitProcedures->add(new UnitProcedure());
-        $this->unitProcedures->add(new UnitProcedure());
     }
 
     /**
@@ -81,9 +74,65 @@ class Procedure implements ExecutableInterface
     {
         return $this->name;
     }
-    
-    /*
-     * (non-PHPdoc) @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::start()
+
+    /**
+     * Set ControlRecipe
+     *
+     * @param ControlRecipe $controlRecipe
+     * @return Procedure
+     */
+    public function setControlRecipe(ControlRecipe $controlRecipe = null)
+    {
+        $this->controlRecipe = $controlRecipe;
+
+        return $this;
+    }
+
+    /**
+     * Get controlrecipe
+     *
+     * @return ControlRecipe
+     */
+    public function getControlRecipe()
+    {
+        return $this->controlRecipe;
+    }
+
+    /**
+     * Add UnitProcedure
+     *
+     * @param UnitProcedure $unitProcedure
+     * @return Procedure
+     */
+    public function addUnitprocedure(UnitProcedure $unitProcedure)
+    {
+        $this->unitProcedures[] = $unitProcedure;
+
+        return $this;
+    }
+
+    /**
+     * Remove UnitProcedure
+     *
+     * @param UnitProcedure $unitProcedure
+     */
+    public function removeUnitProcedure(UnitProcedure $unitProcedure)
+    {
+        $this->unitProcedures->removeElement($unitProcedure);
+    }
+
+    /**
+     * Get UnitProcedure
+     *
+     * @return ArrayCollection
+     */
+    public function getUnitProcedures()
+    {
+        return $this->unitProcedures;
+    }
+
+    /**
+     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::start()
      */
     public function start()
     {
@@ -121,6 +170,7 @@ class Procedure implements ExecutableInterface
             // Execute
             if ($this->unitProcedures->current()->isStarted()) {
                 // Perform unit procedure
+                // @todo make getCurrentUnitProcedure function and property
                 $this->currentUnitProcedure->execute();
             }
         } else {
