@@ -81,8 +81,8 @@ stof_doctrine_extensions:
         default:
             timestampable:  true
 
-#braincrafted_bootstrap:
-#    jquery_path: %kernel.root_dir%/../vendor/jquery/jquery/jquery-1.11.1.js
-#    customize:
-#        variables_file: %kernel.root_dir%/../src/Brouwkuyp/Bundle/DashboardBundle/Resources/public/less/variables.less
-#        bootstrap_output: %kernel.root_dir%/../src/Brouwkuyp/Bundle/DashboardBundle/Resources/public/less/bootstrap.less
+braincrafted_bootstrap:
+    jquery_path: %kernel.root_dir%/../vendor/jquery/jquery/jquery-1.11.1.js
+    customize:
+        variables_file: %kernel.root_dir%/../src/Brouwkuyp/Bundle/DashboardBundle/Resources/public/less/variables.less
+        bootstrap_output: %kernel.root_dir%/../src/Brouwkuyp/Bundle/DashboardBundle/Resources/public/less/bootstrap.less
