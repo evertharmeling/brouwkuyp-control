@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Brouwkuyp\Bundle\LogicBundle\Manager\RecipeControlManager;
+use Brouwkuyp\Bundle\ServiceBundle\Manager\DoctrineBatchControlFactory;
 
 /**
  * BrewCommand
@@ -35,29 +36,27 @@ class BrewCommand extends ContainerAwareCommand
          * @var EntityManager $em
          */
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $bcf = new DoctrineBatchControlFactory($em);
         
         $output->writeln('');
         $output->writeln('Creating RecipeControlManager');
-        $this->rcm = new RecipeControlManager($em);
+        $this->rcm = new RecipeControlManager($bcf);
         
         $output->writeln('Loading recipe: ' . $input->getArgument('recipe'));
-        $this->rcm->load(intval($input->getArgument('recipe')));
+        $bm = $this->rcm->load(intval($input->getArgument('recipe')));
+        
+        $output->writeln('Starting batch');
+        $bm->start();
         
         $output->writeln('<info>Start loop</info>');
         $output->writeln('');
         while ( $loopCount > 0 ) {
             $output->writeln('Run: ' . $loopCount);
-            $this->runner();
+            $bm->execute();
             usleep(1000000);
             $loopCount --;
         }
         
-        $output->writeln('Saving recipe');
-        $this->rcm->save();
-    }
-
-    private function runner()
-    {
-        $this->rcm->execute();
+        $output->writeln('Done with recipe');
     }
 }

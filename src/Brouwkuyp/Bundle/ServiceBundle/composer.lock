@@ -4,15 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-<<<<<<< HEAD
     "hash": "30b88825434c7a752fff7b680d9323e0",
-=======
-    "hash": "029ce18a1b36526a893f8a052933c4e1",
->>>>>>> Configured PHPUnit + Refactored ConsumeCommand
-=======
-    "hash": "30b88825434c7a752fff7b680d9323e0",
->>>>>>> Refactored to BrewControlManager
     "packages": [
         {
             "name": "doctrine/annotations",

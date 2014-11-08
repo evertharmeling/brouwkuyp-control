@@ -2,25 +2,53 @@
 
 namespace Brouwkuyp\Bundle\ServiceBundle\Entity;
 
-use Brouwkuyp\Bundle\LogicBundle\Entity\MasterRecipe as BaseMasterRecipe;
-
 /**
  * MasterRecipe
  */
-class MasterRecipe extends BaseMasterRecipe
+class MasterRecipe
 {
+
     /**
      * @var integer
      */
-    protected $id;
+    private $id;
+
+    /**
+     * @var string
+     */
+    private $name;
+
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return MasterRecipe
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

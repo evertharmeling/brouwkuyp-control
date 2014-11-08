@@ -1,0 +1,28 @@
+Brouwkuyp\Bundle\ServiceBundle\Entity\Operation:
+    type: entity
+    tabel: operation
+    repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\OperationRepository
+
+    id: 
+        id: 
+            type:           integer
+            generator:
+                strategy:   AUTO
+
+    fields: 
+        name: 
+            type:       string
+            length:     120
+
+    manyToOne:
+        unitprocedure:
+            targetEntity: UnitProcedure
+            inversedBy: operations
+            joinColumn:
+                name: unitprocedure_id
+                referencedColumnName: id
+
+    oneToMany:
+        phase:
+            targetEntity: Phase
+            mappedBy: operation

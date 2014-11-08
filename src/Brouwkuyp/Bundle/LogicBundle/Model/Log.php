@@ -4,8 +4,6 @@ namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
 /**
  * Log
- *
- * @author Evert Harmeling <evertharmeling@gmail.com>
  */
 class Log
 {
@@ -36,7 +34,7 @@ class Log
      * @param  \DateTime $createdAt
      * @return Log
      */
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
 

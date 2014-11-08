@@ -17,7 +17,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-            new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
+            //new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
             new Brouwkuyp\Bundle\DashboardBundle\BrouwkuypDashboardBundle(),
             new Brouwkuyp\Bundle\LogicBundle\BrouwkuypLogicBundle(),
             new Brouwkuyp\Bundle\ServiceBundle\BrouwkuypServiceBundle(),

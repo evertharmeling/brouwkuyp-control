@@ -5,7 +5,7 @@ namespace Brouwkuyp\Bundle\LogicBundle\Model;
 /**
  * ControlRecipe
  */
-class ControlRecipe
+class ControlRecipe implements ExecutableInterface
 {
     /**
      *
@@ -18,7 +18,7 @@ class ControlRecipe
      * @var string
      */
     protected $name;
-
+    
     /**
      *
      * @var Procedure
@@ -30,7 +30,9 @@ class ControlRecipe
      */
     public function __construct($id = NULL)
     {
-        $this->id = $id;
+        if (! is_null($id)) {
+            $this->id = $id;
+        }
     }
 
     /**
@@ -38,22 +40,21 @@ class ControlRecipe
      */
     public function load()
     {
-        $this->name = "test";
-        $procedureId = -1;
-        $this->procedure = new Procedure($procedureId);
+        // Load
+        $this->procedure = new Procedure(1);
         $this->procedure->load();
     }
 
     /**
      * Set name
      *
-     * @param  string       $name
+     * @param string $name            
      * @return MasterRecipe
      */
     public function setName($name)
     {
         $this->name = $name;
-
+        
         return $this;
     }
 
@@ -66,11 +67,11 @@ class ControlRecipe
     {
         return $this->name;
     }
-
-    /**
-     * Start the procedure of this recipe
+    
+    /*
+     * (non-PHPdoc) @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::start()
      */
-    public function startProcedure()
+    public function start()
     {
         if (! is_null($this->procedure)) {
             if (! $this->procedure->isFinished()) {
@@ -84,6 +85,10 @@ class ControlRecipe
     }
 
     /**
+     *
+     * (non-PHPdoc)
+     *
+     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::execute()
      * @throws \Exception
      */
     public function execute()
@@ -92,14 +97,42 @@ class ControlRecipe
             if (! $this->procedure->isFinished()) {
                 $this->procedure->execute();
             } else {
-                // Procedure not started
+                throw new \Exception('Procedure not started');
             }
         } else {
-            throw new \Exception("No procedure for this Recipe");
+            throw new \Exception('No procedure for this Recipe');
         }
     }
 
-    public function stopProcedure()
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isStarted()
+     */
+    public function isStarted()
     {
+        $started = false;
+        if (! is_null($this->procedure)) {
+            $started = $this->procedure->isStarted();
+        } else {
+            $started = false;
+        }
+        return $started;
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isFinished()
+     */
+    public function isFinished()
+    {
+        $finished = false;
+        if (! is_null($this->procedure)) {
+            $finished = $this->procedure->isFinished();
+        } else {
+            $finished = false;
+        }
+        return $finished;
     }
 }

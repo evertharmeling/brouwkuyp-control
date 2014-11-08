@@ -13,7 +13,7 @@ namespace Brouwkuyp\Bundle\LogicBundle\Model;
  * All other elements (procedures, unit procedures, and operations)
  * simply group, organize, and direct phases.
  */
-class Phase
+class Phase implements ExecutableInterface
 {
     /**
      * @var string
@@ -41,5 +41,41 @@ class Phase
     public function getName()
     {
         return $this->name;
+    }
+    
+    /**
+     * Starts stage
+     */
+    public function start()
+    {
+        
+    }
+    
+    /**
+     * Executes stage
+    */
+    public function execute()
+    {
+        
+    }
+    
+    /**
+     * Returns started state
+     *
+     * @return bool
+    */
+    public function isStarted()
+    {
+        
+    }
+    
+    /**
+     * Returns finished state
+     *
+     * @return bool
+    */
+    public function isFinished()
+    {
+        
     }
 }

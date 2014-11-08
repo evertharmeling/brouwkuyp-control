@@ -1,0 +1,25 @@
+Brouwkuyp\Bundle\ServiceBundle\Entity\Procedure:
+    type:   entity
+    table:  procedure
+    repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\ProcedureRepository
+
+    id:
+        id:
+            type:           integer
+            generator:
+                strategy:   AUTO
+
+    fields:
+        name: 
+            type:       string
+            length:     120
+
+    oneToOne:
+        controlrecipe:
+            targetEntity: ControlRecipe
+            mappedBy: procedure
+
+    oneToMany:
+        unitprocedure:
+            targetEntity: UnitProcedure
+            mappedBy: procedure

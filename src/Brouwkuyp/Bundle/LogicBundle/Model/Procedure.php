@@ -52,7 +52,7 @@ class Procedure implements ExecutableInterface
      */
     public function load()
     {
-        // Entity should load itself from a database 
+        // Entity should load itself from a database
         // Load UnitProcedures
         $this->unitProcedures->add(new UnitProcedure());
         $this->unitProcedures->add(new UnitProcedure());
@@ -131,6 +131,7 @@ class Procedure implements ExecutableInterface
     /**
      * Returns started state
      *
+     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isStarted()
      * @return bool
      */
     public function isStarted()
@@ -141,6 +142,7 @@ class Procedure implements ExecutableInterface
     /**
      * Returns finished state
      *
+     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isFinished()
      * @return bool
      */
     public function isFinished()
