@@ -1,16 +1,4 @@
-
 $(document).ready(function() {
-    var ws = new SockJS("http://192.168.2.132:15674/stomp");
-    var client = Stomp.over(ws);
-
-    // RabbitMQ SockJS does not support heartbeats so disable them
-    client.heartbeat.incoming = 0;
-    client.heartbeat.outgoing = 0;
-
-    client.debug = onDebug;
-
-    // Make sure the user has limited access rights
-    client.connect("guest", "guest", onConnect, onError, "/");
 
     Highcharts.setOptions({
         global: {
@@ -69,6 +57,20 @@ $(document).ready(function() {
         ]
     });
 
+    console.log('raar');
+
+    var ws = new SockJS("http://192.168.2.132:15674/stomp");
+    var client = Stomp.over(ws);
+
+    // RabbitMQ SockJS does not support heartbeats so disable them
+    client.heartbeat.incoming = 0;
+    client.heartbeat.outgoing = 0;
+
+    client.debug = onDebug;
+
+    // Make sure the user has limited access rights
+    client.connect("guest", "guest", onConnect, onError, "/");
+
     function onConnect() {
         // HLT
         client.subscribe("/topic/brewery.brewhouse01.masher.hlt.curr_temp", function (d) {
@@ -95,7 +97,7 @@ $(document).ready(function() {
     }
 
     function onDebug(m) {
-        //console.log("STOMP DEBUG", m);
+        console.log("STOMP DEBUG", m);
     }
 
     function addToGraph(sensor, temperature) {

@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>Brouwkuyp dashboard</h1>
-    <div id="graph" style="min-width: 310px; height: 700px; margin: 0 auto"></div>
+    <div id="graph" data-url="{{ path('logs_current_recipe') }}"></div>
     <div class="row">
         <div class="col-md-2">
             <h3><small>HLT:</small></h3><h1 class="text-right"><span id="temp-curr-hlt"></span></h1>
