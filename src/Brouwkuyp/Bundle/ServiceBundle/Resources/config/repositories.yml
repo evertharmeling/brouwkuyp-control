@@ -10,3 +10,8 @@ services:
         parent: brouwkuyp_service.repository
         arguments:
             - Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe
+
+    brouwkuyp_service.repository.log:
+        parent: brouwkuyp_service.repository
+        arguments:
+            - Brouwkuyp\Bundle\ServiceBundle\Entity\Log

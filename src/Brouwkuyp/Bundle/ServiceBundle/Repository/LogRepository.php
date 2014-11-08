@@ -3,6 +3,7 @@
 namespace Brouwkuyp\Bundle\ServiceBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * LogRepository
@@ -12,4 +13,28 @@ use Doctrine\ORM\EntityRepository;
  */
 class LogRepository extends EntityRepository
 {
+    /**
+     * @return QueryBuilder
+     */
+    public function getBaseQueryBuilder()
+    {
+        $qb = $this->createQueryBuilder('l')
+            ->orderBy('l.createdAt', 'ASC')
+        ;
+
+        return $qb;
+    }
+
+    /**
+     * @return array
+     */
+    public function findForCurrentRecipe()
+    {
+        $qb = $this->getBaseQueryBuilder()
+            ->andWhere('DATE(l.createdAt) = :date')
+            ->setParameter('date', (new \DateTime())->format('Y-m-d'))
+        ;
+
+        return $qb->getQuery()->execute();
+    }
 }

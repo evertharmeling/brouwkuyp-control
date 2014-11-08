@@ -7,7 +7,6 @@ namespace Brouwkuyp\Bundle\ServiceBundle\Entity;
  */
 class Formula
 {
-
     /**
      * @var integer
      */

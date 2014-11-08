@@ -2,10 +2,12 @@
 
 namespace Brouwkuyp\Bundle\ServiceBundle\Entity;
 
+use Brouwkuyp\Bundle\LogicBundle\Model\MasterRecipe as BaseMasterRecipe;
+
 /**
  * MasterRecipe
  */
-class MasterRecipe
+class MasterRecipe extends BaseMasterRecipe
 {
     /**
      * @var integer
