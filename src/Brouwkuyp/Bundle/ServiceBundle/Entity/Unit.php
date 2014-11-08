@@ -1,28 +1,40 @@
 <?php
 
-namespace Brouwkuyp\Bundle\LogicBundle\Model;
+namespace Brouwkuyp\Bundle\ServiceBundle\Entity;
+
+use Brouwkuyp\Bundle\LogicBundle\Model\Unit as BaseUnit;
 
 /**
- * MasterRecipe
+ * Unit
  */
-class MasterRecipe
+class Unit extends BaseUnit
 {
+
     /**
-     * 
      * @var integer
      */
     protected $id;
-    
+
     /**
      * @var string
      */
     protected $name;
 
     /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Set name
      *
-     * @param  string       $name
-     * @return MasterRecipe
+     * @param string $name
+     * @return Unit
      */
     public function setName($name)
     {
@@ -34,7 +46,7 @@ class MasterRecipe
     /**
      * Get name
      *
-     * @return string
+     * @return string 
      */
     public function getName()
     {

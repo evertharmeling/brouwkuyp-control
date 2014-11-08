@@ -42,4 +42,40 @@ class Phase implements ExecutableInterface
     {
         return $this->name;
     }
+    
+    /**
+     * Starts stage
+     */
+    public function start()
+    {
+        
+    }
+    
+    /**
+     * Executes stage
+    */
+    public function execute()
+    {
+        
+    }
+    
+    /**
+     * Returns started state
+     *
+     * @return bool
+    */
+    public function isStarted()
+    {
+        
+    }
+    
+    /**
+     * Returns finished state
+     *
+     * @return bool
+    */
+    public function isFinished()
+    {
+        
+    }
 }

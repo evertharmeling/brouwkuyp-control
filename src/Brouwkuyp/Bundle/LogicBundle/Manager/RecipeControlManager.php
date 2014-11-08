@@ -10,27 +10,20 @@ use Brouwkuyp\Bundle\LogicBundle\Model\Procedure;
  * RecipeControlManager
  */
 class RecipeControlManager
-{
+{  
     /**
-     * Current ControlRecipe
-     * 
-     * @var \ControlRecipe
-     */
-    private $recipe;
-    
-    /**
-     * EntityManager
+     * BatchControlFactory
      *
-     * @var \EntityManager
+     * @var \BatchControlFactory
      */
-    private $entityManager;
+    private $batchControlFactory;
 
     /**
-     * @param EntityManager $em
+     * @param \BatchControlFactory $bcf
      */
-    public function __construct(EntityManager $em)
+    public function __construct($bcf)
     {
-        $this->entityManager = $em;
+        $this->batchControlFactory = $bcf;
     }
 
     /**
@@ -42,26 +35,15 @@ class RecipeControlManager
     public function load($id)
     {
         // Load recipe 
-        $this->recipe = new ControlRecipe($id);
-        $this->recipe->load();
+        $recipe = $this->batchControlFactory->loadControlRecipe($id);
         
-        if (is_null($this->recipe)) {
-            throw new \Exception("Recipe could not be loaded");
+        if(!is_null($recipe)){
+            echo "Recipe :'".$recipe->getName()."' loaded \n";
+            $recipe->load();
+        }else{
+            throw new \Exception("Recipe could not be found or loaded");
         }
-    }
-    
-    /**
-     * Starts the recipe that is loaded
-     */
-    public function start(){
-        $this->recipe->start();
-    }
-
-    /**
-     * Executes current active recipe
-     */
-    public function execute()
-    {
-        $this->recipe->execute();
+        
+        return new BatchManager($recipe);
     }
 }

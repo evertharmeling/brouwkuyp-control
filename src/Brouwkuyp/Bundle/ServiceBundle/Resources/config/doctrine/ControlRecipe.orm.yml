@@ -1,0 +1,35 @@
+Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe:
+    type:   entity
+    table:  controlrecipe
+    repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\ControlRecipeRepository
+
+    id:
+        id:
+            type:           integer
+            generator:
+                strategy:   AUTO
+
+    fields: 
+        name: 
+            type:       string
+            length:     120
+        version:
+            type: 	integer
+            length:	2
+        remarks:
+            type:	string
+            length:	255
+
+    oneToOne:
+        procedure:
+            targetEntity: Procedure
+            joinColumn:
+                name: procedure_id
+                referencedColumnName: id
+
+    oneToOne:
+        formule:
+            targetEntity: Formula
+            joinColumn:
+                name: formula_id
+                referencedColumnName: id

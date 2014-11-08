@@ -30,7 +30,9 @@ class ControlRecipe implements ExecutableInterface
      */
     public function __construct($id = NULL)
     {
-        $this->id = $id;
+        if (! is_null($id)) {
+            $this->id = $id;
+        }
     }
 
     /**
@@ -39,7 +41,6 @@ class ControlRecipe implements ExecutableInterface
     public function load()
     {
         // Load
-        $this->name = "test";
         $this->procedure = new Procedure(1);
         $this->procedure->load();
     }

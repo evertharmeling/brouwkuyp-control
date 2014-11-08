@@ -1,0 +1,29 @@
+Brouwkuyp\Bundle\ServiceBundle\Entity\Phase:
+    type: entity
+    tabel: phase
+    repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\PhaseRepository
+
+    id: 
+        id: 
+            type:           integer
+            generator:
+                strategy:   AUTO
+
+    fields: 
+        name: 
+            type:       string
+            length:     120
+        type:
+            type:       string
+            length:     50
+        value:
+            type:       integer
+            length:     10
+            
+    manyToOne:
+        operation:
+            targetEntity: Operation
+            inversedBy: phases
+            joinColumn:
+                name: operation_id
+                referencedColumnName: id

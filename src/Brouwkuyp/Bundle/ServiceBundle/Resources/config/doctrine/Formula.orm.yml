@@ -1,0 +1,20 @@
+Brouwkuyp\Bundle\ServiceBundle\Entity\Formula:
+    type: entity
+    tabel: formula
+    repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\FormulaRepository
+
+    id: 
+        id: 
+            type:           integer
+            generator:
+                strategy:   AUTO
+
+    fields: 
+        name: 
+            type:       string
+            length:     120
+
+    oneToOne:
+        controlrecipe:
+            targetEntity: ControlRecipe
+            mappedBy: formula
