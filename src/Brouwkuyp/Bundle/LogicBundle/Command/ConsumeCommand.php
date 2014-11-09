@@ -40,13 +40,13 @@ class ConsumeCommand extends ContainerAwareCommand
         $manager = $this->getContainer()->get('brouwkuyp_service.amqp.manager');
         $callback = function (AMQPMessage $msg) use ($output, $em) {
 
-//            $log = new Log();
-//            $log
-//                ->setTopic($msg->delivery_info['routing_key'])
-//                ->setValue($msg->body)
-//            ;
-//            $em->persist($log);
-//            $em->flush();
+            $log = new Log();
+            $log
+                ->setTopic($msg->delivery_info['routing_key'])
+                ->setValue($msg->body)
+            ;
+            $em->persist($log);
+            $em->flush();
 
             $output->writeln(sprintf("<info>Message received: </info> %s : %s", $msg->delivery_info['routing_key'], $msg->body));
         };

@@ -28,6 +28,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        rabbit_mq_host: %rabbit_mq_host%
 
 # Assetic Configuration
 assetic:
@@ -63,9 +65,16 @@ doctrine:
         # e.g. database_path: "%kernel.root_dir%/data/data.db3"
         # path:     "%database_path%"
 
+        types:
+            brouwkuyp_datetime: Brouwkuyp\Bundle\ServiceBundle\Doctrine\Type\DateTimeType
+
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+
+        dql:
+            datetime_functions:
+                date: DoctrineExtensions\Query\Mysql\Date
 
 # Swiftmailer Configuration
 swiftmailer:

@@ -9,78 +9,11 @@ use Brouwkuyp\Bundle\LogicBundle\Model\Phase as BasePhase;
  */
 class Phase extends BasePhase
 {
-
     /**
      * @var integer
      */
     protected $id;
 
-    /**
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * @var \Brouwkuyp\Bundle\ServiceBundle\Entity\Operation
-     */
-    protected $operation;
-
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Phase
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set operation
-     *
-     * @param \Brouwkuyp\Bundle\ServiceBundle\Entity\Operation $operation
-     * @return Phase
-     */
-    public function setOperation(\Brouwkuyp\Bundle\ServiceBundle\Entity\Operation $operation = null)
-    {
-        $this->operation = $operation;
-
-        return $this;
-    }
-
-    /**
-     * Get operation
-     *
-     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\Operation 
-     */
-    public function getOperation()
-    {
-        return $this->operation;
-    }
     /**
      * @var string
      */
@@ -91,6 +24,15 @@ class Phase extends BasePhase
      */
     private $value;
 
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set type

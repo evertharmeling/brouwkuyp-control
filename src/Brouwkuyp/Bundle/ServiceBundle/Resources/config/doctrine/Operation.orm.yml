@@ -1,6 +1,6 @@
 Brouwkuyp\Bundle\ServiceBundle\Entity\Operation:
     type: entity
-    tabel: operation
+    table: operation
     repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\OperationRepository
 
     id: 
@@ -14,15 +14,15 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Operation:
             type:       string
             length:     120
 
+    oneToMany:
+        phases:
+            targetEntity: Phase
+            mappedBy: operation
+
     manyToOne:
-        unitprocedure:
+        unitProcedure:
             targetEntity: UnitProcedure
             inversedBy: operations
             joinColumn:
-                name: unitprocedure_id
+                name: unit_procedure_id
                 referencedColumnName: id
-
-    oneToMany:
-        phase:
-            targetEntity: Phase
-            mappedBy: operation

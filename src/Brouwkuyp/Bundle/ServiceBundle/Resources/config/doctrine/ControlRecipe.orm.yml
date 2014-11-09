@@ -1,6 +1,6 @@
 Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe:
-    type:   entity
-    table:  controlrecipe
+    type: entity
+    table: control_recipe
     repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\ControlRecipeRepository
 
     id:
@@ -23,13 +23,5 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe:
     oneToOne:
         procedure:
             targetEntity: Procedure
-            joinColumn:
-                name: procedure_id
-                referencedColumnName: id
-
-    oneToOne:
-        formule:
-            targetEntity: Formula
-            joinColumn:
-                name: formula_id
-                referencedColumnName: id
+#        formula:
+#            targetEntity: Formula

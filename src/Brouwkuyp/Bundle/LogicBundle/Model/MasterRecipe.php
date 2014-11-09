@@ -8,12 +8,6 @@ namespace Brouwkuyp\Bundle\LogicBundle\Model;
 class MasterRecipe
 {
     /**
-     * 
-     * @var integer
-     */
-    protected $id;
-    
-    /**
      * @var string
      */
     protected $name;

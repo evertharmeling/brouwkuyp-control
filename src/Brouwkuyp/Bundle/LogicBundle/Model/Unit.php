@@ -2,54 +2,81 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Unit
  */
 class Unit
 {
     /**
-     * @var integer
-     */
-    protected $id;
-
-    /**
      * @var string
      */
     protected $name;
-    
+
     /**
-     * Constructs
-     * 
-     * @param integer $id
+     * @var ArrayCollection
      */
-    public function __construct($id){
-        $this->id = $id;
-    }
-    
+    protected $unitProcedures;
+
     /**
-     * Sets the name of the unit
-     * 
-     * @param string $name
+     * Constructor
      */
-    public function setName($name){
-        $this->name = $name;
+    public function __construct()
+    {
+        $this->unitProcedures = new ArrayCollection();
     }
     
     /**
      * Gets the name of the unit
-     * 
+     *
      * @return string
      */
-    public function getName(){
+    public function getName()
+    {
         return $this->name;
     }
     
     /**
-     * Gets the id of the unit
-     * 
-     * @return integer
+     * Sets the name of the unit
+     *
+     * @param string $name
      */
-    public function getId(){
-        return $this->id;
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Add UnitProcedure
+     *
+     * @param UnitProcedure $unitProcedure
+     * @return Procedure
+     */
+    public function addUnitprocedure(UnitProcedure $unitProcedure)
+    {
+        $this->unitProcedures[] = $unitProcedure;
+
+        return $this;
+    }
+
+    /**
+     * Remove UnitProcedure
+     *
+     * @param UnitProcedure $unitProcedure
+     */
+    public function removeUnitProcedure(UnitProcedure $unitProcedure)
+    {
+        $this->unitProcedures->removeElement($unitProcedure);
+    }
+
+    /**
+     * Get UnitProcedure
+     *
+     * @return ArrayCollection
+     */
+    public function getUnitProcedures()
+    {
+        return $this->unitProcedures;
     }
 }

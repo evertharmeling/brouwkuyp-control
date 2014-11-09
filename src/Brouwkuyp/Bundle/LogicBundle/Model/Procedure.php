@@ -20,13 +20,6 @@ class Procedure implements ExecutableInterface
     protected $name;
 
     /**
-     * Collection of UnitProcedure
-     *
-     * @var ArrayCollection
-     */
-    protected $unitProcedures;
-    
-    /**
      * Flag that signals if we are started
      *
      * @var bool
@@ -41,22 +34,22 @@ class Procedure implements ExecutableInterface
     private $finished;
 
     /**
+     * @var ControlRecipe
+     */
+    protected $controlRecipe;
+
+    /**
+     * Collection of UnitProcedure
+     *
+     * @var ArrayCollection
+     */
+    protected $unitProcedures;
+
+    /**
      */
     public function __construct()
     {
         $this->unitProcedures = new ArrayCollection();
-    }
-
-    /**
-     * Loads the unitprocedures
-     */
-    public function load()
-    {
-        // Entity should load itself from a database
-        // Load UnitProcedures
-        $this->unitProcedures->add(new UnitProcedure());
-        $this->unitProcedures->add(new UnitProcedure());
-        $this->unitProcedures->add(new UnitProcedure());
     }
 
     /**
@@ -81,13 +74,69 @@ class Procedure implements ExecutableInterface
     {
         return $this->name;
     }
-    
-    /*
-     * (non-PHPdoc) @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::start()
+
+    /**
+     * Set ControlRecipe
+     *
+     * @param ControlRecipe $controlRecipe
+     * @return Procedure
+     */
+    public function setControlRecipe(ControlRecipe $controlRecipe = null)
+    {
+        $this->controlRecipe = $controlRecipe;
+
+        return $this;
+    }
+
+    /**
+     * Get controlrecipe
+     *
+     * @return ControlRecipe
+     */
+    public function getControlRecipe()
+    {
+        return $this->controlRecipe;
+    }
+
+    /**
+     * Add UnitProcedure
+     *
+     * @param UnitProcedure $unitProcedure
+     * @return Procedure
+     */
+    public function addUnitprocedure(UnitProcedure $unitProcedure)
+    {
+        $this->unitProcedures[] = $unitProcedure;
+
+        return $this;
+    }
+
+    /**
+     * Remove UnitProcedure
+     *
+     * @param UnitProcedure $unitProcedure
+     */
+    public function removeUnitProcedure(UnitProcedure $unitProcedure)
+    {
+        $this->unitProcedures->removeElement($unitProcedure);
+    }
+
+    /**
+     * Get UnitProcedure
+     *
+     * @return ArrayCollection
+     */
+    public function getUnitProcedures()
+    {
+        return $this->unitProcedures;
+    }
+
+    /**
+     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::start()
      */
     public function start()
     {
-        if (! $this->started) {
+        if (! $this->isStarted()) {
             // Set flag that we are started
             $this->started = true;
             
@@ -95,7 +144,9 @@ class Procedure implements ExecutableInterface
             // Entity should store itself
             
             // Start first UnitProcedure
-            $this->unitProcedures->first()->start();
+            if ($this->getUnitProcedures()->count()) {
+                $this->getUnitProcedures()->first()->start();
+            }
         }
     }
 
@@ -107,21 +158,27 @@ class Procedure implements ExecutableInterface
     public function execute()
     {
         if ($this->isStarted()) {
+            if (!$this->getCurrentUnitProcedure()) {
+                $this->finished = true;
+                return;
+            }
+
             // Start the next unit procedure?
-            if ($this->unitProcedures->current()->isFinished()) {
+            if ($this->getCurrentUnitProcedure()->isFinished()) {
                 // Go to next unit procedure if possible
-                if ($this->unitProcedures->next()) {
-                    $this->unitProcedures->current()->start();
+                if ($this->getUnitProcedures()->next()) {
+                    $this->getCurrentUnitProcedure()->start();
+
+                    // Execute
+                    if ($this->getCurrentUnitProcedure()->isStarted()) {
+                        // Perform unit procedure
+                        $this->$this->getCurrentUnitProcedure()->execute();
+                    }
                 } else {
                     // If last unit procedure is finished
                     // set the finished flag
                     $this->finished = true;
                 }
-            }
-            // Execute
-            if ($this->unitProcedures->current()->isStarted()) {
-                // Perform unit procedure
-                $this->currentUnitProcedure->execute();
             }
         } else {
             throw new \Exception('Procedure not started');
@@ -148,5 +205,13 @@ class Procedure implements ExecutableInterface
     public function isFinished()
     {
         return $this->finished;
+    }
+
+    /**
+     * @return UnitProcedure|false
+     */
+    public function getCurrentUnitProcedure()
+    {
+        return $this->getUnitProcedures()->current();
     }
 }

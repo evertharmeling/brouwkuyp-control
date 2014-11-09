@@ -21,9 +21,14 @@ class Phase implements ExecutableInterface
     protected $name;
 
     /**
+     * @var Operation
+     */
+    protected $operation;
+
+    /**
      * Set name
      *
-     * @param  string       $name
+     * @param  string $name
      * @return Phase
      */
     public function setName($name)
@@ -42,7 +47,30 @@ class Phase implements ExecutableInterface
     {
         return $this->name;
     }
-    
+
+    /**
+     * Set operation
+     *
+     * @param Operation $operation
+     * @return Phase
+     */
+    public function setOperation(Operation $operation = null)
+    {
+        $this->operation = $operation;
+
+        return $this;
+    }
+
+    /**
+     * Get operation
+     *
+     * @return Operation
+     */
+    public function getOperation()
+    {
+        return $this->operation;
+    }
+
     /**
      * Starts stage
      */

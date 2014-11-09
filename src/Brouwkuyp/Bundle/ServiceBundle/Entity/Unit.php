@@ -16,11 +16,6 @@ class Unit extends BaseUnit
     protected $id;
 
     /**
-     * @var string
-     */
-    protected $name;
-
-    /**
      * Get id
      *
      * @return integer 
@@ -28,28 +23,5 @@ class Unit extends BaseUnit
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Unit
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 }

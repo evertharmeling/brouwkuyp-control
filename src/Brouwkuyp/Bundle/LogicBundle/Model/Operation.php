@@ -2,6 +2,8 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Operation
  * 
@@ -17,6 +19,24 @@ class Operation implements ExecutableInterface
      * @var string
      */
     protected $name;
+
+    /**
+     * @var ArrayCollection
+     */
+    protected $phases;
+
+    /**
+     * @var UnitProcedure
+     */
+    protected $unitProcedure;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->phases = new ArrayCollection();
+    }
 
     /**
      * Set name
@@ -40,7 +60,63 @@ class Operation implements ExecutableInterface
     {
         return $this->name;
     }
-    
+
+    /**
+     * Add phase
+     *
+     * @param Phase $phase
+     * @return Operation
+     */
+    public function addPhase(Phase $phase)
+    {
+        $this->phases[] = $phase;
+
+        return $this;
+    }
+
+    /**
+     * Remove phase
+     *
+     * @param Phase $phase
+     */
+    public function removePhase(Phase $phase)
+    {
+        $this->phases->removeElement($phase);
+    }
+
+    /**
+     * Get phase
+     *
+     * @return ArrayCollection
+     */
+    public function getPhases()
+    {
+        return $this->phases;
+    }
+
+    /**
+     * Set UnitProcedure
+     *
+     * @param UnitProcedure $unitProcedure
+     * @return Operation
+     */
+    public function setUnitProcedure(UnitProcedure $unitProcedure = null)
+    {
+        $this->unitProcedure = $unitProcedure;
+
+        return $this;
+    }
+
+    /**
+     * Get UnitProcedure
+     *
+     * @return UnitProcedure
+     */
+    public function getUnitProcedure()
+    {
+        return $this->unitProcedure;
+    }
+
     /**
      * Starts stage
      */

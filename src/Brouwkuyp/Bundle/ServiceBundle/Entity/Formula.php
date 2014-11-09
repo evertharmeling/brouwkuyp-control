@@ -2,14 +2,11 @@
 
 namespace Brouwkuyp\Bundle\ServiceBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Formula
  */
 class Formula
 {
-
     /**
      * @var integer
      */
@@ -21,9 +18,9 @@ class Formula
     private $name;
 
     /**
-     * @var \Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe
+     * @var ControlRecipe
      */
-    private $controlrecipe;
+    private $controlRecipe;
 
 
     /**
@@ -60,25 +57,25 @@ class Formula
     }
 
     /**
-     * Set controlrecipe
+     * Set ControlRecipe
      *
-     * @param \Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe $controlrecipe
+     * @param ControlRecipe $controlRecipe
      * @return Formula
      */
-    public function setControlrecipe(\Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe $controlrecipe = null)
+    public function setControlRecipe(ControlRecipe $controlRecipe = null)
     {
-        $this->controlrecipe = $controlrecipe;
+        $this->controlRecipe = $controlRecipe;
 
         return $this;
     }
 
     /**
-     * Get controlrecipe
+     * Get ControlRecipe
      *
-     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe 
+     * @return ControlRecipe
      */
-    public function getControlrecipe()
+    public function getControlRecipe()
     {
-        return $this->controlrecipe;
+        return $this->controlRecipe;
     }
 }

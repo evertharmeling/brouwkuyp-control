@@ -1,25 +1,22 @@
 Brouwkuyp\Bundle\ServiceBundle\Entity\Log:
-    type:   entity
-    table:  log
+    type: entity
+    table: log
     repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\LogRepository
+    options:
+        engine: MyISAM
 
     id:
-        id:
-            type:           integer
-            generator:
-                strategy:   AUTO
-
-    fields:
-        topic:
-            type:       string
-            length:     120
-        value:
-            type:       string
-            length:     20
-
         createdAt:
             column:     created_at
-            type:       datetime
+            type:       brouwkuyp_datetime
             gedmo:
                 timestampable:
                     on:     create
+        topic:
+            type:       string
+            length:     120
+
+    fields:
+        value:
+            type:       string
+            length:     20

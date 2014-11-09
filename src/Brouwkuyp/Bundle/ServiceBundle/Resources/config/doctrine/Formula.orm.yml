@@ -1,6 +1,6 @@
 Brouwkuyp\Bundle\ServiceBundle\Entity\Formula:
     type: entity
-    tabel: formula
+    table: formula
     repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\FormulaRepository
 
     id: 
@@ -15,6 +15,6 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Formula:
             length:     120
 
     oneToOne:
-        controlrecipe:
+        controlRecipe:
             targetEntity: ControlRecipe
             mappedBy: formula

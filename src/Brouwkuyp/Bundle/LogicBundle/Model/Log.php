@@ -7,6 +7,11 @@ namespace Brouwkuyp\Bundle\LogicBundle\Model;
  */
 class Log
 {
+    // @todo move
+    const TOPIC_HLT_CURR_TEMP = 'brewery.brewhouse01.masher.hlt.curr_temp';
+    const TOPIC_MLT_CURR_TEMP = 'brewery.brewhouse01.masher.mlt.curr_temp';
+    const TOPIC_BLT_CURR_TEMP = 'brewery.brewhouse01.masher.blt.curr_temp';
+
     /**
      * @var string
      */
@@ -34,7 +39,7 @@ class Log
      * @param  \DateTime $createdAt
      * @return Log
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
 
@@ -77,5 +82,13 @@ class Log
         $this->value = $value;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return sha1($this->getCreatedAt()->format('U') . $this->getTopic());
     }
 }
