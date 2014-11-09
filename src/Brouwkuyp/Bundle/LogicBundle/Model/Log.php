@@ -2,6 +2,8 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
+use Brouwkuyp\Bundle\ServiceBundle\Doctrine\DateTime;
+
 /**
  * Log
  */
@@ -10,6 +12,7 @@ class Log
     // @todo move
     const TOPIC_HLT_CURR_TEMP = 'brewery.brewhouse01.masher.hlt.curr_temp';
     const TOPIC_MLT_CURR_TEMP = 'brewery.brewhouse01.masher.mlt.curr_temp';
+    const TOPIC_MLT_SET_TEMP = 'brewery.brewhouse01.masher.mlt.set_temp';
     const TOPIC_BLT_CURR_TEMP = 'brewery.brewhouse01.masher.blt.curr_temp';
 
     /**
@@ -28,7 +31,23 @@ class Log
     protected $createdAt;
 
     /**
-     * @return \DateTime
+     * Constructs the object
+     */
+    public function __construct()
+    {
+        $this->createdAt = new DateTime();
+    }
+
+    /**
+     * @return string
+     */
+    function __toString()
+    {
+        return (string) sha1($this->getCreatedAt() . $this->getTopic());
+    }
+
+    /**
+     * @return DateTime
      */
     public function getCreatedAt()
     {
@@ -36,10 +55,10 @@ class Log
     }
 
     /**
-     * @param  \DateTime $createdAt
+     * @param  DateTime $createdAt
      * @return Log
      */
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt(DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
 
@@ -82,13 +101,5 @@ class Log
         $this->value = $value;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIdentifier()
-    {
-        return sha1($this->getCreatedAt()->format('U') . $this->getTopic());
     }
 }

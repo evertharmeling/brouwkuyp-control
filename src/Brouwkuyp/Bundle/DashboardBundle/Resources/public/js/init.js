@@ -1,97 +1,133 @@
 jQuery(document).ready(function() {
     chart.init();
-    preFetchData.init();
     client.init();
 });
 
 var chart = {
     init: function () {
-        Highcharts.setOptions({
-            global: {
-                useUTC: false
-            }
-        });
-
-        $('#graph').highcharts({
-            chart: {
-                type: 'spline',
-                animation: Highcharts.svg, // don't animate in old IE
-                marginRight: 10
-            },
-            title: {
-                text: 'Live temperatures'
-            },
-            xAxis: {
-                type: 'datetime'
-            },
-            yAxis: {
-                title: {
-                    text: 'Temperature °C'
-                },
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
-                }]
-            },
-            tooltip: {
-                formatter: function() {
-                    return '<b>'+ this.series.name +'</b><br/>'+
-                    'Time: ' + Highcharts.dateFormat('%H:%M:%S', this.x) +'<br/>'+
-                    'Temp: ' + Highcharts.numberFormat(this.y, 2) + '°C';
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            exporting: {
-                enabled: false
-            },
-            series: [
-                {
-                    name: 'HLT',
-                    data: []
-                },
-                {
-                    name: 'MLT',
-                    data: []
-                },
-                {
-                    name: 'BLT',
-                    data: []
-                }
-            ]
-        });
-    }
-};
-
-var preFetchData = {
-    init: function() {
         var $el = $('#graph'),
             $data = $el.data();
 
+        var $hltLogs = [],
+            $mltLogs = [],
+            $bltLogs = [];
+
         $.ajax({
             url: $data.url,
+            async: false,
             success: function(response) {
                 $(response.data).each(function (key, log) {
-                    var $line = -1;
+                    var $value = parseFloat(log.value);
+
                     switch (log.topic) {
-                        case $data.topicHlt:
-                            $line = 0;
+                        case $data.topicHltCurr:
+                            $hltLogs[$hltLogs.length] = [log.time, $value];
                             break;
-                        case $data.topicMlt:
-                            $line = 1;
+                        case $data.topicMltCurr:
+                            $mltLogs[$mltLogs.length] = [log.time, $value];
                             break;
-                        case $data.topicBlt:
-                            $line = 2;
+                        case $data.topicBltCurr:
+                            $bltLogs[$bltLogs.length] = [log.time, $value];
                             break;
                         default:
                             break;
                     }
+                });
 
-                    if ($line >= 0) {
-                        $el.highcharts().series[$line].addPoint([log.time, parseFloat(log.value)]);
-                    }
+                $el.highcharts('StockChart', {
+                    chart: {
+                        type: 'spline',
+                        marginRight: 10
+                    },
+                    rangeSelector: {
+                        inputEnabled: false,
+                        buttons: [
+                            {
+                                type: 'minute',
+                                count: 5,
+                                text: '5m'
+                            },
+                            {
+                                type: 'minute',
+                                count: 30,
+                                text: '30m'
+                            },
+                            {
+                                type: 'hour',
+                                count: 1,
+                                text: '1h'
+                            },
+                            {
+                                type: 'all',
+                                text: 'all'
+                            }
+                        ]
+                    },
+                    title: {
+                        text: 'Live temperatures'
+                    },
+                    xAxis: {
+                        type: 'time'
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Temperature °C'
+                        },
+                        plotLines: [{
+                            value: 64,
+                            dashStyle: 'shortdash',
+                            width: 2,
+                            color: '#088A68',
+                            label: {
+                                text: 'Alpha amylase'
+                            }
+                        }, {
+                            value: 72,
+                            dashStyle: 'shortdash',
+                            width: 2,
+                            color: '#088A68',
+                            label: {
+                                text: 'Beta amylase'
+                            }
+                        }, {
+                            value: 78,
+                            dashStyle: 'shortdash',
+                            width: 2,
+                            color: '#808080',
+                            label: {
+                                text: 'Stop'
+                            }
+                        }]
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return 'Time: ' + Highcharts.dateFormat('%H:%M:%S', this.x) +'<br/>'+
+                            'Temp: ' + Highcharts.numberFormat(this.y, 2) + '°C';
+                        }
+                    },
+                    legend: {
+                        enabled: true
+                    },
+                    exporting: {
+                        enabled: false
+                    },
+                    global: {
+                        useUTC: false
+                    },
+                    series: [
+                        {
+                            name: 'HLT',
+                            data: $hltLogs
+                        },
+                        {
+                            name: 'MLT',
+                            data: $mltLogs
+                        },
+                        {
+                            name: 'BLT',
+                            data: $bltLogs
+                        }
+                    ]
                 });
             }
         });
@@ -102,8 +138,7 @@ var client = {
     init: function () {
         var $el = $('#graph'),
             $data = $el.data(),
-            $ws = new SockJS("http://" + $data.rabbitMqHost + ":15674/stomp"),
-            $client = Stomp.over($ws);
+            $client = Stomp.over(new SockJS("http://" + $data.rabbitMqHost + ":15674/stomp"));
 
         // RabbitMQ SockJS does not support heartbeats so disable them
         $client.heartbeat.incoming = 0;
@@ -112,28 +147,44 @@ var client = {
         $client.debug = this.onDebug;
 
         // Make sure the user has limited access rights
-        $client.connect("guest", "guest", this.onConnect, this.onError, "/");
-    },
+        $client.connect("guest", "guest", onConnect, this.onError, "/");
 
-    onConnect: function() {
-        // HLT
-        $client.subscribe("/topic/" + $data.topicHlt, function (d) {
-            this.addToGraph($el, 0, parseFloat(d.body));
-            this.updateTemperature('hlt', parseFloat(d.body))
-        });
-        // MLT
-        $client.subscribe("/topic/" + $data.topicMlt, function (d) {
-            this.addToGraph($el, 1, parseFloat(d.body));
-            this.updateTemperature('mlt', parseFloat(d.body))
-        });
-        $client.subscribe("/topic/" + $data.topicMlt, function (d) {
-            this.updateTemperature('mlt', parseFloat(d.body), 'set')
-        });
-        // BLT
-        $client.subscribe("/topic/" + $data.topicBlt, function (d) {
-            this.addToGraph($el, 2, parseFloat(d.body));
-            this.updateTemperature('blt', parseFloat(d.body))
-        });
+        function onConnect() {
+            $data = $el.data();
+
+            // HLT
+            $client.subscribe("/topic/" + $data.topicHltCurr, function (d) {
+                var $value = parseFloat(d.body);
+                addToGraph($el, 0, $value);
+                updateTemperature('hlt', $value);
+            });
+            // MLT
+            $client.subscribe("/topic/" + $data.topicMltCurr, function (d) {
+                var $value = parseFloat(d.body);
+                addToGraph($el, 1, $value);
+                updateTemperature('mlt', $value);
+            });
+            $client.subscribe("/topic/" + $data.topicMltSet, function (d) {
+                var $value = parseFloat(d.body);
+                updateTemperature('mlt', $value, 'set');
+            });
+            // BLT
+            $client.subscribe("/topic/" + $data.topicBltCurr, function (d) {
+                var $value = parseFloat(d.body);
+                addToGraph($el, 2, $value);
+                updateTemperature('blt', $value);
+            });
+        }
+
+        function addToGraph($el, $sensor, $temperature) {
+            var date = new Date();
+            $el.highcharts().series[$sensor].addPoint([date.getTime(), $temperature]);
+        }
+
+        function updateTemperature($sensor, $temperature, $action) {
+            $action = typeof $action !== 'undefined' ? $action : 'curr';
+            $('#temp-' + $action + '-' + $sensor).text($temperature + ' °C');
+        }
     },
 
     onError: function(e) {
@@ -141,16 +192,6 @@ var client = {
     },
 
     onDebug: function(m) {
-        console.log("STOMP DEBUG", m);
-    },
-
-    addToGraph: function (el, sensor, temperature) {
-        var date = new Date();
-        el.highcharts().series[sensor].addPoint([date.getTime(), temperature]);
-    },
-
-    updateTemperature: function (sensor, temperature, action) {
-        action = typeof action !== 'undefined' ? action : 'curr';
-        $('#temp-' + action + '-' + sensor).text(temperature + ' °C');
+        //console.log("STOMP DEBUG", m);
     }
 };
