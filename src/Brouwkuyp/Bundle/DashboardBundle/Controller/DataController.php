@@ -19,13 +19,14 @@ class DataController extends Controller
         $data = [];
         /** @var Log $log */
         foreach ($logs as $key => $log) {
-            $data[$log->getTopic()][$log->getIdentifier()] = [
-                'time' => $log->getCreatedAt()->format('H:i:s'),
+            $data[] = [
+                'topic' => $log->getTopic(),
+                'time' => $log->getCreatedAt()->format('U') * 1000,
                 'value' => $log->getValue()
             ];
         }
 
-        return JsonResponse::create($data);
+        return JsonResponse::create(['data' => $data]);
     }
 
     /**

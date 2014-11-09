@@ -2,7 +2,13 @@
 
 {% block content %}
     <h1>Brouwkuyp dashboard</h1>
-    <div id="graph" data-url="{{ path('logs_current_recipe') }}"></div>
+    <div id="graph"
+         data-url="{{ path('logs_current_recipe') }}"
+         data-rabbit-mq-host="{{ rabbit_mq_host }}"
+         data-topic-hlt="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_HLT_CURR_TEMP') }}"
+         data-topic-mlt="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_MLT_CURR_TEMP') }}"
+         data-topic-blt="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_BLT_CURR_TEMP') }}"
+            ></div>
     <div class="row">
         <div class="col-md-2">
             <h3><small>HLT:</small></h3><h1 class="text-right"><span id="temp-curr-hlt"></span></h1>
