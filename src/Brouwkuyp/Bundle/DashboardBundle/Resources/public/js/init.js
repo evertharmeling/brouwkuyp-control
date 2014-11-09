@@ -35,10 +35,6 @@ var chart = {
                 });
 
                 $el.highcharts('StockChart', {
-                    chart: {
-                        type: 'spline',
-                        marginRight: 10
-                    },
                     rangeSelector: {
                         inputEnabled: false,
                         buttons: [
@@ -64,14 +60,14 @@ var chart = {
                         ]
                     },
                     title: {
-                        text: 'Live temperatures'
+                        text: 'Live temperaturen'
                     },
                     xAxis: {
                         type: 'time'
                     },
                     yAxis: {
                         title: {
-                            text: 'Temperature °C'
+                            text: 'Temperatuur °C'
                         },
                         plotLines: [{
                             value: 64,
@@ -101,12 +97,12 @@ var chart = {
                     },
                     tooltip: {
                         formatter: function() {
-                            return 'Time: ' + Highcharts.dateFormat('%H:%M:%S', this.x) +'<br/>'+
+                            return 'Tijd: ' + Highcharts.dateFormat('%H:%M:%S', this.x) +'<br/>'+
                             'Temp: ' + Highcharts.numberFormat(this.y, 2) + '°C';
                         }
                     },
                     legend: {
-                        enabled: true
+                        enabled: false
                     },
                     exporting: {
                         enabled: false

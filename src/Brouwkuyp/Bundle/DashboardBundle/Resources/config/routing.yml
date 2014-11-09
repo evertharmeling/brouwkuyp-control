@@ -2,6 +2,14 @@ home:
     path:       /
     defaults:   { _controller: BrouwkuypDashboardBundle:Main:index }
 
+recipe_index:
+    path:       /recepten
+    defaults:   { _controller: BrouwkuypDashboardBundle:Recipe:index }
+
+brewing_index:
+    path:       /brouwsels
+    defaults:   { _controller: BrouwkuypDashboardBundle:Brewing:index }
+
 logs_current_recipe:
     path:       /data/logs/current
     defaults:   { _controller: BrouwkuypDashboardBundle:Data:currentRecipeLog }
