@@ -20,15 +20,6 @@ class ControlRecipe implements ExecutableInterface
     protected $procedure;
 
     /**
-<<<<<<< HEAD
-=======
-     * Constructs
-     */
-    /*
-     * public function __construct($id = null) { if (!is_null($id)) { $this->id = $id; } }
-     */
-    
-    /**
      * Set name
      *
      * @param string $name            
@@ -52,16 +43,15 @@ class ControlRecipe implements ExecutableInterface
     }
 
     /**
+     *
      * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::start()
      * @throws \Exception
      */
     public function start()
     {
-        echo "ControlRecipe::start 1\n";
-        if (! is_null($this->procedure)) {
-            echo "ControlRecipe::start 2\n";
-            if (! $this->procedure->isFinished()) {
-                echo "ControlRecipe::start 3\n";
+        echo " ControlRecipe::start 1\n";
+        if (!is_null($this->procedure)) {
+            if (!$this->procedure->isFinished()) {
                 $this->procedure->start();
             } else {
                 throw new \Exception('Procedure already finished');
@@ -72,14 +62,15 @@ class ControlRecipe implements ExecutableInterface
     }
 
     /**
+     *
      * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::execute()
      * @throws \Exception
      */
     public function execute()
     {
         echo "ControlRecipe::execute \n";
-        if (! is_null($this->procedure)) {
-            if (! $this->procedure->isFinished()) {
+        if (!is_null($this->procedure)) {
+            if (!$this->procedure->isFinished()) {
                 $this->procedure->execute();
             } else {
                 // procedure finished!
@@ -90,6 +81,7 @@ class ControlRecipe implements ExecutableInterface
     }
 
     /**
+     *
      * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isStarted()
      */
     public function isStarted()
@@ -97,11 +89,12 @@ class ControlRecipe implements ExecutableInterface
         if (!is_null($this->getProcedure())) {
             return $this->getProcedure()->isStarted();
         }
-
+        
         return false;
     }
 
     /**
+     *
      * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isFinished()
      */
     public function isFinished()
@@ -109,20 +102,20 @@ class ControlRecipe implements ExecutableInterface
         if (!is_null($this->procedure)) {
             return $this->procedure->isFinished();
         }
-
+        
         return false;
     }
 
     /**
      * Set procedure
      *
-     * @param Procedure $procedure
+     * @param Procedure $procedure            
      * @return ControlRecipe
      */
     public function setProcedure(Procedure $procedure = null)
     {
         $this->procedure = $procedure;
-
+        
         return $this;
     }
 

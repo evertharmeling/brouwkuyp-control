@@ -122,7 +122,7 @@ class Operation implements ExecutableInterface
      */
     public function start()
     {
-    
+        echo "    Operation::start: '".$this->name."'\n";
     }
     
     /**
@@ -130,7 +130,7 @@ class Operation implements ExecutableInterface
      */
     public function execute()
     {
-    
+        echo "    Operation::execute: '".$this->name."'\n";
     }
     
     /**

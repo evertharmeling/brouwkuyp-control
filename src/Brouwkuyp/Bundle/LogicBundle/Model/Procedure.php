@@ -136,8 +136,7 @@ class Procedure implements ExecutableInterface
      */
     public function start()
     {
-        echo "Procedure::start \n";
-        echo "unitProcedure count: ".$this->unitProcedures->count()." \n";
+        echo "  Procedure::start \n";
              
         if (! $this->started) {
             // Set flag that we are started
@@ -156,7 +155,7 @@ class Procedure implements ExecutableInterface
      */
     public function execute()
     {
-        echo "Procedure::execute \n";
+        echo "  Procedure::execute \n";
         
         if ($this->isStarted()) {
             if (!$this->getCurrentUnitProcedure()) {
@@ -205,7 +204,6 @@ class Procedure implements ExecutableInterface
      */
     public function isFinished()
     {
-        echo "Procedure::isFinished \n";
         return $this->finished;
     }
 

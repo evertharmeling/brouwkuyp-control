@@ -21,6 +21,16 @@ class Phase implements ExecutableInterface
     protected $name;
 
     /**
+     * @var string
+     */
+    protected $type;
+    
+    /**
+     * @var integer
+     */
+    protected $value;
+    
+    /**
      * @var Operation
      */
     protected $operation;
@@ -46,6 +56,26 @@ class Phase implements ExecutableInterface
     public function getName()
     {
         return $this->name;
+    }
+    
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+    
+    /**
+     * Get value
+     *
+     * @return integer
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 
     /**

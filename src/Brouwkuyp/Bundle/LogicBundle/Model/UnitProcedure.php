@@ -167,6 +167,16 @@ class UnitProcedure implements ExecutableInterface
      */
     public function start()
     {
+        echo "   UnitProcedure::start, unit: ".$this->unit->getName()."\n";
+        if (! $this->started) {
+            // Set flag that we are started
+            $this->started = true;
+        
+            // Start first UnitProcedure
+            if ($this->operations->count()) {
+                $this->operations->first()->start();
+            }
+        }
     }
 
     /**
@@ -174,6 +184,33 @@ class UnitProcedure implements ExecutableInterface
      */
     public function execute()
     {
+        echo "   UnitProcedure::execute, unit: ".$this->unit->getName()."\n";
+        if ($this->started) {
+            if (!$this->getCurrentOperation()) {
+                $this->finished = true;
+                return;
+            }
+        
+            // Start the next unit procedure?
+            if ($this->getCurrentOperation()->isFinished()) {
+                // Go to next unit procedure if possible
+                if ($this->operations->next()) {
+                    $this->getCurrentOperation()->start();
+        
+                    // Execute
+                    if ($this->getCurrentOperation()->isStarted()) {
+                        // Perform unit procedure
+                        $this->$this->getCurrentOperation()->execute();
+                    }
+                } else {
+                    // If last unit procedure is finished
+                    // set the finished flag
+                    $this->finished = true;
+                }
+            }
+        } else {
+            throw new \Exception('UnitProcedure not started');
+        }
     }
 
     /**
@@ -190,5 +227,10 @@ class UnitProcedure implements ExecutableInterface
     public function isFinished()
     {
         return $this->finished;
+    }
+    
+    public function getCurrentOperation()
+    {
+        return $this->operations->current();
     }
 }
