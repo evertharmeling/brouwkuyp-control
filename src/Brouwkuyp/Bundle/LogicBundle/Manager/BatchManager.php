@@ -30,6 +30,7 @@ class BatchManager
      */
     public function start()
     {
+        echo "BatchManager::start \n";
         $this->recipe->start();
     }
     
@@ -38,6 +39,7 @@ class BatchManager
      */
     public function execute()
     {
+        echo "BatchManager::execute \n";
         $this->recipe->execute();
     }
 }

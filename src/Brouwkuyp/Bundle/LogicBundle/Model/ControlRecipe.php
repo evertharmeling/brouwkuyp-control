@@ -20,6 +20,15 @@ class ControlRecipe implements ExecutableInterface
     protected $procedure;
 
     /**
+<<<<<<< HEAD
+=======
+     * Constructs
+     */
+    /*
+     * public function __construct($id = null) { if (!is_null($id)) { $this->id = $id; } }
+     */
+    
+    /**
      * Set name
      *
      * @param string $name            
@@ -48,9 +57,12 @@ class ControlRecipe implements ExecutableInterface
      */
     public function start()
     {
-        if (!is_null($this->getProcedure())) {
-            if (!$this->getProcedure()->isFinished()) {
-                $this->getProcedure()->start();
+        echo "ControlRecipe::start 1\n";
+        if (! is_null($this->procedure)) {
+            echo "ControlRecipe::start 2\n";
+            if (! $this->procedure->isFinished()) {
+                echo "ControlRecipe::start 3\n";
+                $this->procedure->start();
             } else {
                 throw new \Exception('Procedure already finished');
             }
@@ -65,9 +77,10 @@ class ControlRecipe implements ExecutableInterface
      */
     public function execute()
     {
-        if (!is_null($this->getProcedure())) {
-            if (!$this->getProcedure()->isFinished()) {
-                $this->getProcedure()->execute();
+        echo "ControlRecipe::execute \n";
+        if (! is_null($this->procedure)) {
+            if (! $this->procedure->isFinished()) {
+                $this->procedure->execute();
             } else {
                 // procedure finished!
             }
