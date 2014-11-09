@@ -9,9 +9,6 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Log:
         createdAt:
             column:     created_at
             type:       brouwkuyp_datetime
-            gedmo:
-                timestampable:
-                    on:     create
         topic:
             type:       string
             length:     120

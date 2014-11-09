@@ -108,6 +108,9 @@ class Manager
         $this->logger = $logger;
     }
 
+    /**
+     * @return LoggerInterface|NullLogger
+     */
     public function getLogger()
     {
         if ($this->logger) {
