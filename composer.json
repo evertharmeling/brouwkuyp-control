@@ -21,12 +21,14 @@
         "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~3.0",
         "sensio/framework-extra-bundle": "~3.0",
+        "sonata-project/intl-bundle": "2.2.*",
         "incenteev/composer-parameter-handler": "~2.0",
         "videlalvaro/php-amqplib": "2.4.*",
         "stof/doctrine-extensions-bundle": "1.1.*",
         "braincrafted/bootstrap-bundle": "2.1.*",
         "twbs/bootstrap": "~3.2",
-        "jquery/jquery": "1.11.*"
+        "jquery/jquery": "1.11.*",
+        "knplabs/knp-menu-bundle": "~2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
@@ -60,6 +62,7 @@
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
+        "symfony-assets-install": "relative",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
         },

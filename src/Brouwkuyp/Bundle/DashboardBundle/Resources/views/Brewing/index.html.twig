@@ -1,0 +1,26 @@
+{% extends 'BrouwkuypDashboardBundle::base.html.twig' %}
+
+{% block content %}
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <td>Datum</td>
+            <td>Naam</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for recipe in recipes %}
+        <tr>
+            <td>{{ recipe.createdAt|format_date('EE dd-MM-yyyy') }}</td>
+            <td>{{ recipe.name }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="2">Nog geen brouwsels gemaakt</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

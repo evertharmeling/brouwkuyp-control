@@ -17,11 +17,6 @@ To consume messages sent by the Arduino, be sure to have the consume command run
 
 ## Development commands
 
-`app/console assets:install --symlink --relative`
-`app/console assetic:dump`  // double check if previous command already gave the the correct styling...
-
-`app/console assetic:dump`
-
 Get up to date:
 
 `git pull --rebase upstream develop`
@@ -34,9 +29,14 @@ Update database, view changes
 
 `app/console doc:sch:update --dump-sql`
 
-Update database
+Updated orm files, generate doctrine migration file
 
-`app/console doc:sch:update --force`
+`app/console doc:mig:diff`
+
+Double check file in `app/DoctrineMigrations`
+Perform doctrine migration
+
+`app/console doc:mig:mig`
 
 Commit changes
 
