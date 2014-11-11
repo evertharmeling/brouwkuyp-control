@@ -68,12 +68,13 @@ class ControlRecipe implements ExecutableInterface
      */
     public function execute()
     {
-        echo "ControlRecipe::execute \n";
+        echo " ControlRecipe::execute \n";
         if (!is_null($this->procedure)) {
             if (!$this->procedure->isFinished()) {
                 $this->procedure->execute();
             } else {
                 // procedure finished!
+                // TODO
             }
         } else {
             throw new \Exception('No procedure for this Recipe');

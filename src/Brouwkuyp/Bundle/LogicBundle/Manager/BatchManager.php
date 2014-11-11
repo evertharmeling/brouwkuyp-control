@@ -41,7 +41,7 @@ class BatchManager
      */
     public function execute()
     {
-        echo "BatchManager::execute \n";
+        echo "\nBatchManager::execute \n";
         $this->recipe->execute();
     }
     

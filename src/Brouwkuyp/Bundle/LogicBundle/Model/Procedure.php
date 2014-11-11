@@ -168,17 +168,16 @@ class Procedure implements ExecutableInterface
                 // Go to next unit procedure if possible
                 if ($this->getUnitProcedures()->next()) {
                     $this->getCurrentUnitProcedure()->start();
-
-                    // Execute
-                    if ($this->getCurrentUnitProcedure()->isStarted()) {
-                        // Perform unit procedure
-                        $this->$this->getCurrentUnitProcedure()->execute();
-                    }
                 } else {
                     // If last unit procedure is finished
                     // set the finished flag
                     $this->finished = true;
                 }
+            }
+            // Execute
+            if (!$this->finished && $this->getCurrentUnitProcedure()->isStarted()) {
+                // Perform unit procedure
+                $this->getCurrentUnitProcedure()->execute();
             }
         } else {
             throw new \Exception('Procedure not started');

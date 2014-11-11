@@ -22,18 +22,21 @@ class UnitProcedure implements ExecutableInterface
      * @var string
      */
     protected $name;
-
+    
     /**
+     *
      * @var ArrayCollection
      */
     protected $operations;
-
+    
     /**
+     *
      * @var Procedure
      */
     protected $procedure;
-
+    
     /**
+     *
      * @var Unit
      */
     protected $unit;
@@ -86,20 +89,20 @@ class UnitProcedure implements ExecutableInterface
     /**
      * Add operation
      *
-     * @param Operation $operation
+     * @param Operation $operation            
      * @return UnitProcedure
      */
     public function addOperation(Operation $operation)
     {
-        $this->operations[] = $operation;
-
+        $this->operations [] = $operation;
+        
         return $this;
     }
 
     /**
      * Remove operation
      *
-     * @param Operation $operation
+     * @param Operation $operation            
      */
     public function removeOperation(Operation $operation)
     {
@@ -119,13 +122,13 @@ class UnitProcedure implements ExecutableInterface
     /**
      * Set procedure
      *
-     * @param Procedure $procedure
+     * @param Procedure $procedure            
      * @return UnitProcedure
      */
     public function setProcedure(Procedure $procedure = null)
     {
         $this->procedure = $procedure;
-
+        
         return $this;
     }
 
@@ -142,13 +145,13 @@ class UnitProcedure implements ExecutableInterface
     /**
      * Set unit
      *
-     * @param Unit $unit
+     * @param Unit $unit            
      * @return UnitProcedure
      */
     public function setUnit(Unit $unit = null)
     {
         $this->unit = $unit;
-
+        
         return $this;
     }
 
@@ -163,16 +166,17 @@ class UnitProcedure implements ExecutableInterface
     }
 
     /**
+     *
      * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::start()
      */
     public function start()
     {
-        echo "   UnitProcedure::start, unit: ".$this->unit->getName()."\n";
-        if (! $this->started) {
+        echo "   UnitProcedure::start, unit: " . $this->unit->getName() . "\n";
+        if (!$this->started) {
             // Set flag that we are started
             $this->started = true;
-        
-            // Start first UnitProcedure
+            
+            // Start first Operation
             if ($this->operations->count()) {
                 $this->operations->first()->start();
             }
@@ -180,33 +184,33 @@ class UnitProcedure implements ExecutableInterface
     }
 
     /**
+     *
      * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::execute()
      */
     public function execute()
     {
-        echo "   UnitProcedure::execute, unit: ".$this->unit->getName()."\n";
+        echo "   UnitProcedure::execute, unit: " . $this->unit->getName() . "\n";
         if ($this->started) {
             if (!$this->getCurrentOperation()) {
                 $this->finished = true;
                 return;
             }
-        
-            // Start the next unit procedure?
+            
+            // Start the next Operation?
             if ($this->getCurrentOperation()->isFinished()) {
                 // Go to next unit procedure if possible
                 if ($this->operations->next()) {
                     $this->getCurrentOperation()->start();
-        
-                    // Execute
-                    if ($this->getCurrentOperation()->isStarted()) {
-                        // Perform unit procedure
-                        $this->$this->getCurrentOperation()->execute();
-                    }
                 } else {
-                    // If last unit procedure is finished
+                    // If last operation is finished
                     // set the finished flag
                     $this->finished = true;
                 }
+            }
+            // Execute
+            if (!$this->finished && $this->getCurrentOperation()->isStarted()) {
+                // Perform Operation
+                $this->getCurrentOperation()->execute();
             }
         } else {
             throw new \Exception('UnitProcedure not started');
@@ -214,6 +218,7 @@ class UnitProcedure implements ExecutableInterface
     }
 
     /**
+     *
      * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isStarted()
      */
     public function isStarted()
@@ -222,13 +227,14 @@ class UnitProcedure implements ExecutableInterface
     }
 
     /**
+     *
      * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isFinished()
      */
     public function isFinished()
     {
         return $this->finished;
     }
-    
+
     public function getCurrentOperation()
     {
         return $this->operations->current();
