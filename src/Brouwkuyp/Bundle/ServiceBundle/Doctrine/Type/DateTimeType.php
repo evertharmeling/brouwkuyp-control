@@ -12,8 +12,8 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 class DateTimeType extends BaseDateTimeType
 {
     /**
-     * @param mixed $value
-     * @param AbstractPlatform $platform
+     * @param  mixed                                    $value
+     * @param  AbstractPlatform                         $platform
      * @return \DateTime|DateTime
      * @throws \Doctrine\DBAL\Types\ConversionException
      */

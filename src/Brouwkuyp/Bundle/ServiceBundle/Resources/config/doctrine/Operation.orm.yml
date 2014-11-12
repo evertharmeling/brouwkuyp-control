@@ -3,14 +3,14 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Operation:
     table: operation
     repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\OperationRepository
 
-    id: 
-        id: 
+    id:
+        id:
             type:           integer
             generator:
                 strategy:   AUTO
 
-    fields: 
-        name: 
+    fields:
+        name:
             type:       string
             length:     120
 

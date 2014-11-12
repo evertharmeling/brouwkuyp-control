@@ -17,7 +17,7 @@ class Operation extends BaseOperation
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {

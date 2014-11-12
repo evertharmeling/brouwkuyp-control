@@ -9,7 +9,7 @@ use Brouwkuyp\Bundle\LogicBundle\Model\UnitProcedure;
 
 /**
  * BatchManager
- * 
+ *
  * Control the chosen recipe and log all relevant information
  * during the batch.
  */
@@ -37,7 +37,7 @@ class BatchManager
         $this->showBatch();
         $this->recipe->start();
     }
-    
+
     /**
      * Executes current active recipe
      */
@@ -46,7 +46,7 @@ class BatchManager
         echo "\nBatchManager::execute \n";
         $this->recipe->execute();
     }
-    
+
     /**
      * Outputs batch and recipe information
      */
@@ -57,18 +57,15 @@ class BatchManager
         echo sprintf(" Procedure: '%s'", $this->recipe->getProcedure()->getName()) . PHP_EOL;
         echo "  UnitProcedures: " . PHP_EOL;
         /** @var UnitProcedure $up */
-        foreach ($this->recipe->getProcedure()->getUnitProcedures() as $up)
-        {
+        foreach ($this->recipe->getProcedure()->getUnitProcedures() as $up) {
             echo sprintf("   UP: '%s'", $up->getName()) . PHP_EOL;
             echo sprintf("    Unit: '%s'", $up->getUnit()->getName()) . PHP_EOL;
             echo "    Operations: " . PHP_EOL;
             /** @var Operation $op */
-            foreach ($up->getOperations() as $op)
-            {
+            foreach ($up->getOperations() as $op) {
                 echo sprintf("     OP: '%s'", $op->getName()) . PHP_EOL;
                 /** @var Phase $phase */
-                foreach ($op->getPhases() as $phase)
-                {
+                foreach ($op->getPhases() as $phase) {
                     echo sprintf("      Phase:  '%s'", $phase->getName()) . PHP_EOL;
                     echo sprintf("       type:  '%s'", $phase->getType()) . PHP_EOL;
                     echo sprintf("       value: '%s'", $phase->getValue()) . PHP_EOL;

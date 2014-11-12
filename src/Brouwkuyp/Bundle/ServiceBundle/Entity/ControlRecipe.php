@@ -27,7 +27,7 @@ class ControlRecipe extends BaseControlRecipe
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -37,7 +37,7 @@ class ControlRecipe extends BaseControlRecipe
     /**
      * Set version
      *
-     * @param integer $version
+     * @param  integer       $version
      * @return ControlRecipe
      */
     public function setVersion($version)
@@ -50,7 +50,7 @@ class ControlRecipe extends BaseControlRecipe
     /**
      * Get version
      *
-     * @return integer 
+     * @return integer
      */
     public function getVersion()
     {
@@ -60,7 +60,7 @@ class ControlRecipe extends BaseControlRecipe
     /**
      * Set remarks
      *
-     * @param string $remarks
+     * @param  string        $remarks
      * @return ControlRecipe
      */
     public function setRemarks($remarks)
@@ -73,7 +73,7 @@ class ControlRecipe extends BaseControlRecipe
     /**
      * Get remarks
      *
-     * @return string 
+     * @return string
      */
     public function getRemarks()
     {

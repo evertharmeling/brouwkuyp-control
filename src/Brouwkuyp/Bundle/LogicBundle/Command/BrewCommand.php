@@ -25,8 +25,8 @@ class BrewCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param  InputInterface  $input
+     * @param  OutputInterface $output
      * @return int|null|void
      * @throws \Exception
      */
@@ -38,24 +38,24 @@ class BrewCommand extends ContainerAwareCommand
         $output->writeln('Creating RecipeControlManager');
         /** @var RecipeControlManager  $rcm */
         $rcm = $this->getContainer()->get('brouwkuyp_logic.manager.recipe_control');
-        
+
         $output->writeln('Loading recipe: ' . $input->getArgument('recipe'));
         /** @var BatchManager $bm */
         // Eventually change the argument to optional to be able to resume an active recipe
         $bm = $rcm->load($input->getArgument('recipe'));
-        
+
         $output->writeln('Starting batch');
         $bm->start();
-        
+
         $output->writeln('<info>Start loop</info>');
         $output->writeln('');
-        while ( $loopCount > 0 ) {
+        while ($loopCount > 0) {
             $output->writeln('Run: ' . $loopCount);
             $bm->execute();
             usleep(1000000);
             $loopCount --;
         }
-        
+
         $output->writeln('Done with recipe');
     }
 }

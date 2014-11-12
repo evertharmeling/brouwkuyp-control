@@ -49,7 +49,7 @@ class Phase implements ExecutableInterface
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string $name
      * @return Phase
      */
     public function setName($name)
@@ -92,7 +92,7 @@ class Phase implements ExecutableInterface
     /**
      * Set operation
      *
-     * @param Operation $operation
+     * @param  Operation $operation
      * @return Phase
      */
     public function setOperation(Operation $operation = null)
@@ -134,7 +134,7 @@ class Phase implements ExecutableInterface
             throw new \Exception('Phase not started');
         }
 
-        if (!$this->finished){
+        if (!$this->finished) {
             $this->checkAndUpdateProgress();
             $this->performTask();
         }

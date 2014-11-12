@@ -51,7 +51,7 @@ class ConsumeCommand extends ContainerAwareCommand
 
             $output->writeln(
                     sprintf("<info>Message received: </info>%s: %s : %s",
-                             new \DateTime())->format('H:i:s'), 
+                             new \DateTime())->format('H:i:s'),
                     $msg->delivery_info['routing_key'], $msg->body);
         };
 

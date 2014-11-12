@@ -18,7 +18,7 @@ class Unit extends BaseUnit
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {

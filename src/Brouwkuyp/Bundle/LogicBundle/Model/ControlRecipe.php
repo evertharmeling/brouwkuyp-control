@@ -12,7 +12,7 @@ class ControlRecipe implements ExecutableInterface
      * @var string
      */
     protected $name;
-    
+
     /**
      *
      * @var Procedure
@@ -22,13 +22,13 @@ class ControlRecipe implements ExecutableInterface
     /**
      * Set name
      *
-     * @param string $name            
+     * @param  string        $name
      * @return ControlRecipe
      */
     public function setName($name)
     {
         $this->name = $name;
-        
+
         return $this;
     }
 
@@ -90,7 +90,7 @@ class ControlRecipe implements ExecutableInterface
         if (!is_null($this->getProcedure())) {
             return $this->getProcedure()->isStarted();
         }
-        
+
         return false;
     }
 
@@ -103,20 +103,20 @@ class ControlRecipe implements ExecutableInterface
         if (!is_null($this->procedure)) {
             return $this->procedure->isFinished();
         }
-        
+
         return false;
     }
 
     /**
      * Set procedure
      *
-     * @param Procedure $procedure            
+     * @param  Procedure     $procedure
      * @return ControlRecipe
      */
     public function setProcedure(Procedure $procedure = null)
     {
         $this->procedure = $procedure;
-        
+
         return $this;
     }
 

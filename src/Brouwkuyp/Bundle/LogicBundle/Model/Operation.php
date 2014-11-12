@@ -23,19 +23,19 @@ class Operation implements ExecutableInterface
      * @var string
      */
     protected $name;
-    
+
     /**
      *
      * @var ArrayCollection
      */
     protected $phases;
-    
+
     /**
      *
      * @var UnitProcedure
      */
     protected $unitProcedure;
-    
+
     /**
      * Constructor
      */
@@ -47,13 +47,13 @@ class Operation implements ExecutableInterface
     /**
      * Set name
      *
-     * @param string $name            
+     * @param  string    $name
      * @return Operation
      */
     public function setName($name)
     {
         $this->name = $name;
-        
+
         return $this;
     }
 
@@ -70,20 +70,20 @@ class Operation implements ExecutableInterface
     /**
      * Add phase
      *
-     * @param Phase $phase            
+     * @param  Phase     $phase
      * @return Operation
      */
     public function addPhase(Phase $phase)
     {
         $this->phases [] = $phase;
-        
+
         return $this;
     }
 
     /**
      * Remove phase
      *
-     * @param Phase $phase            
+     * @param Phase $phase
      */
     public function removePhase(Phase $phase)
     {
@@ -103,13 +103,13 @@ class Operation implements ExecutableInterface
     /**
      * Set UnitProcedure
      *
-     * @param UnitProcedure $unitProcedure            
+     * @param  UnitProcedure $unitProcedure
      * @return Operation
      */
     public function setUnitProcedure(UnitProcedure $unitProcedure = null)
     {
         $this->unitProcedure = $unitProcedure;
-        
+
         return $this;
     }
 
@@ -132,7 +132,7 @@ class Operation implements ExecutableInterface
         if (!$this->started) {
             // Set flag that we are started
             $this->started = true;
-            
+
             // Start first UnitProcedure
             if ($this->phases->count()) {
                 $this->phases->first()->start();
@@ -152,6 +152,7 @@ class Operation implements ExecutableInterface
 
         if (!$this->phases->current()) {
             $this->finished = true;
+
             return;
         }
 
@@ -160,7 +161,6 @@ class Operation implements ExecutableInterface
             // Go to next phase if possible
             if ($this->phases->next()) {
                 $this->phases->current()->start();
-
 
             } else {
                 // If last phase is finished

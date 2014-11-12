@@ -26,7 +26,7 @@ class Unit
     {
         $this->unitProcedures = new ArrayCollection();
     }
-    
+
     /**
      * Gets the name of the unit
      *
@@ -36,7 +36,7 @@ class Unit
     {
         return $this->name;
     }
-    
+
     /**
      * Sets the name of the unit
      *
@@ -50,7 +50,7 @@ class Unit
     /**
      * Add UnitProcedure
      *
-     * @param UnitProcedure $unitProcedure
+     * @param  UnitProcedure $unitProcedure
      * @return Procedure
      */
     public function addUnitprocedure(UnitProcedure $unitProcedure)

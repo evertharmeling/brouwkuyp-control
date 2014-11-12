@@ -11,7 +11,7 @@ interface ExecutableInterface
      * Starts stage
      */
     public function start();
-    
+
     /**
      * Executes stage
      */
@@ -23,7 +23,7 @@ interface ExecutableInterface
      * @return bool
      */
     public function isStarted();
-    
+
     /**
      * Returns finished state
      *

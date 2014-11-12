@@ -4,9 +4,6 @@ namespace Brouwkuyp\Bundle\LogicBundle\Manager;
 
 use Brouwkuyp\Bundle\LogicBundle\Model\ControlRecipe;
 use Brouwkuyp\Bundle\ServiceBundle\Repository\ControlRecipeRepository;
-use Doctrine\ORM\EntityManager;
-use Brouwkuyp\Bundle\LogicBundle\Model\Procedure;
-use Doctrine\ORM\EntityRepository;
 
 /**
  * RecipeControlManager
@@ -21,7 +18,7 @@ class RecipeControlManager
 
     /**
      *
-     * @param ControlRecipeRepository $controlRecipeRepository            
+     * @param ControlRecipeRepository $controlRecipeRepository
      */
     public function __construct(ControlRecipeRepository $controlRecipeRepository)
     {
@@ -41,7 +38,7 @@ class RecipeControlManager
         echo sprintf("RecipeControlManager::load id: '%s'", $id) . PHP_EOL;
         /** @var ControlRecipe $recipe */
         $recipe = $this->controlRecipeRepository->find($id);
-        
+
         if (is_null($recipe)) {
             throw new \Exception("Recipe could not be found or loaded");
         }

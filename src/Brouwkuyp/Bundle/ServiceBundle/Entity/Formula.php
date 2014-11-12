@@ -22,11 +22,10 @@ class Formula
      */
     private $controlRecipe;
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -36,7 +35,7 @@ class Formula
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string  $name
      * @return Formula
      */
     public function setName($name)
@@ -49,7 +48,7 @@ class Formula
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -59,7 +58,7 @@ class Formula
     /**
      * Set ControlRecipe
      *
-     * @param ControlRecipe $controlRecipe
+     * @param  ControlRecipe $controlRecipe
      * @return Formula
      */
     public function setControlRecipe(ControlRecipe $controlRecipe = null)

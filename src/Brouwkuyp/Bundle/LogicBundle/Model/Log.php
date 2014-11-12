@@ -41,7 +41,7 @@ class Log
     /**
      * @return string
      */
-    function __toString()
+    public function __toString()
     {
         return (string) sha1($this->getCreatedAt() . $this->getTopic());
     }
