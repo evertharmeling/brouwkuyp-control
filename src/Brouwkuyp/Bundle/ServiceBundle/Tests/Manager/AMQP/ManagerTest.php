@@ -1,6 +1,6 @@
 <?php
 
-namespace Brouwkuyp\Bundle\ServiceBundle\Tests\Manager;
+namespace Brouwkuyp\Bundle\ServiceBundle\Tests\Manager\AMQP;
 
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
