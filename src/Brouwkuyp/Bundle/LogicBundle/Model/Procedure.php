@@ -136,12 +136,11 @@ class Procedure implements ExecutableInterface
      */
     public function start()
     {
-        if (! $this->isStarted()) {
+        echo "  Procedure::start \n";
+             
+        if (! $this->started) {
             // Set flag that we are started
             $this->started = true;
-            
-            // Store in database that we are started
-            // Entity should store itself
             
             // Start first UnitProcedure
             if ($this->getUnitProcedures()->count()) {
@@ -151,12 +150,13 @@ class Procedure implements ExecutableInterface
     }
 
     /**
-     * (non-PHPdoc)
      *
      * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::execute()
      */
     public function execute()
     {
+        echo "  Procedure::execute \n";
+        
         if ($this->isStarted()) {
             if (!$this->getCurrentUnitProcedure()) {
                 $this->finished = true;
@@ -168,17 +168,16 @@ class Procedure implements ExecutableInterface
                 // Go to next unit procedure if possible
                 if ($this->getUnitProcedures()->next()) {
                     $this->getCurrentUnitProcedure()->start();
-
-                    // Execute
-                    if ($this->getCurrentUnitProcedure()->isStarted()) {
-                        // Perform unit procedure
-                        $this->$this->getCurrentUnitProcedure()->execute();
-                    }
                 } else {
                     // If last unit procedure is finished
                     // set the finished flag
                     $this->finished = true;
                 }
+            }
+            // Execute
+            if (!$this->finished && $this->getCurrentUnitProcedure()->isStarted()) {
+                // Perform unit procedure
+                $this->getCurrentUnitProcedure()->execute();
             }
         } else {
             throw new \Exception('Procedure not started');

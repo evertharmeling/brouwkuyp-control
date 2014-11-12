@@ -3,6 +3,7 @@
 namespace Brouwkuyp\Bundle\LogicBundle\Manager;
 
 use Brouwkuyp\Bundle\LogicBundle\Model\ControlRecipe;
+use Brouwkuyp\Bundle\LogicBundle\Model\UnitProcedure;
 
 /**
  * BatchManager
@@ -30,6 +31,8 @@ class BatchManager
      */
     public function start()
     {
+        echo "BatchManager::start \n";
+        $this->showBatch();
         $this->recipe->start();
     }
     
@@ -38,6 +41,38 @@ class BatchManager
      */
     public function execute()
     {
+        echo "\nBatchManager::execute \n";
         $this->recipe->execute();
+    }
+    
+    /**
+     * Outputs batch and recipe information
+     */
+    public function showBatch()
+    {
+        echo "\n*********************************************\n";
+        echo "Recipe: '".$this->recipe->getName()."'\n";
+        echo " Procedure: '".$this->recipe->getProcedure()->getName()."'\n";
+        echo "  UnitProcedures: \n";
+        /** @var UnitProcedure $up */
+        foreach ($this->recipe->getProcedure()->getUnitProcedures() as $up)
+        {
+            echo "   UP: '".$up->getName()."'\n"; 
+            echo "    Unit: '".$up->getUnit()->getName()."'\n";
+            echo "    Operations: \n";
+            /** @var Operation $op */
+            foreach ($up->getOperations() as $op)
+            {
+                echo "     OP: '".$op->getName()."'\n";
+                /** @var Phase $phase */
+                foreach ($op->getPhases() as $phase)
+                {
+                    echo "      Phase:  '".$phase->getName()."'\n";
+                    echo "       type:  '".$phase->getType()."'\n";
+                    echo "       value: '".$phase->getValue()."'\n";
+                }
+            }
+        }
+        echo "*********************************************\n\n";
     }
 }

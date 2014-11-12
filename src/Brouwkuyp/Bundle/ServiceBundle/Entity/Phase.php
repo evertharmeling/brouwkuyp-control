@@ -17,12 +17,12 @@ class Phase extends BasePhase
     /**
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * @var integer
      */
-    private $value;
+    protected $value;
 
     /**
      * Get id
