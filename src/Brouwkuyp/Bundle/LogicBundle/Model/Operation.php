@@ -161,7 +161,6 @@ class Operation implements ExecutableInterface
             // Go to next phase if possible
             if ($this->phases->next()) {
                 $this->phases->current()->start();
-
             } else {
                 // If last phase is finished
                 // set the finished flag

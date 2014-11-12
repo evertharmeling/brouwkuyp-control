@@ -9,7 +9,6 @@ use Brouwkuyp\Bundle\LogicBundle\Model\UnitProcedure as BaseUnitProcedure;
  */
 class UnitProcedure extends BaseUnitProcedure
 {
-
     /**
      * @var integer
      */

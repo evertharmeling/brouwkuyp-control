@@ -28,8 +28,7 @@ class RecipeControlManager
     /**
      * Loads MasterRecipe from database and creates ControlRecipe
      *
-     * @param
-     *            $id
+     * @param               $id
      * @return BatchManager
      * @throws \Exception
      */

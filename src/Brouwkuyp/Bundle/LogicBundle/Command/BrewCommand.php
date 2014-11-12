@@ -3,11 +3,11 @@
 namespace Brouwkuyp\Bundle\LogicBundle\Command;
 
 use Brouwkuyp\Bundle\LogicBundle\Manager\BatchManager;
+use Brouwkuyp\Bundle\LogicBundle\Manager\RecipeControlManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Brouwkuyp\Bundle\LogicBundle\Manager\RecipeControlManager;
 
 /**
  * BrewCommand

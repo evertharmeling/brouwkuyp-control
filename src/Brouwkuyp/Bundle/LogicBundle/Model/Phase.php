@@ -166,7 +166,7 @@ class Phase implements ExecutableInterface
                 echo sprintf("Please add the following ingredient: '%s'", $this->value) . PHP_EOL;
                 break;
             default:
-                throw new \Exception('Unknown Phase type: '.$this->type);
+                throw new \Exception('Unknown Phase type: ' . $this->type);
         }
     }
 }

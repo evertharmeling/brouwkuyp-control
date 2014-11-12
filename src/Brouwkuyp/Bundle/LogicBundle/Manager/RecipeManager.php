@@ -7,5 +7,4 @@ namespace Brouwkuyp\Bundle\LogicBundle\Manager;
  */
 class RecipeManager
 {
-
 }

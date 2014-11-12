@@ -3,8 +3,8 @@
 namespace Brouwkuyp\Bundle\ServiceBundle\Doctrine\Type;
 
 use Brouwkuyp\Bundle\ServiceBundle\Doctrine\DateTime;
-use Doctrine\DBAL\Types\DateTimeType as BaseDateTimeType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Types\DateTimeType as BaseDateTimeType;
 
 /**
  * DateTimeType

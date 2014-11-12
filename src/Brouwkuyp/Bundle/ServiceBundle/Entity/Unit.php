@@ -9,7 +9,6 @@ use Brouwkuyp\Bundle\LogicBundle\Model\Unit as BaseUnit;
  */
 class Unit extends BaseUnit
 {
-
     /**
      * @var integer
      */
