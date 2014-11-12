@@ -2,6 +2,8 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
+use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
+
 /**
  * Phase
  *
@@ -15,57 +17,45 @@ namespace Brouwkuyp\Bundle\LogicBundle\Model;
  */
 class Phase implements ExecutableInterface
 {
-    const CONTROL_TEMP = 'controltemp';
-    const ADD_INGREDIENTS = 'addingr';
-    
+    use ExecutableTrait;
+
+    const CONTROL_TEMP      = 'control_temp';
+    const ADD_INGREDIENTS   = 'add_ingredients';
+
     /**
      *
      * @var string
      */
     protected $name;
-    
+
     /**
      *
      * @var string
      */
     protected $type;
-    
+
     /**
      *
      * @var integer
      */
     protected $value;
-    
+
     /**
      *
      * @var Operation
      */
     protected $operation;
-    
-    /**
-     * Flag indicating that this Phase is started.
-     *
-     * @var bool
-     */
-    protected $started;
-    
-    /**
-     * Flag indicating that this Phase is performed and finished.
-     *
-     * @var bool
-     */
-    protected $finished;
 
     /**
      * Set name
      *
-     * @param string $name            
+     * @param string $name
      * @return Phase
      */
     public function setName($name)
     {
         $this->name = $name;
-        
+
         return $this;
     }
 
@@ -102,13 +92,13 @@ class Phase implements ExecutableInterface
     /**
      * Set operation
      *
-     * @param Operation $operation            
+     * @param Operation $operation
      * @return Phase
      */
     public function setOperation(Operation $operation = null)
     {
         $this->operation = $operation;
-        
+
         return $this;
     }
 
@@ -141,52 +131,42 @@ class Phase implements ExecutableInterface
     {
         echo "     Phase::execute: '" . $this->name . "'\n";
         if ($this->started) {
-            if(!$this->finished){
-                $this->checkAndUpdateProgress();
-                $this->performTask();
-            }
-        } else {
             throw new \Exception('Phase not started');
+        }
+
+        if (!$this->finished){
+            $this->checkAndUpdateProgress();
+            $this->performTask();
         }
     }
 
-    /**
-     *
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isStarted()
-     */
-    public function isStarted()
-    {
-        return $this->started;
-    }
-
-    /**
-     *
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isFinished()
-     */
-    public function isFinished()
-    {
-        return $this->finished;
-    }
-    
     private function checkAndUpdateProgress()
     {
-        // TODO
-        
+        // @TODO
+
         // if condition is met set finished flag
         // and update other progress stuff
     }
-    
+
+    /**
+     * Performs the tasks according to the phase
+     *
+     * @throws \Exception
+     */
     private function performTask()
     {
-        // TODO
-        if ($this->type == Phase::CONTROL_TEMP) {
-            // call control temp on our Unit
-            echo "Setting temperature to: '".$this->value."'\n";
-        }else if ($this->type == Phase::ADD_INGREDIENTS){
-            // ask operator to add the ingredients
-            echo 'Please add the following ingredient: \''.$this->value.'\'\n"';
-        }else{
-            throw new \Exception('Unknown Phase type: '.$this->type);
+        // @TODO
+        switch ($this->type) {
+            case self::CONTROL_TEMP:
+                // call control temp on our Unit
+                echo sprintf("Setting temperature to: '%s'", $this->value) . PHP_EOL;
+                break;
+            case self::ADD_INGREDIENTS:
+                // ask operator to add the ingredients
+                echo sprintf("Please add the following ingredient: '%s'", $this->value) . PHP_EOL;
+                break;
+            default:
+                throw new \Exception('Unknown Phase type: '.$this->type);
         }
     }
 }

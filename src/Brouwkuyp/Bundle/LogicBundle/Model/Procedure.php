@@ -2,6 +2,7 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
+use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -13,25 +14,13 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Procedure implements ExecutableInterface
 {
+    use ExecutableTrait;
+
     /**
      *
      * @var string
      */
     protected $name;
-
-    /**
-     * Flag that signals if we are started
-     *
-     * @var bool
-     */
-    private $started;
-    
-    /**
-     * Flag that signals that we are finished
-     *
-     * @var bool
-     */
-    private $finished;
 
     /**
      * @var ControlRecipe
@@ -132,7 +121,7 @@ class Procedure implements ExecutableInterface
     }
 
     /**
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::start()
+     * @see ExecutableInterface::start()
      */
     public function start()
     {
@@ -143,67 +132,45 @@ class Procedure implements ExecutableInterface
             $this->started = true;
             
             // Start first UnitProcedure
-            if ($this->getUnitProcedures()->count()) {
-                $this->getUnitProcedures()->first()->start();
+            if ($this->unitProcedures->count()) {
+                $this->unitProcedures->first()->start();
             }
         }
     }
 
     /**
      *
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::execute()
+     * @see ExecutableInterface::execute()
      */
     public function execute()
     {
         echo "  Procedure::execute \n";
         
-        if ($this->isStarted()) {
-            if (!$this->getCurrentUnitProcedure()) {
-                $this->finished = true;
-                return;
-            }
-
-            // Start the next unit procedure?
-            if ($this->getCurrentUnitProcedure()->isFinished()) {
-                // Go to next unit procedure if possible
-                if ($this->getUnitProcedures()->next()) {
-                    $this->getCurrentUnitProcedure()->start();
-                } else {
-                    // If last unit procedure is finished
-                    // set the finished flag
-                    $this->finished = true;
-                }
-            }
-            // Execute
-            if (!$this->finished && $this->getCurrentUnitProcedure()->isStarted()) {
-                // Perform unit procedure
-                $this->getCurrentUnitProcedure()->execute();
-            }
-        } else {
+        if (!$this->isStarted()) {
             throw new \Exception('Procedure not started');
         }
-    }
 
-    /**
-     * Returns started state
-     *
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isStarted()
-     * @return bool
-     */
-    public function isStarted()
-    {
-        return $this->started;
-    }
+        if (!$this->getCurrentUnitProcedure()) {
+            $this->finished = true;
+            return;
+        }
 
-    /**
-     * Returns finished state
-     *
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isFinished()
-     * @return bool
-     */
-    public function isFinished()
-    {
-        return $this->finished;
+        // Start the next unit procedure?
+        if ($this->getCurrentUnitProcedure()->isFinished()) {
+            // Go to next unit procedure if possible
+            if ($this->unitProcedures->next()) {
+                $this->getCurrentUnitProcedure()->start();
+            } else {
+                // If last unit procedure is finished
+                // set the finished flag
+                $this->finished = true;
+            }
+        }
+        // Execute
+        if (!$this->finished && $this->getCurrentUnitProcedure()->isStarted()) {
+            // Perform unit procedure
+            $this->getCurrentUnitProcedure()->execute();
+        }
     }
 
     /**

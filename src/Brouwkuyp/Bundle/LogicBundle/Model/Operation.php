@@ -2,6 +2,7 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
+use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -15,6 +16,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Operation implements ExecutableInterface
 {
+    use ExecutableTrait;
+
     /**
      *
      * @var string
@@ -33,20 +36,6 @@ class Operation implements ExecutableInterface
      */
     protected $unitProcedure;
     
-    /**
-     * Flag indicating that this Operation is started.
-     *
-     * @var bool
-     */
-    protected $started;
-    
-    /**
-     * Flag indicating that this Operation is performed and finished.
-     *
-     * @var bool
-     */
-    protected $finished;
-
     /**
      * Constructor
      */
@@ -157,50 +146,32 @@ class Operation implements ExecutableInterface
     public function execute()
     {
         echo "    Operation::execute: '" . $this->name . "'\n";
-        if ($this->started) {
-            if (!$this->phases->current()) {
-                $this->finished = true;
-                return;
-            }
-        
-            // Start the next phase?
-            if ($this->phases->current()->isFinished()) {
-                // Go to next phase if possible
-                if ($this->phases->next()) {
-                    $this->phases->current()->start();
-        
-                    
-                } else {
-                    // If last phase is finished
-                    // set the finished flag
-                    $this->finished = true;
-                }
-            }
-            // Execute
-            if (!$this->finished && $this->phases->current()->isStarted()) {
-                // Perform phase
-                $this->phases->current()->execute();
-            }
-        } else {
+        if (!$this->started) {
             throw new \Exception('Operation not started');
         }
-    }
 
-    /**
-     *
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isStarted()
-     */
-    public function isStarted()
-    {
-        return $this->started;
-    }
+        if (!$this->phases->current()) {
+            $this->finished = true;
+            return;
+        }
 
-    /**
-     *
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isFinished()
-     */
-    public function isFinished()
-    {
-        return $this->finished;
+        // Start the next phase?
+        if ($this->phases->current()->isFinished()) {
+            // Go to next phase if possible
+            if ($this->phases->next()) {
+                $this->phases->current()->start();
+
+
+            } else {
+                // If last phase is finished
+                // set the finished flag
+                $this->finished = true;
+            }
+        }
+        // Execute
+        if (!$this->finished && $this->phases->current()->isStarted()) {
+            // Perform phase
+            $this->phases->current()->execute();
+        }
     }
 }

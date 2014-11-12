@@ -3,6 +3,8 @@
 namespace Brouwkuyp\Bundle\LogicBundle\Manager;
 
 use Brouwkuyp\Bundle\LogicBundle\Model\ControlRecipe;
+use Brouwkuyp\Bundle\LogicBundle\Model\Operation;
+use Brouwkuyp\Bundle\LogicBundle\Model\Phase;
 use Brouwkuyp\Bundle\LogicBundle\Model\UnitProcedure;
 
 /**
@@ -50,29 +52,29 @@ class BatchManager
      */
     public function showBatch()
     {
-        echo "\n*********************************************\n";
-        echo "Recipe: '".$this->recipe->getName()."'\n";
-        echo " Procedure: '".$this->recipe->getProcedure()->getName()."'\n";
-        echo "  UnitProcedures: \n";
+        echo PHP_EOL . "*********************************************" . PHP_EOL;
+        echo sprintf("Recipe: '%s'", $this->recipe->getName()) . PHP_EOL;
+        echo sprintf(" Procedure: '%s'", $this->recipe->getProcedure()->getName()) . PHP_EOL;
+        echo "  UnitProcedures: " . PHP_EOL;
         /** @var UnitProcedure $up */
         foreach ($this->recipe->getProcedure()->getUnitProcedures() as $up)
         {
-            echo "   UP: '".$up->getName()."'\n"; 
-            echo "    Unit: '".$up->getUnit()->getName()."'\n";
-            echo "    Operations: \n";
+            echo sprintf("   UP: '%s'", $up->getName()) . PHP_EOL;
+            echo sprintf("    Unit: '%s'", $up->getUnit()->getName()) . PHP_EOL;
+            echo "    Operations: " . PHP_EOL;
             /** @var Operation $op */
             foreach ($up->getOperations() as $op)
             {
-                echo "     OP: '".$op->getName()."'\n";
+                echo sprintf("     OP: '%s'", $op->getName()) . PHP_EOL;
                 /** @var Phase $phase */
                 foreach ($op->getPhases() as $phase)
                 {
-                    echo "      Phase:  '".$phase->getName()."'\n";
-                    echo "       type:  '".$phase->getType()."'\n";
-                    echo "       value: '".$phase->getValue()."'\n";
+                    echo sprintf("      Phase:  '%s'", $phase->getName()) . PHP_EOL;
+                    echo sprintf("       type:  '%s'", $phase->getType()) . PHP_EOL;
+                    echo sprintf("       value: '%s'", $phase->getValue()) . PHP_EOL;
                 }
             }
         }
-        echo "*********************************************\n\n";
+        echo "*********************************************" . PHP_EOL . PHP_EOL;
     }
 }

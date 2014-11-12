@@ -2,8 +2,8 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
+use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
-use Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface;
 
 /**
  * UnitProcedure
@@ -17,6 +17,8 @@ use Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface;
  */
 class UnitProcedure implements ExecutableInterface
 {
+    use ExecutableTrait;
+
     /**
      *
      * @var string
@@ -40,20 +42,6 @@ class UnitProcedure implements ExecutableInterface
      * @var Unit
      */
     protected $unit;
-    
-    /**
-     * Flag indicating that this UnitProcedure is started.
-     *
-     * @var bool
-     */
-    protected $started;
-    
-    /**
-     * Flag indicating that this UnitProcedure is performed and finished.
-     *
-     * @var bool
-     */
-    protected $finished;
 
     /**
      * Constructs
@@ -94,7 +82,7 @@ class UnitProcedure implements ExecutableInterface
      */
     public function addOperation(Operation $operation)
     {
-        $this->operations [] = $operation;
+        $this->operations[] = $operation;
         
         return $this;
     }
@@ -167,7 +155,7 @@ class UnitProcedure implements ExecutableInterface
 
     /**
      *
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::start()
+     * @see ExecutableInterface::start()
      */
     public function start()
     {
@@ -185,56 +173,41 @@ class UnitProcedure implements ExecutableInterface
 
     /**
      *
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::execute()
+     * @see ExecutableInterface::execute()
      */
     public function execute()
     {
         echo "   UnitProcedure::execute, unit: " . $this->unit->getName() . "\n";
-        if ($this->started) {
-            if (!$this->getCurrentOperation()) {
-                $this->finished = true;
-                return;
-            }
-            
-            // Start the next Operation?
-            if ($this->getCurrentOperation()->isFinished()) {
-                // Go to next unit procedure if possible
-                if ($this->operations->next()) {
-                    $this->getCurrentOperation()->start();
-                } else {
-                    // If last operation is finished
-                    // set the finished flag
-                    $this->finished = true;
-                }
-            }
-            // Execute
-            if (!$this->finished && $this->getCurrentOperation()->isStarted()) {
-                // Perform Operation
-                $this->getCurrentOperation()->execute();
-            }
-        } else {
+        if (!$this->started) {
             throw new \Exception('UnitProcedure not started');
+        }
+
+        if (!$this->getCurrentOperation()) {
+            $this->finished = true;
+            return;
+        }
+
+        // Start the next Operation?
+        if ($this->getCurrentOperation()->isFinished()) {
+            // Go to next unit procedure if possible
+            if ($this->operations->next()) {
+                $this->getCurrentOperation()->start();
+            } else {
+                // If last operation is finished
+                // set the finished flag
+                $this->finished = true;
+            }
+        }
+        // Execute
+        if (!$this->finished && $this->getCurrentOperation()->isStarted()) {
+            // Perform Operation
+            $this->getCurrentOperation()->execute();
         }
     }
 
     /**
-     *
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isStarted()
+     * @return Operation|false
      */
-    public function isStarted()
-    {
-        return $this->started;
-    }
-
-    /**
-     *
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isFinished()
-     */
-    public function isFinished()
-    {
-        return $this->finished;
-    }
-
     public function getCurrentOperation()
     {
         return $this->operations->current();

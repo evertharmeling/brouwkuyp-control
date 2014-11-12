@@ -38,20 +38,18 @@ class RecipeControlManager
      */
     public function load($id)
     {
-        echo "RecipeControlManager::load id: " . $id . "\n";
-        /**
-         * @var ControlRecipe $recipe
-         */
+        echo sprintf("RecipeControlManager::load id: '%s'", $id) . PHP_EOL;
+        /** @var ControlRecipe $recipe */
         $recipe = $this->controlRecipeRepository->find($id);
         
-        if (!is_null($recipe)) {
-            // could convert the $recipe Entity to the $receipe Model
-            // (if we decide not to let the entity extend the model)
-            echo "Loaded recipe: '" . $recipe->getName() . "'\n";
-        } else {
+        if (is_null($recipe)) {
             throw new \Exception("Recipe could not be found or loaded");
         }
-        
+
+        // could convert the $recipe Entity to the $receipe Model
+        // (if we decide not to let the entity extend the model)
+        echo sprintf("Loaded recipe: '%s'", $recipe->getName()) . PHP_EOL;
+
         return new BatchManager($recipe);
     }
 }

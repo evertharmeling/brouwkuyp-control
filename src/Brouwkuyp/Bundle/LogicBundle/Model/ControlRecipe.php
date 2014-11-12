@@ -44,46 +44,46 @@ class ControlRecipe implements ExecutableInterface
 
     /**
      *
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::start()
+     * @see ExecutableInterface::start()
      * @throws \Exception
      */
     public function start()
     {
         echo " ControlRecipe::start 1\n";
-        if (!is_null($this->procedure)) {
-            if (!$this->procedure->isFinished()) {
-                $this->procedure->start();
-            } else {
-                throw new \Exception('Procedure already finished');
-            }
-        } else {
+        if (is_null($this->procedure)) {
             throw new \Exception('No Procedure for this Recipe');
         }
+
+        if ($this->procedure->isFinished()) {
+            throw new \Exception('Procedure already finished');
+        }
+
+        $this->procedure->start();
     }
 
     /**
      *
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::execute()
+     * @see ExecutableInterface::execute()
      * @throws \Exception
      */
     public function execute()
     {
         echo " ControlRecipe::execute \n";
-        if (!is_null($this->procedure)) {
-            if (!$this->procedure->isFinished()) {
-                $this->procedure->execute();
-            } else {
-                // procedure finished!
-                // TODO
-            }
-        } else {
+        if (is_null($this->procedure)) {
             throw new \Exception('No procedure for this Recipe');
+        }
+
+        if (!$this->procedure->isFinished()) {
+            $this->procedure->execute();
+        } else {
+            // procedure finished!
+            // @TODO
         }
     }
 
     /**
      *
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isStarted()
+     * @see ExecutableInterface::isStarted()
      */
     public function isStarted()
     {
@@ -96,7 +96,7 @@ class ControlRecipe implements ExecutableInterface
 
     /**
      *
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isFinished()
+     * @see ExecutableInterface::isFinished()
      */
     public function isFinished()
     {
