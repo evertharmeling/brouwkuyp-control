@@ -9,7 +9,6 @@ use Brouwkuyp\Bundle\LogicBundle\Model\UnitProcedure as BaseUnitProcedure;
  */
 class UnitProcedure extends BaseUnitProcedure
 {
-
     /**
      * @var integer
      */
@@ -18,7 +17,7 @@ class UnitProcedure extends BaseUnitProcedure
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {

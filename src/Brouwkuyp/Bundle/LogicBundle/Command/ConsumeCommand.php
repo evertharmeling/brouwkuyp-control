@@ -49,7 +49,10 @@ class ConsumeCommand extends ContainerAwareCommand
             $em->persist($log);
             $em->flush();
 
-            $output->writeln(sprintf("<info>Message received: </info>%s: %s : %s", (new \DateTime())->format('H:i:s'), $msg->delivery_info['routing_key'], $msg->body));
+            $output->writeln(
+                    sprintf("<info>Message received: </info>%s: %s : %s",
+                             new \DateTime())->format('H:i:s'),
+                    $msg->delivery_info['routing_key'], $msg->body);
         };
 
         $manager->consume($callback, 'brewery.#');

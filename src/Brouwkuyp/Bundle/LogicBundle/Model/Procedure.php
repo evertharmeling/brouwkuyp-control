@@ -2,6 +2,7 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
+use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -13,25 +14,13 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Procedure implements ExecutableInterface
 {
+    use ExecutableTrait;
+
     /**
      *
      * @var string
      */
     protected $name;
-
-    /**
-     * Flag that signals if we are started
-     *
-     * @var bool
-     */
-    private $started;
-    
-    /**
-     * Flag that signals that we are finished
-     *
-     * @var bool
-     */
-    private $finished;
 
     /**
      * @var ControlRecipe
@@ -55,7 +44,7 @@ class Procedure implements ExecutableInterface
     /**
      * Set name
      *
-     * @param  string       $name
+     * @param  string    $name
      * @return Procedure
      */
     public function setName($name)
@@ -78,7 +67,7 @@ class Procedure implements ExecutableInterface
     /**
      * Set ControlRecipe
      *
-     * @param ControlRecipe $controlRecipe
+     * @param  ControlRecipe $controlRecipe
      * @return Procedure
      */
     public function setControlRecipe(ControlRecipe $controlRecipe = null)
@@ -101,7 +90,7 @@ class Procedure implements ExecutableInterface
     /**
      * Add UnitProcedure
      *
-     * @param UnitProcedure $unitProcedure
+     * @param  UnitProcedure $unitProcedure
      * @return Procedure
      */
     public function addUnitprocedure(UnitProcedure $unitProcedure)
@@ -132,79 +121,57 @@ class Procedure implements ExecutableInterface
     }
 
     /**
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::start()
+     * @see ExecutableInterface::start()
      */
     public function start()
     {
-        if (! $this->isStarted()) {
+        echo "  Procedure::start \n";
+
+        if (! $this->started) {
             // Set flag that we are started
             $this->started = true;
-            
-            // Store in database that we are started
-            // Entity should store itself
-            
+
             // Start first UnitProcedure
-            if ($this->getUnitProcedures()->count()) {
-                $this->getUnitProcedures()->first()->start();
+            if ($this->unitProcedures->count()) {
+                $this->unitProcedures->first()->start();
             }
         }
     }
 
     /**
-     * (non-PHPdoc)
      *
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::execute()
+     * @see ExecutableInterface::execute()
      */
     public function execute()
     {
-        if ($this->isStarted()) {
-            if (!$this->getCurrentUnitProcedure()) {
-                $this->finished = true;
-                return;
-            }
+        echo "  Procedure::execute \n";
 
-            // Start the next unit procedure?
-            if ($this->getCurrentUnitProcedure()->isFinished()) {
-                // Go to next unit procedure if possible
-                if ($this->getUnitProcedures()->next()) {
-                    $this->getCurrentUnitProcedure()->start();
-
-                    // Execute
-                    if ($this->getCurrentUnitProcedure()->isStarted()) {
-                        // Perform unit procedure
-                        $this->$this->getCurrentUnitProcedure()->execute();
-                    }
-                } else {
-                    // If last unit procedure is finished
-                    // set the finished flag
-                    $this->finished = true;
-                }
-            }
-        } else {
+        if (!$this->isStarted()) {
             throw new \Exception('Procedure not started');
         }
-    }
 
-    /**
-     * Returns started state
-     *
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isStarted()
-     * @return bool
-     */
-    public function isStarted()
-    {
-        return $this->started;
-    }
+        if (!$this->getCurrentUnitProcedure()) {
+            $this->finished = true;
 
-    /**
-     * Returns finished state
-     *
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isFinished()
-     * @return bool
-     */
-    public function isFinished()
-    {
-        return $this->finished;
+            return;
+        }
+
+        // Start the next unit procedure?
+        if ($this->getCurrentUnitProcedure()->isFinished()) {
+            // Go to next unit procedure if possible
+            if ($this->unitProcedures->next()) {
+                $this->getCurrentUnitProcedure()->start();
+            } else {
+                // If last unit procedure is finished
+                // set the finished flag
+                $this->finished = true;
+            }
+        }
+        // Execute
+        if (!$this->finished && $this->getCurrentUnitProcedure()->isStarted()) {
+            // Perform unit procedure
+            $this->getCurrentUnitProcedure()->execute();
+        }
     }
 
     /**

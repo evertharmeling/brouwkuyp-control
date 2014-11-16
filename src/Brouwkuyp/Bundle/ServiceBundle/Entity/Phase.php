@@ -17,17 +17,17 @@ class Phase extends BasePhase
     /**
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * @var integer
      */
-    private $value;
+    protected $value;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -37,7 +37,7 @@ class Phase extends BasePhase
     /**
      * Set type
      *
-     * @param string $type
+     * @param  string $type
      * @return Phase
      */
     public function setType($type)
@@ -50,7 +50,7 @@ class Phase extends BasePhase
     /**
      * Get type
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {
@@ -60,7 +60,7 @@ class Phase extends BasePhase
     /**
      * Set value
      *
-     * @param integer $value
+     * @param  integer $value
      * @return Phase
      */
     public function setValue($value)
@@ -73,7 +73,7 @@ class Phase extends BasePhase
     /**
      * Get value
      *
-     * @return integer 
+     * @return integer
      */
     public function getValue()
     {

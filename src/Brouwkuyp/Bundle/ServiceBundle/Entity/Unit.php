@@ -9,7 +9,6 @@ use Brouwkuyp\Bundle\LogicBundle\Model\Unit as BaseUnit;
  */
 class Unit extends BaseUnit
 {
-
     /**
      * @var integer
      */
@@ -18,7 +17,7 @@ class Unit extends BaseUnit
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {

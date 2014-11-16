@@ -22,7 +22,7 @@ class Procedure extends BaseProcedure
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {

@@ -10,7 +10,7 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Procedure:
                 strategy:   AUTO
 
     fields:
-        name: 
+        name:
             type:       string
             length:     120
 

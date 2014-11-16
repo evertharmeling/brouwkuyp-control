@@ -17,7 +17,7 @@ class MasterRecipe extends BaseMasterRecipe
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {

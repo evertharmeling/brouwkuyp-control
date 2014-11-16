@@ -9,8 +9,8 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe:
             generator:
                 strategy:   AUTO
 
-    fields: 
-        name: 
+    fields:
+        name:
             type:       string
             length:     120
         version:

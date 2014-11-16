@@ -2,8 +2,8 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
+use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
-use Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface;
 
 /**
  * UnitProcedure
@@ -17,6 +17,8 @@ use Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface;
  */
 class UnitProcedure implements ExecutableInterface
 {
+    use ExecutableTrait;
+
     /**
      *
      * @var string
@@ -24,33 +26,22 @@ class UnitProcedure implements ExecutableInterface
     protected $name;
 
     /**
+     *
      * @var ArrayCollection
      */
     protected $operations;
 
     /**
+     *
      * @var Procedure
      */
     protected $procedure;
 
     /**
+     *
      * @var Unit
      */
     protected $unit;
-    
-    /**
-     * Flag indicating that this UnitProcedure is started.
-     *
-     * @var bool
-     */
-    protected $started;
-    
-    /**
-     * Flag indicating that this UnitProcedure is performed and finished.
-     *
-     * @var bool
-     */
-    protected $finished;
 
     /**
      * Constructs
@@ -63,13 +54,13 @@ class UnitProcedure implements ExecutableInterface
     /**
      * Set name
      *
-     * @param string $name            
+     * @param  string        $name
      * @return UnitProcedure
      */
     public function setName($name)
     {
         $this->name = $name;
-        
+
         return $this;
     }
 
@@ -86,7 +77,7 @@ class UnitProcedure implements ExecutableInterface
     /**
      * Add operation
      *
-     * @param Operation $operation
+     * @param  Operation     $operation
      * @return UnitProcedure
      */
     public function addOperation(Operation $operation)
@@ -119,7 +110,7 @@ class UnitProcedure implements ExecutableInterface
     /**
      * Set procedure
      *
-     * @param Procedure $procedure
+     * @param  Procedure     $procedure
      * @return UnitProcedure
      */
     public function setProcedure(Procedure $procedure = null)
@@ -142,7 +133,7 @@ class UnitProcedure implements ExecutableInterface
     /**
      * Set unit
      *
-     * @param Unit $unit
+     * @param  Unit          $unit
      * @return UnitProcedure
      */
     public function setUnit(Unit $unit = null)
@@ -163,32 +154,63 @@ class UnitProcedure implements ExecutableInterface
     }
 
     /**
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::start()
+     *
+     * @see ExecutableInterface::start()
      */
     public function start()
     {
+        echo "   UnitProcedure::start, unit: " . $this->unit->getName() . "\n";
+        if (!$this->started) {
+            // Set flag that we are started
+            $this->started = true;
+
+            // Start first Operation
+            if ($this->operations->count()) {
+                $this->operations->first()->start();
+            }
+        }
     }
 
     /**
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::execute()
+     *
+     * @see ExecutableInterface::execute()
      */
     public function execute()
     {
+        echo "   UnitProcedure::execute, unit: " . $this->unit->getName() . "\n";
+        if (!$this->started) {
+            throw new \Exception('UnitProcedure not started');
+        }
+
+        if (!$this->getCurrentOperation()) {
+            $this->finished = true;
+
+            return;
+        }
+
+        // Start the next Operation?
+        if ($this->getCurrentOperation()->isFinished()) {
+            // Go to next unit procedure if possible
+            if ($this->operations->next()) {
+                $this->getCurrentOperation()->start();
+            } else {
+                // If last operation is finished
+                // set the finished flag
+                $this->finished = true;
+            }
+        }
+        // Execute
+        if (!$this->finished && $this->getCurrentOperation()->isStarted()) {
+            // Perform Operation
+            $this->getCurrentOperation()->execute();
+        }
     }
 
     /**
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isStarted()
+     * @return Operation|false
      */
-    public function isStarted()
+    public function getCurrentOperation()
     {
-        return $this->started;
-    }
-
-    /**
-     * @see \Brouwkuyp\Bundle\LogicBundle\Model\ExecutableInterface::isFinished()
-     */
-    public function isFinished()
-    {
-        return $this->finished;
+        return $this->operations->current();
     }
 }
