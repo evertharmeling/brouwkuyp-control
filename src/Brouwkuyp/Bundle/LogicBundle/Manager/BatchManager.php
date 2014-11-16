@@ -6,6 +6,7 @@ use Brouwkuyp\Bundle\LogicBundle\Model\ControlRecipe;
 use Brouwkuyp\Bundle\LogicBundle\Model\Operation;
 use Brouwkuyp\Bundle\LogicBundle\Model\Phase;
 use Brouwkuyp\Bundle\LogicBundle\Model\UnitProcedure;
+use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface;
 
 /**
  * BatchManager
@@ -19,13 +20,19 @@ class BatchManager
      * @var ControlRecipe
      */
     private $recipe;
+    
+    /**
+     * @var BrewControlManagerInterface
+     */
+    private $bcm;
 
     /**
      * @param ControlRecipe $recipe
      */
-    public function __construct(ControlRecipe $recipe)
+    public function __construct(ControlRecipe $recipe, BrewControlManagerInterface $bcm)
     {
         $this->recipe = $recipe;
+        $this->bcm = $bcm;
     }
 
     /**
@@ -73,5 +80,13 @@ class BatchManager
             }
         }
         echo "*********************************************" . PHP_EOL . PHP_EOL;
+    }
+    
+    /**
+     * @return \Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface
+     */
+    public function getBrewControlManager()
+    {
+        return $this->bcm;
     }
 }

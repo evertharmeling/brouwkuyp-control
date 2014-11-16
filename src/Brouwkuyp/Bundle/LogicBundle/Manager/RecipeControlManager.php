@@ -42,10 +42,6 @@ class RecipeControlManager
             throw new \Exception("Recipe could not be found or loaded");
         }
 
-        // could convert the $recipe Entity to the $receipe Model
-        // (if we decide not to let the entity extend the model)
-        echo sprintf("Loaded recipe: '%s'", $recipe->getName()) . PHP_EOL;
-
-        return new BatchManager($recipe);
+        return $recipe;
     }
 }
