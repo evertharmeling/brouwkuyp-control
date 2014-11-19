@@ -102,7 +102,7 @@ var chart = {
                         }
                     },
                     legend: {
-                        enabled: false
+                        enabled: true
                     },
                     exporting: {
                         enabled: false

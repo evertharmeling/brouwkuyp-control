@@ -13,7 +13,7 @@ class Log
     const TOPIC_HLT_CURR_TEMP = 'brewery.brewhouse01.masher.hlt.curr_temp';
     const TOPIC_MLT_CURR_TEMP = 'brewery.brewhouse01.masher.mlt.curr_temp';
     const TOPIC_MLT_SET_TEMP = 'brewery.brewhouse01.masher.mlt.set_temp';
-    const TOPIC_BLT_CURR_TEMP = 'brewery.brewhouse01.masher.blt.curr_temp';
+    const TOPIC_BLT_CURR_TEMP = 'brewery.brewhouse01.boiler.curr_temp';
 
     /**
      * @var string
