@@ -14,12 +14,28 @@
             <div class="col-md-2">
                 <h3><small>HLT:</small></h3><h1 class="text-right"><span id="temp-curr-hlt"></span></h1>
             </div>
-            <div class="col-md-2 col-md-offset-2">
+            <div class="col-md-2">
                 <h3><small>MLT:</small></h3><h1 class="text-right"><span id="temp-curr-mlt"></span></h1>
                 <h3 class="text-right"><span id="temp-set-mlt"></span></h3>
             </div>
-            <div class="col-md-2 col-md-offset-2">
+            <div class="col-md-2">
                 <h3><small>BLT:</small></h3><h1 class="text-right"><span id="temp-curr-blt"></span></h1>
+            </div>
+            <div class="col-md-4">
+                <form action="">
+                    <table id="switches">
+                        <tbody>
+                            <tr>
+                                <td><label for="pump_overrule">Pomp auto</label></td>
+                                <td><div class="toggle-pump"><label for="pump">Pomp</label></div></td>
+                            </tr>
+                            <tr>
+                                <td><div class="switch"><input type="checkbox" checked="checked" name="pump_overrule" id="pump_overrule" /><label for="pump_overrule"></label></div></td>
+                                <td><div class="switch toggle-pump"><input type="checkbox" name="pump" id="pump" data-url="{{ path('async_pump') }}"/><label for="pump"></label></div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
             </div>
         </div>
     </div>

@@ -57,6 +57,7 @@ class Manager
      */
     public function publish(AMQPMessage $message, $routingKey = '')
     {
+        // @todo add error handling (try, catch) and return value
         $this->getLogger()->info('amqp.publish', [
             'route' => $routingKey,
             'value' => $message->body

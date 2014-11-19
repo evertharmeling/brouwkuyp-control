@@ -13,32 +13,40 @@
 @import "../../../../../../../vendor/twbs/bootstrap/less/bootstrap.less";
 
 div#graph {
-  min-width: 310px;
-  height: 650px;
-  margin: 0 auto;
+    min-width: 310px;
+    height: 650px;
+    margin: 0 auto;
 }
 
 div#graph-footer {
-  margin-top: 50px;
+    margin-top: 0px;
 }
 
 div#header {
-  h1 {
-    width: 400px;
-    display: inline-block;
+    h1 {
+        width: 400px;
+        display: inline-block;
 
-    a {
-      text-decoration: none;
+        a {
+          text-decoration: none;
+        }
     }
-  }
 
-  nav {
-    position: absolute;
-    right: 20px;
-    top: 20px
-  }
+    nav {
+        position: absolute;
+        right: 20px;
+        top: 20px
+    }
 }
 
 table thead {
-  font-weight: bold;
+    font-weight: bold;
+}
+
+table#switches td {
+    width: 100px;
+}
+
+div.toggle-pump {
+    display: none;
 }

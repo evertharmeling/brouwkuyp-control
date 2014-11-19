@@ -3,6 +3,7 @@
 namespace Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP;
 
 use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManager as BaseBrewControlManager;
+use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\PumpStateMessage;
 use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\TemperatureMessage;
 
 /**
@@ -12,6 +13,7 @@ class BrewControlManager extends BaseBrewControlManager
 {
     // @todo dynamic route, because current class does not have knowledge about the whole infrastructure
     const ROUTE_MASHER_SET_TEMP = 'brewery.brewhouse01.masher.set_temp';
+    const ROUTE_PUMP_SET_STATE = 'brewery.brewhouse01.pump.set_state';
 
     /**
      * @var Manager
@@ -33,5 +35,18 @@ class BrewControlManager extends BaseBrewControlManager
     public function setMashTemperature($value)
     {
         $this->amqpManager->publish(new TemperatureMessage($value), self::ROUTE_MASHER_SET_TEMP);
+
+        return true;
+    }
+
+    /**
+     * @param bool $value
+     * @return bool
+     */
+    public function setPumpState($value)
+    {
+        $this->amqpManager->publish(new PumpStateMessage($value), self::ROUTE_PUMP_SET_STATE);
+
+        return true;
     }
 }
