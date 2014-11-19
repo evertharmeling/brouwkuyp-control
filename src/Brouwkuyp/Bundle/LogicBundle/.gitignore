@@ -1,0 +1,7 @@
+composer.lock
+coverage
+phpunit.xml
+vendor
+Tests/App/cache/*
+Tests/App/logs/*
+Resources/public/components

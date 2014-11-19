@@ -7,6 +7,7 @@ use Brouwkuyp\Bundle\LogicBundle\Model\Operation;
 use Brouwkuyp\Bundle\LogicBundle\Model\Phase;
 use Brouwkuyp\Bundle\LogicBundle\Model\UnitProcedure;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface;
+use Brouwkuyp\Bundle\LogicBundle\Model\ObserverInterface;
 
 /**
  * BatchManager
@@ -14,7 +15,7 @@ use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface;
  * Control the chosen recipe and log all relevant information
  * during the batch.
  */
-class BatchManager
+class BatchManager implements ObserverInterface
 {
     /**
      * @var ControlRecipe
@@ -42,6 +43,11 @@ class BatchManager
     {
         echo "BatchManager::start \n";
         $this->showBatch();
+        
+        // register us as observer
+        $observablePhase = $this->recipe->getProcedure()->getCurrentUnitProcedure()->getCurrentOperation()->getCurrentPhase();
+        $observablePhase->registerObserver($this);
+        
         $this->recipe->start();
     }
 
@@ -85,8 +91,14 @@ class BatchManager
     /**
      * @return \Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface
      */
-    public function getBrewControlManager()
+    /*public function getBrewControlManager()
     {
         return $this->bcm;
+    }*/
+    
+    public function notify()
+    {
+        echo "something changed in the model \n";
+        $this->bcm->setMashTemperature(50.0);
     }
 }

@@ -15,7 +15,7 @@ use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
  * All other elements (procedures, unit procedures, and operations)
  * simply group, organize, and direct phases.
  */
-class Phase implements ExecutableInterface
+class Phase extends Observable implements ExecutableInterface
 {
     use ExecutableTrait;
 
@@ -131,42 +131,9 @@ class Phase implements ExecutableInterface
     {
         echo "     Phase::execute: '" . $this->name . "'\n";
         if ($this->started) {
+            $this->notifyObservers();
+        } else{
             throw new \Exception('Phase not started');
-        }
-
-        if (!$this->finished) {
-            $this->checkAndUpdateProgress();
-            $this->performTask();
-        }
-    }
-
-    private function checkAndUpdateProgress()
-    {
-        // @TODO
-
-        // if condition is met set finished flag
-        // and update other progress stuff
-    }
-
-    /**
-     * Performs the tasks according to the phase
-     *
-     * @throws \Exception
-     */
-    private function performTask()
-    {
-        // @TODO
-        switch ($this->type) {
-            case self::CONTROL_TEMP:
-                // call control temp on our Unit
-                echo sprintf("Setting temperature to: '%s'", $this->value) . PHP_EOL;
-                break;
-            case self::ADD_INGREDIENTS:
-                // ask operator to add the ingredients
-                echo sprintf("Please add the following ingredient: '%s'", $this->value) . PHP_EOL;
-                break;
-            default:
-                throw new \Exception('Unknown Phase type: ' . $this->type);
         }
     }
 }
