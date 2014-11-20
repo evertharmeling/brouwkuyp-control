@@ -44,10 +44,10 @@ abstract class Observable implements ObservableInterface
          * ObserverInterface
          */
         if (!is_null($this->observers)) {
-            foreach ( $this->observers as $observer ) {
-                echo "notifying one observer \n";
-                    $observer->notify();
-                }
+            foreach ( $this->observers as $observer )
+            {
+                $observer->notify();
+            }
         }
     }
 }

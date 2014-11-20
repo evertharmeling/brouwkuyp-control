@@ -3,6 +3,7 @@
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
 use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
+use Symfony\Component\Stopwatch\Stopwatch;
 
 /**
  * Phase
@@ -45,6 +46,20 @@ class Phase extends Observable implements ExecutableInterface
      * @var Operation
      */
     protected $operation;
+    
+    /**
+     * Wanted duration in seconds
+     * 
+     * @var integer
+     */
+    protected $duration;
+    
+    /**
+     * Timer for monitoring the duration
+     * 
+     * @var Stopwatch
+     */
+    protected $timer;
 
     /**
      * Set name
@@ -88,6 +103,16 @@ class Phase extends Observable implements ExecutableInterface
     {
         return $this->value;
     }
+    
+    /**
+     * Get duration
+     * 
+     * @return integer
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
 
     /**
      * Set operation
@@ -121,6 +146,9 @@ class Phase extends Observable implements ExecutableInterface
         if (!$this->started) {
             // Set flag that we are started
             $this->started = true;
+            $this->timer = new Stopwatch();
+            $this->timer->start('started');
+            $this->notifyObservers();
         }
     }
 
@@ -129,11 +157,20 @@ class Phase extends Observable implements ExecutableInterface
      */
     public function execute()
     {
-        echo "     Phase::execute: '" . $this->name . "'\n";
+        echo "     Phase::execute: '" . $this->name . PHP_EOL;
         if ($this->started) {
-            $this->notifyObservers();
+            echo sprintf("      duration: '%d'", $this->getDurationSeconds()) . PHP_EOL;
+            if($this->getDurationSeconds() > $this->duration){
+                $this->finished = true;
+            }
         } else{
             throw new \Exception('Phase not started');
         }
+    }
+    
+    private function getDurationSeconds()
+    {
+        $timerEvent = $this->timer->lap('started');
+        return ($timerEvent->getDuration()/1000);
     }
 }

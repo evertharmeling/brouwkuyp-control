@@ -51,11 +51,9 @@ class BrewCommand extends ContainerAwareCommand
 
         $output->writeln('<info>Start loop</info>');
         $output->writeln('');
-        while ($loopCount > 0) {
-            $output->writeln('Run: ' . $loopCount);
+        while ($bm->isRunning()) {
             $bm->execute();
             usleep(1000000);
-            $loopCount --;
         }
 
         $output->writeln('Done with recipe');

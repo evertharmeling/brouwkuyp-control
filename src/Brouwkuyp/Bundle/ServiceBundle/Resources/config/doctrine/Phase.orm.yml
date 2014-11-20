@@ -19,6 +19,9 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Phase:
         value:
             type:       integer
             length:     10
+        duration:
+            type:       integer
+            length:     12
 
     manyToOne:
         operation:
