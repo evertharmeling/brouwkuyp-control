@@ -1,0 +1,13 @@
+body {
+  font: normal 16px/20px "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.row {
+  display: block;
+  margin-top: 20px;
+}

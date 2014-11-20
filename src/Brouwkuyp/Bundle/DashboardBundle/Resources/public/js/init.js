@@ -1,6 +1,35 @@
-jQuery(document).ready(function() {
+/*----------------------------------------------------------------------------*\
+ $CONSOLE
+ Prevents error when console methods are not available
+ Reference: paulirish.com/2009/log-a-lightweight-wrapper-for-consolelog/
+ \*----------------------------------------------------------------------------*/
+
+(function() {
+    var method;
+    var noop = function noop() {};
+    var methods = [
+        'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
+        'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+        'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
+        'timeStamp', 'trace', 'warn'
+    ];
+    var length = methods.length;
+    var console = (window.console = window.console || {});
+
+    while (length--) {
+        method = methods[length];
+
+        // Only stub undefined methods.
+        if (!console[method]) {
+            console[method] = noop;
+        }
+    }
+}());
+
+$(document).ready(function(){
     chart.init();
     client.init();
+    pumpSwitches.init();
 });
 
 var chart = {
@@ -102,7 +131,7 @@ var chart = {
                         }
                     },
                     legend: {
-                        enabled: false
+                        enabled: true
                     },
                     exporting: {
                         enabled: false
@@ -189,5 +218,28 @@ var client = {
 
     onDebug: function(m) {
         //console.log("STOMP DEBUG", m);
+    }
+};
+
+var pumpSwitches = {
+    init: function () {
+        $('#pump_overrule').on('click', function(e) {
+            $('.toggle-pump').toggle();
+        });
+
+        var $pump = $('#pump'),
+            $data = $pump.data();
+
+        $pump.on('click', function(e) {
+            $.post(
+                $data.url,
+                {
+                    'pump_state': $pump.is(':checked')
+                },
+                function(response) {
+                    //console.log(response);
+                }
+            );
+        });
     }
 };

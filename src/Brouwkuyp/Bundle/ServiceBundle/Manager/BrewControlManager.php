@@ -9,7 +9,13 @@ abstract class BrewControlManager implements BrewControlManagerInterface
 {
     /**
      * @param  float $value
-     * @return mixed
+     * @return bool
      */
     abstract public function setMashTemperature($value);
+
+    /**
+     * @param bool $value
+     * @return bool
+     */
+    abstract public function setPumpState($value);
 }
