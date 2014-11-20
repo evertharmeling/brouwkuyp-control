@@ -8,13 +8,13 @@ namespace Brouwkuyp\Bundle\ServiceBundle\Manager;
 interface BrewControlManagerInterface
 {
     /**
-     * @param float $value
+     * @param  float $value
      * @return bool
      */
     public function setMashTemperature($value);
 
     /**
-     * @param bool $value
+     * @param  string $value
      * @return bool
      */
     public function setPumpState($value);

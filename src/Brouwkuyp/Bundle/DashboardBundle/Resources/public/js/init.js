@@ -223,16 +223,28 @@ var client = {
 
 var pumpSwitches = {
     init: function () {
-        $('#pump_overrule').on('click', function(e) {
-            $('.toggle-pump').toggle();
-        });
+        var $pumpAutomatic = $('#pump_automatic'),
+            $pump = $('#pump'),
+            $pumpData = $pump.data();
 
-        var $pump = $('#pump'),
-            $data = $pump.data();
+        $pumpAutomatic.on('click', function(e) {
+            $('.toggle-pump').toggle();
+            if ($pumpAutomatic.is(':checked')) {
+                $.post(
+                    $pumpData.url,
+                    {
+                        'pump_state': 'automatic'
+                    },
+                    function(response) {
+                        //console.log(response);
+                    }
+                );
+            }
+        });
 
         $pump.on('click', function(e) {
             $.post(
-                $data.url,
+                $pumpData.url,
                 {
                     'pump_state': $pump.is(':checked')
                 },

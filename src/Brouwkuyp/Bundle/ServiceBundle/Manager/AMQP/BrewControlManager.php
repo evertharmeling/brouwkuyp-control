@@ -29,8 +29,8 @@ class BrewControlManager extends BaseBrewControlManager
     }
 
     /**
-     * @param  float      $value
-     * @return mixed|void
+     * @param  float $value
+     * @return bool
      */
     public function setMashTemperature($value)
     {
@@ -40,7 +40,7 @@ class BrewControlManager extends BaseBrewControlManager
     }
 
     /**
-     * @param bool $value
+     * @param  string $value
      * @return bool
      */
     public function setPumpState($value)
