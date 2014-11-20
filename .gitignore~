@@ -13,4 +13,5 @@
 .buildpath
 .project
 .settings
+.lock
 
