@@ -2,6 +2,7 @@
 
 namespace Brouwkuyp\Bundle\DashboardBundle\Controller;
 
+use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Pump;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,7 +21,18 @@ class AsyncController extends Controller
         ];
 
         if ($request->request->has('pump_state')) {
-            if ($this->getBrewControlManager()->setPumpState($request->request->get('pump_state'))) {
+            switch ($request->request->get('pump_state')) {
+                case 'true':
+                    $state = Pump::STATE_ON;
+                    break;
+                case 'false':
+                    $state = Pump::STATE_OFF;
+                    break;
+                default:
+                    $state = Pump::STATE_AUTOMATIC;
+            }
+
+            if ($this->getBrewControlManager()->setPumpState($state)) {
                 $data['message'] = 'success';
             } else {
                 $data['message'] = 'error';

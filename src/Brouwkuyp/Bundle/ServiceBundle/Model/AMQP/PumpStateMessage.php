@@ -2,6 +2,7 @@
 
 namespace Brouwkuyp\Bundle\ServiceBundle\Model\AMQP;
 
+use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Pump;
 use PhpAmqpLib\Message\AMQPMessage;
 
 /**
@@ -10,11 +11,15 @@ use PhpAmqpLib\Message\AMQPMessage;
 class PumpStateMessage extends AMQPMessage
 {
     /**
-     * @param bool $value
-     * @param array $properties
+     * @param string $value
+     * @param array  $properties
      */
     public function __construct($value, array $properties = null)
     {
-        parent::__construct((bool) $value, $properties);
+        if (!in_array($value, Pump::getPossibleStates())) {
+            throw new \InvalidArgumentException(sprintf("'%s' is not a valid pump state", $value));
+        }
+
+        parent::__construct($value, $properties);
     }
 }
