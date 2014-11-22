@@ -1,14 +1,17 @@
 <?php
 
-namespace Brouwkuyp\Bundle\LogicBundle\Model;
+namespace Brouwkuyp\Bundle\LogicBundle\Model\Equipment;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Brouwkuyp\Bundle\LogicBundle\Model\UnitProcedure;
 
 /**
  * Unit
  */
 class Unit
 {
+    const TYPE_MASHER = 'Masher';
+    
     /**
      * @var string
      */

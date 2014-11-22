@@ -4,6 +4,7 @@ namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
 use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
+use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Unit;
 
 /**
  * UnitProcedure

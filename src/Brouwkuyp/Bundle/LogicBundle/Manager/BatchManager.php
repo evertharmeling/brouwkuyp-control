@@ -24,10 +24,9 @@ class BatchManager implements ObserverInterface
     private $recipe;
     
     /**
-     *
-     * @var BrewControlManagerInterface
+     * @var EquipmentManager
      */
-    private $bcm;
+    private $equipmentManager;
     
     /**
      *
@@ -39,10 +38,10 @@ class BatchManager implements ObserverInterface
      *
      * @param ControlRecipe $recipe            
      */
-    public function __construct(ControlRecipe $recipe, BrewControlManagerInterface $bcm)
+    public function __construct(ControlRecipe $recipe, EquipmentManager $em)
     {
         $this->recipe = $recipe;
-        $this->bcm = $bcm;
+        $this->equipmentManager = $em;
     }
 
     /**
@@ -117,7 +116,7 @@ class BatchManager implements ObserverInterface
         // Phase changed
         $this->observablePhase = $this->recipe->getProcedure()->getCurrentUnitProcedure()->getCurrentOperation()->getCurrentPhase();
         // Execute task for this Phase
-        $this->performTaskForPhase();
+        $this->equipmentManager->performTaskFor($this->observablePhase);
     }
 
     /**
@@ -138,17 +137,6 @@ class BatchManager implements ObserverInterface
                     $observable->registerObserver($this);
                 }
             }
-        }
-    }
-
-    private function performTaskForPhase()
-    {
-        if ($this->observablePhase->getType() == Phase::CONTROL_TEMP) {
-            $this->bcm->setMashTemperature($this->observablePhase->getValue());
-        } else if ($this->observablePhase->getType() == Phase::ADD_INGREDIENTS) {
-            echo sprintf("Operator, add the following ingredients: '%s'", $this->observablePhase->getValue()) . PHP_EOL;
-        } else {
-            throw new \Exception('Unknown Phase type');
         }
     }
 }

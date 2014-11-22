@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Brouwkuyp\Bundle\LogicBundle\Manager\EquipmentManager;
 
 /**
  * BrewCommand
@@ -40,11 +41,13 @@ class BrewCommand extends ContainerAwareCommand
         $rcm = $this->getContainer()->get('brouwkuyp_logic.manager.recipe_control');
         /** @var BrewControlManagerInterface */
         $bcm = $this->getContainer()->get('brouwkuyp_service.manager.brew_control');
+        /** @var EquipmentManager */
+        $em = new EquipmentManager($bcm);
         
         $output->writeln('Loading recipe: ' . $input->getArgument('recipe'));
         /** @var BatchManager $bm */
         // Eventually change the argument to optional to be able to resume an active recipe
-        $bm = new BatchManager($rcm->load($input->getArgument('recipe')), $bcm);
+        $bm = new BatchManager($rcm->load($input->getArgument('recipe')), $em);
         
         $output->writeln('Starting batch');
         $bm->start();

@@ -2,7 +2,7 @@
 
 namespace Brouwkuyp\Bundle\ServiceBundle\Entity;
 
-use Brouwkuyp\Bundle\LogicBundle\Model\Unit as BaseUnit;
+use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Unit as BaseUnit;
 
 /**
  * Unit
