@@ -34,9 +34,7 @@ class BrewControlManager extends BaseBrewControlManager
      */
     public function setMashTemperature($value)
     {
-        $this->amqpManager->publish(new TemperatureMessage($value), self::ROUTE_MASHER_SET_TEMP);
-
-        return true;
+        return $this->amqpManager->publish(new TemperatureMessage($value), self::ROUTE_MASHER_SET_TEMP);
     }
 
     /**
@@ -45,8 +43,6 @@ class BrewControlManager extends BaseBrewControlManager
      */
     public function setPumpState($value)
     {
-        $this->amqpManager->publish(new PumpStateMessage($value), self::ROUTE_PUMP_SET_STATE);
-
-        return true;
+        return $this->amqpManager->publish(new PumpStateMessage($value), self::ROUTE_PUMP_SET_STATE);
     }
 }
