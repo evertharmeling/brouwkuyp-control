@@ -4,12 +4,13 @@ namespace Brouwkuyp\Bundle\ServiceBundle\Tests\Manager\AMQP;
 
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\BrewControlManager;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
+use Brouwkuyp\Bundle\ServiceBundle\Test\AMQP\AMQPTestCase;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 /**
  * @author Evert Harmeling <evertharmeling@gmail.com>
  */
-class BrewControlManagerTest extends \PHPUnit_Framework_TestCase
+class BrewControlManagerTest extends AMQPTestCase
 {
     /**
      * @var BrewControlManager
@@ -20,12 +21,11 @@ class BrewControlManagerTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $manager = new Manager(new AMQPStreamConnection('localhost', 5672, 'guest', 'guest'));
-        $this->brewControlManager = new BrewControlManager($manager);
+        $this->brewControlManager = new BrewControlManager(new Manager($this->conn));
     }
 
     public function testPublish()
     {
-        $this->brewControlManager->setMashTemperature(62);
+        $this->assertTrue($this->brewControlManager->setMashTemperature(62));
     }
 }

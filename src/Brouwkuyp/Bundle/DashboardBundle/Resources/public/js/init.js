@@ -192,6 +192,7 @@ var client = {
             $client.subscribe("/topic/" + $data.topicMltSet, function (d) {
                 var $value = parseFloat(d.body);
                 updateTemperature('mlt', $value, 'set');
+                // @todo store set temps and be able to add plotBands (maisch steps)
             });
             // BLT
             $client.subscribe("/topic/" + $data.topicBltCurr, function (d) {

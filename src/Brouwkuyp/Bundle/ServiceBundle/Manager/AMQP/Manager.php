@@ -53,16 +53,25 @@ class Manager
 
     /**
      * @param AMQPMessage $message
-     * @param string      $routingKey
+     * @param string $routingKey
+     * @return bool
      */
     public function publish(AMQPMessage $message, $routingKey = '')
     {
-        // @todo add error handling (try, catch) and return value
         $this->getLogger()->info('amqp.publish', [
             'route' => $routingKey,
             'value' => $message->body
         ]);
-        $this->channel->basic_publish($message, self::CHANNEL_NAME, $routingKey);
+
+        try {
+            $this->channel->basic_publish($message, self::CHANNEL_NAME, $routingKey);
+
+            return true;
+        } catch (\Exception $e) {
+            $this->getLogger()->error($e->getMessage());
+
+            return false;
+        }
     }
 
     /**
@@ -98,7 +107,7 @@ class Manager
     public function close()
     {
         $this->channel->close();
-        $this->conn->close();
+        return (bool) $this->conn->close();
     }
 
     /**

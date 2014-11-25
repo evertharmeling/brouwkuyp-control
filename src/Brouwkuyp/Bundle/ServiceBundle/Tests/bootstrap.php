@@ -10,3 +10,12 @@ composer install
 EOT
     );
 }
+
+spl_autoload_register(function($class)
+{
+    if (0 === strpos($class, 'Brouwkuyp\\Bundle\\LogicBundle\\')) {
+        $path = implode('/', array_slice(explode('\\', $class), 3)) . '.php';
+        require_once __DIR__ . '/../../LogicBundle/' . $path;
+        return true;
+    }
+});
