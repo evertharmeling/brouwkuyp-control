@@ -200,6 +200,15 @@ var client = {
                 addToGraph($el, 2, $value);
                 updateTemperature('blt', $value);
             });
+            // PUMP
+            $client.subscribe("/topic/" + $data.topicPumpCurrMode, function (d) {
+                var $value = (d.body == 'automatic');
+                updatePumpMode($value);
+            });
+            $client.subscribe("/topic/" + $data.topicPumpCurrState, function (d) {
+                var $value = (d.body == 'true');
+                updatePumpState($value);
+            });
         }
 
         function addToGraph($el, $sensor, $temperature) {
@@ -210,6 +219,24 @@ var client = {
         function updateTemperature($sensor, $temperature, $action) {
             $action = typeof $action !== 'undefined' ? $action : 'curr';
             $('#temp-' + $action + '-' + $sensor).text($temperature + ' °C');
+        }
+
+        function updatePumpMode($state) {
+            var $el = $('#pump_automatic');
+            if ($state) {
+                $el.prop('checked', true);
+            } else {
+                $el.prop('checked', false);
+            }
+        }
+
+        function updatePumpState($state) {
+            $el = $('#pump');
+            if ($state) {
+                $el.prop('checked', true);
+            } else {
+                $el.prop('checked', false);
+            }
         }
     },
 

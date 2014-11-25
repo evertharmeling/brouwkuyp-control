@@ -67,7 +67,8 @@ class ConsumeCommand extends ContainerAwareCommand
             );
         };
 
-        $manager->consume($callback, 'brewery.#.masher.#');
+//        $manager->consume($callback, 'brewery.#.masher.#');
+        $manager->consume($callback, 'brewery.#');
 
         while ($manager->receive()) {
             $manager->wait();

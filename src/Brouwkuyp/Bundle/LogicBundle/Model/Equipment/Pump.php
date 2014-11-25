@@ -13,6 +13,9 @@ class Pump
     const STATE_OFF         = 'off';
     const STATE_AUTOMATIC   = 'automatic';
 
+    const MODE_AUTOMATIC    = 'automatic';
+    const MODE_MANUAL       = 'manual';
+
     /**
      * Returns possible pump states
      *
