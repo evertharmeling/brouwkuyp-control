@@ -79,4 +79,37 @@ class ControlRecipe extends BaseControlRecipe
     {
         return $this->remarks;
     }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return ControlRecipe
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get procedure
+     *
+     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\Procedure 
+     */
+    public function getProcedure()
+    {
+        return $this->procedure;
+    }
 }

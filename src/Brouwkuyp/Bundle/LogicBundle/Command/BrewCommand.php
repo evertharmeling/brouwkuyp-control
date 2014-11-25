@@ -18,47 +18,86 @@ use Brouwkuyp\Bundle\LogicBundle\Manager\EquipmentManager;
 class BrewCommand extends ContainerAwareCommand
 {
     const SET_TEMP = 'brewery.brewhouse01.masher.set_temp';
+    
+    /**
+     * @var EntityManager
+     */
+    private $em;
 
     protected function configure()
     {
-        $this->setName('brouwkuyp:brew')->setDescription('Start the brewing of beer!');
-        $this->addArgument('recipe', InputArgument::REQUIRED, 'Recipe to load');
+        $this->setName('brouwkuyp:brew')->setDescription(
+                'Start the brewing of beer!');
+        $this->addArgument('recipe', InputArgument::REQUIRED, 
+                'Recipe to load');
     }
 
     /**
-     * @param  InputInterface  $input
-     * @param  OutputInterface $output
+     *
+     * @param InputInterface $input            
+     * @param OutputInterface $output            
      * @return int|null|void
      * @throws \Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $loopCount = 100;
-
+        
         $output->writeln(PHP_EOL);
         $output->writeln('Creating RecipeControlManager');
-        /** @var RecipeControlManager  $rcm */
-        $rcm = $this->getContainer()->get('brouwkuyp_logic.manager.recipe_control');
-        /** @var BrewControlManagerInterface */
-        $bcm = $this->getContainer()->get('brouwkuyp_service.manager.brew_control');
-        /** @var EquipmentManager */
-        $em = new EquipmentManager($bcm);
+        /**
+         *
+         * @var RecipeControlManager $rcm
+         */
+        $rcm = $this->getContainer()->get(
+                'brouwkuyp_logic.manager.recipe_control');
+        /**
+         *
+         * @var BrewControlManagerInterface
+         */
+        $bcm = $this->getContainer()->get(
+                'brouwkuyp_service.manager.brew_control');
+        /**
+         *
+         * @var EquipmentManager
+         */
+        $equipmentManager = new EquipmentManager($bcm);
         
-        $output->writeln('Loading recipe: ' . $input->getArgument('recipe'));
-        /** @var BatchManager $bm */
-        // Eventually change the argument to optional to be able to resume an active recipe
-        $bm = new BatchManager($rcm->load($input->getArgument('recipe')), $em);
+        $output->writeln(
+                'Loading recipe: ' . $input->getArgument('recipe'));
+        /**
+         *
+         * @var BatchManager $bm
+         */
+        $bm = new BatchManager($this->getEntityManager(),$equipmentManager);
+        $batch = $bm->createBatch($rcm->load($input->getArgument('recipe')));
+        $bm->start($batch);
         
-        $output->writeln('Starting batch');
-        $bm->start();
-
-        $output->writeln('<info>Start loop</info>');
-        $output->writeln('');
-        while ($bm->isRunning()) {
+        while ( $bm->isRunning($batch) ) {
             $bm->execute();
-            usleep(1000000);
+            usleep(500000);
         }
-
+        
         $output->writeln('Done with recipe');
+    }
+
+    /**
+     * Because the EntityManager gets closed when there's an error, it needs to
+     * be created again
+     *
+     * @return EntityManager
+     * @throws ORMException
+     */
+    private function getEntityManager()
+    {
+        if (!$this->em) {
+            $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        }
+    
+        if (!$this->em->isOpen()) {
+            $this->em = $this->em->create($this->em->getConnection(), $this->em->getConfiguration());
+        }
+    
+        return $this->em;
     }
 }

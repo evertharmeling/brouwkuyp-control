@@ -8,6 +8,9 @@ use Brouwkuyp\Bundle\LogicBundle\Model\Phase;
 use Brouwkuyp\Bundle\LogicBundle\Model\UnitProcedure;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface;
 use Brouwkuyp\Bundle\LogicBundle\Model\ObserverInterface;
+use Brouwkuyp\Bundle\ServiceBundle\Entity\Batch;
+use Doctrine\ORM\EntityManager;
+use Brouwkuyp\Bundle\ServiceBundle\Doctrine\DateTime;
 
 /**
  * BatchManager
@@ -19,72 +22,109 @@ class BatchManager implements ObserverInterface
 {
     /**
      *
-     * @var ControlRecipe
-     */
-    private $recipe;
-    
-    /**
      * @var EquipmentManager
      */
     private $equipmentManager;
     
     /**
      *
+     * @var EntityManager
+     */
+    private $entityManager;
+    
+    /**
+     *
      * @var Phase
      */
     private $observablePhase;
-
+    
     /**
      *
-     * @param ControlRecipe $recipe            
+     * @var Batch
      */
-    public function __construct(ControlRecipe $recipe, EquipmentManager $em)
+    private $batch;
+
+    /**
+     * @param EntityManager $entityManager
+     * @param EquipmentManager $equipmentManager
+     */
+    public function __construct(EntityManager $entityManager, EquipmentManager $equipmentManager)
+    
     {
-        $this->recipe = $recipe;
-        $this->equipmentManager = $em;
+        $this->entityManager = $entityManager;
+        $this->equipmentManager = $equipmentManager;
+    }
+
+    /**
+     * Create a batch from a Recipe.
+     *
+     * @param ControlRecipe $recipe 
+     * @return Batch           
+     */
+    public function createBatch(ControlRecipe $recipe)
+    {
+        $this->batch = new Batch($recipe);
+        $this->batch->setCreatedAt(new DateTime());
+        $this->entityManager->persist($this->batch);
+        $this->entityManager->flush();
+        return $this->batch;
     }
 
     /**
      * Starts the recipe that is loaded
      */
-    public function start()
+    public function start(Batch $batch = NULL)
     {
-        echo "BatchManager::start \n";
+        if(is_null($batch)){
+            $batch = $this->batch;
+        }
         // Print recipe
-        $this->showBatch();
+        $this->showBatch($batch);
         
         // register us as observer
         $this->registerOnPhases();
         
         // Start the procedure to follow this recipe
-        $this->recipe->start();
+        $batch->start();
     }
 
     /**
-     * Executes current active recipe
+     * Executes a given batch or the current active batch.
      */
-    public function execute()
+    public function execute(Batch $batch = NULL)
     {
-        echo "\nBatchManager::execute \n";
-        $this->recipe->execute();
+        if(is_null($batch)){
+            $batch = $this->batch;
+        }
+        $batch->execute();
     }
 
     /**
      * Outputs batch and recipe information
+     *
+     * @param Batch $batch            
      */
-    public function showBatch()
+    public function showBatch(Batch $batch = NULL)
     {
-        echo PHP_EOL . "*********************************************" . PHP_EOL;
-        echo sprintf("Recipe: '%s'", $this->recipe->getName()) . PHP_EOL;
-        echo sprintf(" Procedure: '%s'", $this->recipe->getProcedure()->getName()) . PHP_EOL;
+        if(is_null($batch)){
+            $batch = $this->batch;
+        }
+        echo PHP_EOL . "*********************************************" .
+                 PHP_EOL;
+        echo sprintf("Recipe: '%s'", $batch->getRecipe()->getName()) .
+                 PHP_EOL;
+        echo sprintf(" Procedure: '%s'", 
+                $batch->getRecipe()->getProcedure()->getName()) .
+                 PHP_EOL;
         echo "  UnitProcedures: " . PHP_EOL;
         /**
          *
          * @var UnitProcedure $up
          */
-        foreach ( $this->recipe->getProcedure()->getUnitProcedures() as $up ) {
+        foreach ( $batch->getRecipe()->getProcedure()->getUnitProcedures() as $up ) {
             echo sprintf("   UP: '%s'", $up->getName()) . PHP_EOL;
-            echo sprintf("    Unit: '%s'", $up->getUnit()->getName()) . PHP_EOL;
+            echo sprintf("    Unit: '%s'", $up->getUnit()->getName()) .
+                     PHP_EOL;
             echo "    Operations: " . PHP_EOL;
             /**
              *
@@ -97,26 +137,34 @@ class BatchManager implements ObserverInterface
                  * @var Phase $phase
                  */
                 foreach ( $op->getPhases() as $phase ) {
-                    echo sprintf("      Phase:  '%s'", $phase->getName()) . PHP_EOL;
-                    echo sprintf("       type:  '%s'", $phase->getType()) . PHP_EOL;
-                    echo sprintf("       value: '%s'", $phase->getValue()) . PHP_EOL;
-                    echo sprintf("       duration: '%s'", $phase->getDuration()) . PHP_EOL;
+                    echo sprintf("      Phase:  '%s'", 
+                            $phase->getName()) . PHP_EOL;
+                    echo sprintf("       type:  '%s'", 
+                            $phase->getType()) . PHP_EOL;
+                    echo sprintf("       value: '%s'", 
+                            $phase->getValue()) . PHP_EOL;
+                    echo sprintf("       duration: '%s'", 
+                            $phase->getDuration()) . PHP_EOL;
                 }
             }
         }
-        echo "*********************************************" . PHP_EOL . PHP_EOL;
+        echo "*********************************************" . PHP_EOL .
+                 PHP_EOL;
     }
 
     /**
+     * We're being notified so save the current Phase and
+     * let the equipment perform the task that is needed to execute the Phase.
      *
      * @see \Brouwkuyp\Bundle\LogicBundle\Model\ObserverInterface::notify()
      */
     public function notify()
     {
-        // Phase changed
-        $this->observablePhase = $this->recipe->getProcedure()->getCurrentUnitProcedure()->getCurrentOperation()->getCurrentPhase();
+        // Maybe Phase changed
+        $this->observablePhase = $this->batch->getRecipe()->getProcedure()->getCurrentUnitProcedure()->getCurrentOperation()->getCurrentPhase();
         // Execute task for this Phase
-        $this->equipmentManager->performTaskFor($this->observablePhase);
+        $this->equipmentManager->performTaskFor(
+                $this->observablePhase);
     }
 
     /**
@@ -124,14 +172,20 @@ class BatchManager implements ObserverInterface
      *
      * @var bool
      */
-    public function isRunning()
+    public function isRunning(Batch $batch = NULL)
     {
-        return ($this->recipe->isStarted() && !$this->recipe->isFinished());
+        if(is_null($batch)){
+            $batch = $this->batch;
+        }
+        return ($batch->isStarted() && !$batch->isFinished());
     }
 
+    /**
+     * Registers this BatchManager on all Phases as an observer
+     */
     private function registerOnPhases()
     {
-        foreach ( $this->recipe->getProcedure()->getUnitProcedures() as $up ) {
+        foreach ( $this->batch->getRecipe()->getProcedure()->getUnitProcedures() as $up ) {
             foreach ( $up->getOperations() as $op ) {
                 foreach ( $op->getPhases() as $observable ) {
                     $observable->registerObserver($this);

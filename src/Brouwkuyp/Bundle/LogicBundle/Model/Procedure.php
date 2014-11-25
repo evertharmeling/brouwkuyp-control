@@ -15,18 +15,19 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Procedure implements ExecutableInterface
 {
     use ExecutableTrait;
-
+    
     /**
      *
      * @var string
      */
     protected $name;
-
+    
     /**
+     *
      * @var ControlRecipe
      */
     protected $controlRecipe;
-
+    
     /**
      * Collection of UnitProcedure
      *
@@ -44,13 +45,13 @@ class Procedure implements ExecutableInterface
     /**
      * Set name
      *
-     * @param  string    $name
+     * @param string $name            
      * @return Procedure
      */
     public function setName($name)
     {
         $this->name = $name;
-
+        
         return $this;
     }
 
@@ -67,13 +68,13 @@ class Procedure implements ExecutableInterface
     /**
      * Set ControlRecipe
      *
-     * @param  ControlRecipe $controlRecipe
+     * @param ControlRecipe $controlRecipe            
      * @return Procedure
      */
     public function setControlRecipe(ControlRecipe $controlRecipe = null)
     {
         $this->controlRecipe = $controlRecipe;
-
+        
         return $this;
     }
 
@@ -90,20 +91,20 @@ class Procedure implements ExecutableInterface
     /**
      * Add UnitProcedure
      *
-     * @param  UnitProcedure $unitProcedure
+     * @param UnitProcedure $unitProcedure            
      * @return Procedure
      */
     public function addUnitprocedure(UnitProcedure $unitProcedure)
     {
-        $this->unitProcedures[] = $unitProcedure;
-
+        $this->unitProcedures [] = $unitProcedure;
+        
         return $this;
     }
 
     /**
      * Remove UnitProcedure
      *
-     * @param UnitProcedure $unitProcedure
+     * @param UnitProcedure $unitProcedure            
      */
     public function removeUnitProcedure(UnitProcedure $unitProcedure)
     {
@@ -121,16 +122,17 @@ class Procedure implements ExecutableInterface
     }
 
     /**
+     *
      * @see ExecutableInterface::start()
      */
     public function start()
     {
-        echo "  Procedure::start \n";
-
-        if (! $this->started) {
+        echo 'Procedure::start' . PHP_EOL;
+        
+        if (!$this->started) {
             // Set flag that we are started
             $this->started = true;
-
+            
             // Start first UnitProcedure
             if ($this->unitProcedures->count()) {
                 $this->unitProcedures->first()->start();
@@ -144,18 +146,16 @@ class Procedure implements ExecutableInterface
      */
     public function execute()
     {
-        echo "  Procedure::execute \n";
-
         if (!$this->isStarted()) {
             throw new \Exception('Procedure not started');
         }
-
+        
         if (!$this->getCurrentUnitProcedure()) {
             $this->finished = true;
-
+            
             return;
         }
-
+        
         // Start the next unit procedure?
         if ($this->getCurrentUnitProcedure()->isFinished()) {
             // Go to next unit procedure if possible
@@ -168,13 +168,15 @@ class Procedure implements ExecutableInterface
             }
         }
         // Execute
-        if (!$this->finished && $this->getCurrentUnitProcedure()->isStarted()) {
+        if (!$this->finished &&
+                 $this->getCurrentUnitProcedure()->isStarted()) {
             // Perform unit procedure
             $this->getCurrentUnitProcedure()->execute();
         }
     }
 
     /**
+     *
      * @return UnitProcedure|false
      */
     public function getCurrentUnitProcedure()
