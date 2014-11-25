@@ -83,7 +83,7 @@ class ControlRecipe extends BaseControlRecipe
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string        $name
      * @return ControlRecipe
      */
     public function setName($name)
@@ -96,7 +96,7 @@ class ControlRecipe extends BaseControlRecipe
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -106,7 +106,7 @@ class ControlRecipe extends BaseControlRecipe
     /**
      * Get procedure
      *
-     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\Procedure 
+     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\Procedure
      */
     public function getProcedure()
     {

@@ -11,13 +11,13 @@ use Brouwkuyp\Bundle\ServiceBundle\Doctrine\DateTime;
 class Batch extends BaseBatch
 {
     /**
-     * 
+     *
      * @var integer
      */
     protected $id;
-    
+
     /**
-     * 
+     *
      * @var DateTime
      */
     protected $creationAt;
@@ -25,7 +25,7 @@ class Batch extends BaseBatch
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -35,7 +35,7 @@ class Batch extends BaseBatch
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param  \DateTime $createdAt
      * @return Batch
      */
     public function setCreatedAt($createdAt)
@@ -48,7 +48,7 @@ class Batch extends BaseBatch
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -58,7 +58,7 @@ class Batch extends BaseBatch
     /**
      * Set control_recipe
      *
-     * @param \Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe $controlRecipe
+     * @param  \Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe $controlRecipe
      * @return Batch
      */
     public function setControlRecipe(\Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe $controlRecipe = null)
@@ -71,7 +71,7 @@ class Batch extends BaseBatch
     /**
      * Get control_recipe
      *
-     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe 
+     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe
      */
     public function getControlRecipe()
     {
@@ -81,7 +81,7 @@ class Batch extends BaseBatch
     /**
      * Set master_recipe
      *
-     * @param \Brouwkuyp\Bundle\ServiceBundle\Entity\MasterRecipe $masterRecipe
+     * @param  \Brouwkuyp\Bundle\ServiceBundle\Entity\MasterRecipe $masterRecipe
      * @return Batch
      */
     public function setMasterRecipe(\Brouwkuyp\Bundle\ServiceBundle\Entity\MasterRecipe $masterRecipe = null)
@@ -94,7 +94,7 @@ class Batch extends BaseBatch
     /**
      * Get master_recipe
      *
-     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\MasterRecipe 
+     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\MasterRecipe
      */
     public function getMasterRecipe()
     {

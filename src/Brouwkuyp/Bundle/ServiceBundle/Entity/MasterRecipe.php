@@ -27,7 +27,7 @@ class MasterRecipe extends BaseMasterRecipe
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string       $name
      * @return MasterRecipe
      */
     public function setName($name)
@@ -40,7 +40,7 @@ class MasterRecipe extends BaseMasterRecipe
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {

@@ -23,7 +23,7 @@ class Operation extends BaseOperation
     {
         return $this->id;
     }
- 
+
     /**
      * Constructor
      */
@@ -35,7 +35,7 @@ class Operation extends BaseOperation
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string    $name
      * @return Operation
      */
     public function setName($name)
@@ -48,7 +48,7 @@ class Operation extends BaseOperation
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -58,7 +58,7 @@ class Operation extends BaseOperation
     /**
      * Get phases
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPhases()
     {
@@ -68,7 +68,7 @@ class Operation extends BaseOperation
     /**
      * Get unitProcedure
      *
-     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\UnitProcedure 
+     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\UnitProcedure
      */
     public function getUnitProcedure()
     {

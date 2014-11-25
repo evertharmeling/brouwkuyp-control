@@ -12,20 +12,20 @@ class Batch implements ExecutableInterface
      * @var ControlRecipe
      */
     protected $control_recipe;
-    
+
     /**
      * Timer for monitoring the duration
      *
      * @var Stopwatch
      */
     protected $timer;
-    
+
     /**
      * Creation date and time
      * @var DateTime
      */
     protected $createdAt;
-    
+
     /**
      * Construct the batch corresponding to the selected Recipe.
      * @param ControlRecipe $recipe
@@ -46,11 +46,11 @@ class Batch implements ExecutableInterface
         if (is_null($this->control_recipe)) {
             throw new \Exception('No Recipe for this Batch');
         }
-        
+
         if ($this->control_recipe->isFinished()) {
             throw new \Exception('Procedure already finished');
         }
-        
+
         $this->control_recipe->start();
     }
 
@@ -64,7 +64,7 @@ class Batch implements ExecutableInterface
         if (is_null($this->control_recipe)) {
             throw new \Exception('No Recipe for this Batch');
         }
-        
+
         if (!$this->control_recipe->isFinished()) {
             $this->control_recipe->execute();
         } else {
@@ -93,13 +93,13 @@ class Batch implements ExecutableInterface
     /**
      * Set ControlRecipe
      *
-     * @param ControlRecipe $recipe            
+     * @param  ControlRecipe $recipe
      * @return Batch
      */
     public function setRecipe(ControlRecipe $recipe)
     {
         $this->control_recipe = $recipe;
-        
+
         return $this;
     }
 

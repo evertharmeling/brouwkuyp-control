@@ -35,7 +35,7 @@ class UnitProcedure extends BaseUnitProcedure
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string        $name
      * @return UnitProcedure
      */
     public function setName($name)
@@ -48,7 +48,7 @@ class UnitProcedure extends BaseUnitProcedure
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -58,7 +58,7 @@ class UnitProcedure extends BaseUnitProcedure
     /**
      * Get operations
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getOperations()
     {
@@ -68,7 +68,7 @@ class UnitProcedure extends BaseUnitProcedure
     /**
      * Get procedure
      *
-     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\Procedure 
+     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\Procedure
      */
     public function getProcedure()
     {
@@ -78,7 +78,7 @@ class UnitProcedure extends BaseUnitProcedure
     /**
      * Get unit
      *
-     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\Unit 
+     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\Unit
      */
     public function getUnit()
     {

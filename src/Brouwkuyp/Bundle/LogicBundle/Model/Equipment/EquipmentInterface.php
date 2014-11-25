@@ -11,12 +11,11 @@ use Brouwkuyp\Bundle\LogicBundle\Model\Phase;
  */
 interface EquipmentInterface
 {
-
     /**
      * Perform the task that is needed for the given Phase
      * on the corresponding Unit.
-     * 
-     * @param Phase $phase            
+     *
+     * @param Phase $phase
      */
     public function performTask(Phase $phase);
 }

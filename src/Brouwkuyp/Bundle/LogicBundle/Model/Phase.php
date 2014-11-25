@@ -23,38 +23,38 @@ class Phase extends Observable implements ExecutableInterface
     const ADD_INGREDIENTS = 'add_ingredients';
     const PRINT_TIMES = 10;
     const NOTIFY_TIMES = 30;
-    
+
     /**
      *
      * @var string
      */
     protected $name;
-    
+
     /**
      *
      * @var string
      */
     protected $type;
-    
+
     /**
      *
      * @var integer
      */
     protected $value;
-    
+
     /**
      *
      * @var Operation
      */
     protected $operation;
-    
+
     /**
      * Wanted duration in seconds
      *
      * @var integer
      */
     protected $duration;
-    
+
     /**
      * Counter for the times being executed
      *
@@ -65,13 +65,13 @@ class Phase extends Observable implements ExecutableInterface
     /**
      * Set name
      *
-     * @param string $name            
+     * @param  string $name
      * @return Phase
      */
     public function setName($name)
     {
         $this->name = $name;
-        
+
         return $this;
     }
 
@@ -118,13 +118,13 @@ class Phase extends Observable implements ExecutableInterface
     /**
      * Set operation
      *
-     * @param Operation $operation            
+     * @param  Operation $operation
      * @return Phase
      */
     public function setOperation(Operation $operation = null)
     {
         $this->operation = $operation;
-        
+
         return $this;
     }
 
@@ -163,7 +163,7 @@ class Phase extends Observable implements ExecutableInterface
         if ($this->started) {
             if ($this->getDurationSeconds() > $this->duration) {
                 $this->finished = true;
-            }else{
+            } else {
                 if (($this->executed % Phase::NOTIFY_TIMES) == 0) {
                     $this->notifyObservers();
                 }
@@ -177,14 +177,15 @@ class Phase extends Observable implements ExecutableInterface
     private function getDurationSeconds()
     {
         $timerEvent = $this->timer->lap('started');
+
         return ($timerEvent->getDuration() / 1000);
     }
 
     private function printPhaseExecution()
     {
         if (($this->executed % Phase::PRINT_TIMES) == 0) {
-            echo sprintf('Phase::execute %s (%4d/%4d)', $this->name, 
-                    $this->getDurationSeconds(), $this->duration)  . PHP_EOL;
+            echo sprintf('Phase::execute %s (%4d/%4d)', $this->name,
+                    $this->getDurationSeconds(), $this->duration) . PHP_EOL;
         }
     }
 }

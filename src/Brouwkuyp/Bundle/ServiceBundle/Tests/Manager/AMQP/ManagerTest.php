@@ -5,7 +5,6 @@ namespace Brouwkuyp\Bundle\ServiceBundle\Tests\Manager\AMQP;
 use Brouwkuyp\Bundle\LogicBundle\Model\Log;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
 use Brouwkuyp\Bundle\ServiceBundle\Test\AMQP\AMQPTestCase;
-use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
 /**

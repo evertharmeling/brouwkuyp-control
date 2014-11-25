@@ -172,7 +172,7 @@ class Operation implements ExecutableInterface
             $this->phases->current()->execute();
         }
     }
-    
+
     /**
      * @return Phase|false
      */

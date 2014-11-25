@@ -83,7 +83,7 @@ class Phase extends BasePhase
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string $name
      * @return Phase
      */
     public function setName($name)
@@ -96,7 +96,7 @@ class Phase extends BasePhase
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -106,7 +106,7 @@ class Phase extends BasePhase
     /**
      * Set duration
      *
-     * @param integer $duration
+     * @param  integer $duration
      * @return Phase
      */
     public function setDuration($duration)
@@ -119,7 +119,7 @@ class Phase extends BasePhase
     /**
      * Get duration
      *
-     * @return integer 
+     * @return integer
      */
     public function getDuration()
     {
@@ -129,7 +129,7 @@ class Phase extends BasePhase
     /**
      * Get operation
      *
-     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\Operation 
+     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\Operation
      */
     public function getOperation()
     {

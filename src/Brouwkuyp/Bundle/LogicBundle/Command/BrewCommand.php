@@ -3,12 +3,12 @@
 namespace Brouwkuyp\Bundle\LogicBundle\Command;
 
 use Brouwkuyp\Bundle\LogicBundle\Manager\BatchManager;
+use Brouwkuyp\Bundle\LogicBundle\Manager\EquipmentManager;
 use Brouwkuyp\Bundle\LogicBundle\Manager\RecipeControlManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Brouwkuyp\Bundle\LogicBundle\Manager\EquipmentManager;
 
 /**
  * BrewCommand
@@ -18,7 +18,7 @@ use Brouwkuyp\Bundle\LogicBundle\Manager\EquipmentManager;
 class BrewCommand extends ContainerAwareCommand
 {
     const SET_TEMP = 'brewery.brewhouse01.masher.set_temp';
-    
+
     /**
      * @var EntityManager
      */
@@ -28,21 +28,21 @@ class BrewCommand extends ContainerAwareCommand
     {
         $this->setName('brouwkuyp:brew')->setDescription(
                 'Start the brewing of beer!');
-        $this->addArgument('recipe', InputArgument::REQUIRED, 
+        $this->addArgument('recipe', InputArgument::REQUIRED,
                 'Recipe to load');
     }
 
     /**
      *
-     * @param InputInterface $input            
-     * @param OutputInterface $output            
+     * @param  InputInterface  $input
+     * @param  OutputInterface $output
      * @return int|null|void
      * @throws \Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $loopCount = 100;
-        
+
         $output->writeln(PHP_EOL);
         $output->writeln('Creating RecipeControlManager');
         /**
@@ -62,22 +62,22 @@ class BrewCommand extends ContainerAwareCommand
          * @var EquipmentManager
          */
         $equipmentManager = new EquipmentManager($bcm);
-        
+
         $output->writeln(
                 'Loading recipe: ' . $input->getArgument('recipe'));
         /**
          *
          * @var BatchManager $bm
          */
-        $bm = new BatchManager($this->getEntityManager(),$equipmentManager);
+        $bm = new BatchManager($this->getEntityManager(), $equipmentManager);
         $batch = $bm->createBatch($rcm->load($input->getArgument('recipe')));
         $bm->start($batch);
-        
-        while ( $bm->isRunning($batch) ) {
+
+        while ($bm->isRunning($batch)) {
             $bm->execute();
             usleep(500000);
         }
-        
+
         $output->writeln('Done with recipe');
     }
 
@@ -93,11 +93,11 @@ class BrewCommand extends ContainerAwareCommand
         if (!$this->em) {
             $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
         }
-    
+
         if (!$this->em->isOpen()) {
             $this->em = $this->em->create($this->em->getConnection(), $this->em->getConfiguration());
         }
-    
+
         return $this->em;
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Tests\Model;
 
-use Brouwkuyp\Bundle\LogicBundle\Model\Observer;
 use Brouwkuyp\Bundle\LogicBundle\Model\Observable;
+use Brouwkuyp\Bundle\LogicBundle\Model\Observer;
 
 /**
  * Tests the abstract Observable class
@@ -15,7 +15,7 @@ class ObservableTest extends \PHPUnit_Framework_TestCase
      * @var TestObservable
      */
     private $observable;
-    
+
     /**
      *
      * @var TestObserver
@@ -25,7 +25,7 @@ class ObservableTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        
+
         $this->observer = new TestObserver();
         $this->observable = new TestObservable();
     }

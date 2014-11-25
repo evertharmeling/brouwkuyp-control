@@ -35,7 +35,7 @@ class Unit extends BaseUnit
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string $name
      * @return Unit
      */
     public function setName($name)
@@ -48,7 +48,7 @@ class Unit extends BaseUnit
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -58,7 +58,7 @@ class Unit extends BaseUnit
     /**
      * Get unitProcedures
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUnitProcedures()
     {

@@ -40,7 +40,7 @@ class Procedure extends BaseProcedure
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string    $name
      * @return Procedure
      */
     public function setName($name)
@@ -53,7 +53,7 @@ class Procedure extends BaseProcedure
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -63,7 +63,7 @@ class Procedure extends BaseProcedure
     /**
      * Get controlRecipe
      *
-     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe 
+     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe
      */
     public function getControlRecipe()
     {
@@ -73,7 +73,7 @@ class Procedure extends BaseProcedure
     /**
      * Get unitProcedures
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUnitProcedures()
     {

@@ -2,11 +2,11 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Manager;
 
-use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface;
+use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\EquipmentInterface;
+use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\MLT;
 use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Unit;
 use Brouwkuyp\Bundle\LogicBundle\Model\Phase;
-use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\MLT;
-use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\EquipmentInterface;
+use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface;
 
 class EquipmentManager
 {
@@ -18,7 +18,7 @@ class EquipmentManager
 
     /**
      *
-     * @param BrewControlManagerInterface $bcm            
+     * @param BrewControlManagerInterface $bcm
      */
     public function __construct(BrewControlManagerInterface $bcm)
     {
@@ -27,7 +27,7 @@ class EquipmentManager
 
     /**
      * Performs the Task needed for the given PHase
-     * 
+     *
      * @param Phase $phase
      */
     public function performTaskFor(Phase $phase)
@@ -38,18 +38,19 @@ class EquipmentManager
     }
 
     /**
-     * 
-     * @param Unit $unit
+     *
+     * @param  Unit               $unit
      * @return EquipmentInterface
      */
     private function getEquipmentOf(Unit $unit)
     {
-        $equipment = NULL;
+        $equipment = null;
         // TODO: cache units and equipment
         // TODO: Unit can have multiple equipment
         if ($unit->getName() == Unit::TYPE_MASHER) {
             $equipment = new MLT($this->bcm);
         }
+
         return $equipment;
     }
 }
