@@ -49,13 +49,13 @@ var chart = {
                     var $value = parseFloat(log.value);
 
                     switch (log.topic) {
-                        case $data.topicHltCurr:
+                        case $data.topicHltCurrTemp:
                             $hltLogs[$hltLogs.length] = [log.time, $value];
                             break;
-                        case $data.topicMltCurr:
+                        case $data.topicMltCurrTemp:
                             $mltLogs[$mltLogs.length] = [log.time, $value];
                             break;
-                        case $data.topicBltCurr:
+                        case $data.topicBltCurrTemp:
                             $bltLogs[$bltLogs.length] = [log.time, $value];
                             break;
                         default:
@@ -178,24 +178,24 @@ var client = {
             $data = $el.data();
 
             // HLT
-            $client.subscribe("/topic/" + $data.topicHltCurr, function (d) {
+            $client.subscribe("/topic/" + $data.topicHltCurrTemp, function (d) {
                 var $value = parseFloat(d.body);
                 addToGraph($el, 0, $value);
                 updateTemperature('hlt', $value);
             });
             // MLT
-            $client.subscribe("/topic/" + $data.topicMltCurr, function (d) {
+            $client.subscribe("/topic/" + $data.topicMltCurrTemp, function (d) {
                 var $value = parseFloat(d.body);
                 addToGraph($el, 1, $value);
                 updateTemperature('mlt', $value);
             });
-            $client.subscribe("/topic/" + $data.topicMltSet, function (d) {
+            $client.subscribe("/topic/" + $data.topicMltSetTemp, function (d) {
                 var $value = parseFloat(d.body);
                 updateTemperature('mlt', $value, 'set');
                 // @todo store set temps and be able to add plotBands (maisch steps)
             });
             // BLT
-            $client.subscribe("/topic/" + $data.topicBltCurr, function (d) {
+            $client.subscribe("/topic/" + $data.topicBltCurrTemp, function (d) {
                 var $value = parseFloat(d.body);
                 addToGraph($el, 2, $value);
                 updateTemperature('blt', $value);
