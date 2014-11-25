@@ -12,7 +12,7 @@ class ControlRecipe implements ExecutableInterface
      * @var string
      */
     protected $name;
-
+    
     /**
      *
      * @var Procedure
@@ -22,13 +22,13 @@ class ControlRecipe implements ExecutableInterface
     /**
      * Set name
      *
-     * @param  string        $name
+     * @param string $name            
      * @return ControlRecipe
      */
     public function setName($name)
     {
         $this->name = $name;
-
+        
         return $this;
     }
 
@@ -49,15 +49,15 @@ class ControlRecipe implements ExecutableInterface
      */
     public function start()
     {
-        echo " ControlRecipe::start 1\n";
+        echo 'ControlRecipe::start' . PHP_EOL;
         if (is_null($this->procedure)) {
             throw new \Exception('No Procedure for this Recipe');
         }
-
+        
         if ($this->procedure->isFinished()) {
             throw new \Exception('Procedure already finished');
         }
-
+        
         $this->procedure->start();
     }
 
@@ -67,17 +67,11 @@ class ControlRecipe implements ExecutableInterface
      * @throws \Exception
      */
     public function execute()
-    {
-        echo " ControlRecipe::execute \n";
-        if (is_null($this->procedure)) {
-            throw new \Exception('No procedure for this Recipe');
-        }
-
+    {       
         if (!$this->procedure->isFinished()) {
             $this->procedure->execute();
         } else {
-            // procedure finished!
-            // @TODO
+            echo 'ControlRecipe is done' . PHP_EOL;
         }
     }
 
@@ -87,11 +81,7 @@ class ControlRecipe implements ExecutableInterface
      */
     public function isStarted()
     {
-        if (!is_null($this->getProcedure())) {
-            return $this->getProcedure()->isStarted();
-        }
-
-        return false;
+        return $this->getProcedure()->isStarted();
     }
 
     /**
@@ -100,23 +90,19 @@ class ControlRecipe implements ExecutableInterface
      */
     public function isFinished()
     {
-        if (!is_null($this->procedure)) {
-            return $this->procedure->isFinished();
-        }
-
-        return false;
+        return $this->procedure->isFinished();
     }
 
     /**
      * Set procedure
      *
-     * @param  Procedure     $procedure
+     * @param Procedure $procedure            
      * @return ControlRecipe
      */
     public function setProcedure(Procedure $procedure = null)
     {
         $this->procedure = $procedure;
-
+        
         return $this;
     }
 

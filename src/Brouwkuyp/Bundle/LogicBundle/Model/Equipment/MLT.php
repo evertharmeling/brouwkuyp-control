@@ -27,12 +27,23 @@ class MLT implements EquipmentInterface
      */
     public function performTask(Phase $phase)
     {
+        echo sprintf('MLT::performTask \'%s\': %s', $phase->getType(), $phase->getValue()).PHP_EOL;
         if ($phase->getType() == Phase::CONTROL_TEMP) {
-            $this->bcm->setMashTemperature($phase->getValue());
+            $this->setHeaterTemperature($phase->getValue());
         } else if ($phase->getType() == Phase::ADD_INGREDIENTS) {
             echo sprintf("Operator, add the following ingredients: '%s'", $phase->getValue()) . PHP_EOL;
         } else {
             throw new \Exception('Unknown Phase type');
         }
+    }
+    
+    /**
+     * Sets the temperature of the Heater Control Module
+     * 
+     * @param float $setpoint
+     */
+    public function setHeaterTemperature($setpoint)
+    {
+        $this->bcm->setMashTemperature($setpoint);
     }
 }

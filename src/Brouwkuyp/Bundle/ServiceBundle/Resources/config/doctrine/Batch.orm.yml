@@ -1,0 +1,20 @@
+Brouwkuyp\Bundle\ServiceBundle\Entity\Batch:
+    type: entity
+    table: batch
+    repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\BatchRepository
+
+    id:
+        id:
+            type:           integer
+            generator:
+                strategy:   AUTO
+
+    fields:
+        createdAt:
+            type:           datetime
+            column:         creation_at
+
+    manyToOne:
+        control_recipe:
+            targetEntity: ControlRecipe
+            mappedBy: batch

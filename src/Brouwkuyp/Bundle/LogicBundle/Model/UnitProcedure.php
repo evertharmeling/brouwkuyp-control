@@ -19,25 +19,25 @@ use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Unit;
 class UnitProcedure implements ExecutableInterface
 {
     use ExecutableTrait;
-
+    
     /**
      *
      * @var string
      */
     protected $name;
-
+    
     /**
      *
      * @var ArrayCollection
      */
     protected $operations;
-
+    
     /**
      *
      * @var Procedure
      */
     protected $procedure;
-
+    
     /**
      *
      * @var Unit
@@ -55,13 +55,13 @@ class UnitProcedure implements ExecutableInterface
     /**
      * Set name
      *
-     * @param  string        $name
+     * @param string $name            
      * @return UnitProcedure
      */
     public function setName($name)
     {
         $this->name = $name;
-
+        
         return $this;
     }
 
@@ -78,20 +78,20 @@ class UnitProcedure implements ExecutableInterface
     /**
      * Add operation
      *
-     * @param  Operation     $operation
+     * @param Operation $operation            
      * @return UnitProcedure
      */
     public function addOperation(Operation $operation)
     {
-        $this->operations[] = $operation;
-
+        $this->operations [] = $operation;
+        
         return $this;
     }
 
     /**
      * Remove operation
      *
-     * @param Operation $operation
+     * @param Operation $operation            
      */
     public function removeOperation(Operation $operation)
     {
@@ -111,13 +111,13 @@ class UnitProcedure implements ExecutableInterface
     /**
      * Set procedure
      *
-     * @param  Procedure     $procedure
+     * @param Procedure $procedure            
      * @return UnitProcedure
      */
     public function setProcedure(Procedure $procedure = null)
     {
         $this->procedure = $procedure;
-
+        
         return $this;
     }
 
@@ -134,13 +134,13 @@ class UnitProcedure implements ExecutableInterface
     /**
      * Set unit
      *
-     * @param  Unit          $unit
+     * @param Unit $unit            
      * @return UnitProcedure
      */
     public function setUnit(Unit $unit = null)
     {
         $this->unit = $unit;
-
+        
         return $this;
     }
 
@@ -160,11 +160,12 @@ class UnitProcedure implements ExecutableInterface
      */
     public function start()
     {
-        echo "   UnitProcedure::start, unit: " . $this->unit->getName() . "\n";
+        echo sprintf('UnitProcedure::start, unit: %s', 
+                $this->unit->getName()) . PHP_EOL;
         if (!$this->started) {
             // Set flag that we are started
             $this->started = true;
-
+            
             // Start first Operation
             if ($this->operations->count()) {
                 $this->operations->first()->start();
@@ -178,17 +179,16 @@ class UnitProcedure implements ExecutableInterface
      */
     public function execute()
     {
-        echo "   UnitProcedure::execute, unit: " . $this->unit->getName() . "\n";
         if (!$this->started) {
             throw new \Exception('UnitProcedure not started');
         }
-
+        
         if (!$this->getCurrentOperation()) {
             $this->finished = true;
-
+            
             return;
         }
-
+        
         // Start the next Operation?
         if ($this->getCurrentOperation()->isFinished()) {
             // Go to next unit procedure if possible
@@ -201,13 +201,15 @@ class UnitProcedure implements ExecutableInterface
             }
         }
         // Execute
-        if (!$this->finished && $this->getCurrentOperation()->isStarted()) {
+        if (!$this->finished &&
+                 $this->getCurrentOperation()->isStarted()) {
             // Perform Operation
             $this->getCurrentOperation()->execute();
         }
     }
 
     /**
+     *
      * @return Operation|false
      */
     public function getCurrentOperation()
