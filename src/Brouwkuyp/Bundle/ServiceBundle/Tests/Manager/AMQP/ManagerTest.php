@@ -29,6 +29,6 @@ class ManagerTest extends AMQPTestCase
 
     public function testPublish()
     {
-        $this->assertTrue($this->manager->publish(new AMQPMessage(80), Log::TOPIC_MLT_SET_TEMP));
+        $this->assertTrue($this->manager->publish(new AMQPMessage(80), Log::TOPIC_MASHER_SET_TEMP));
     }
 }
