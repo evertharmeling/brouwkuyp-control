@@ -202,12 +202,10 @@ var client = {
             });
             // PUMP
             $client.subscribe("/topic/" + $data.topicPumpCurrMode, function (d) {
-                var $value = (d.body == 'automatic');
-                updatePumpMode($value);
+                toggleCheckbox($('#pump_automatic'), (d.body == 'automatic'));
             });
             $client.subscribe("/topic/" + $data.topicPumpCurrState, function (d) {
-                var $value = (d.body == 'true');
-                updatePumpState($value);
+                toggleCheckbox($('#pump'), (d.body == 'true'));
             });
         }
 
@@ -221,17 +219,7 @@ var client = {
             $('#temp-' + $action + '-' + $sensor).text($temperature + ' °C');
         }
 
-        function updatePumpMode($state) {
-            var $el = $('#pump_automatic');
-            if ($state) {
-                $el.prop('checked', true);
-            } else {
-                $el.prop('checked', false);
-            }
-        }
-
-        function updatePumpState($state) {
-            $el = $('#pump');
+        function toggleCheckbox($el, $state) {
             if ($state) {
                 $el.prop('checked', true);
             } else {
