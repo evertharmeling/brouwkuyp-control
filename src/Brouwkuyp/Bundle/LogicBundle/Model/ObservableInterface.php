@@ -2,7 +2,6 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
-
 interface ObservableInterface
 {
     /**
