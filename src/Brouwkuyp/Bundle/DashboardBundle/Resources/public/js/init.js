@@ -137,7 +137,8 @@ var chart = {
                         enabled: false
                     },
                     global: {
-                        useUTC: false
+                        useUTC: false,
+                        timezoneOffset: 60
                     },
                     series: [
                         {

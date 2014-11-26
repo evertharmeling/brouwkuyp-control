@@ -4,10 +4,7 @@ namespace Brouwkuyp\Bundle\LogicBundle\Command;
 
 use Brouwkuyp\Bundle\ServiceBundle\Entity\Log;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\ORMException;
 use PhpAmqpLib\Message\AMQPMessage;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -21,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Evert Harmeling <evertharmeling@gmail.com>
  */
-class ConsumeCommand extends ContainerAwareCommand
+class ConsumeCommand extends BaseCommand
 {
     const PERSISTENCE_PERIOD = 4;
 
@@ -33,9 +30,6 @@ class ConsumeCommand extends ContainerAwareCommand
 
     /** @var array */
     private $logs;
-
-    /** @var EntityManager */
-    private $em;
 
     /**
      * Configure command
@@ -57,6 +51,7 @@ class ConsumeCommand extends ContainerAwareCommand
     {
         $this->output = $output;
         $this->startTime = time();
+        $this->getEntityManager()->getConnection()->getConfiguration()->setSQLLogger(null);
 
         $this->output->writeln('<info>We are gonna receive messages!</info>');
 
@@ -116,37 +111,6 @@ class ConsumeCommand extends ContainerAwareCommand
 
             $this->logs = [];
             $this->startTime = time();
-        }
-    }
-
-    /**
-     * Because the EntityManager gets closed when there's an error, it needs to be created again
-     *
-     * @return EntityManager
-     * @throws ORMException
-     */
-    private function getEntityManager()
-    {
-        if (!$this->em) {
-            $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        }
-
-        if (!$this->em->isOpen()) {
-            $this->em = $this->em->create($this->em->getConnection(), $this->em->getConfiguration());
-        }
-
-        return $this->em;
-    }
-
-    /**
-     * Flushes the EntityManager
-     */
-    private function flush()
-    {
-        try {
-            $this->getEntityManager()->flush();
-        } catch (\Exception $e) {
-            // in case more than one message is sent and logged, which results in a primary key constraint
         }
     }
 }
