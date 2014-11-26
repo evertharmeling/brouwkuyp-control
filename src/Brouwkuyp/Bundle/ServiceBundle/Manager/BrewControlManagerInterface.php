@@ -20,7 +20,7 @@ interface BrewControlManagerInterface
     public function setPumpState($value);
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return bool
      */
     public function setPumpMode($value);

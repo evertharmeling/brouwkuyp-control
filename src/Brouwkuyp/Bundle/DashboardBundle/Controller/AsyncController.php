@@ -2,7 +2,6 @@
 
 namespace Brouwkuyp\Bundle\DashboardBundle\Controller;
 
-use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Pump;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
