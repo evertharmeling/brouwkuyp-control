@@ -14,7 +14,12 @@ logs_current_recipe:
     path:       /data/logs/current
     defaults:   { _controller: BrouwkuypDashboardBundle:Data:currentRecipeLog }
 
-async_pump:
-    path:       /async/pump
-    defaults:   { _controller: BrouwkuypDashboardBundle:Async:pump }
+async_pump_state:
+    path:       /async/pump/state
+    defaults:   { _controller: BrouwkuypDashboardBundle:Async:pumpState }
+    methods:    [ POST ]
+
+async_pump_mode:
+    path:       /async/pump/mode
+    defaults:   { _controller: BrouwkuypDashboardBundle:Async:pumpMode }
     methods:    [ POST ]

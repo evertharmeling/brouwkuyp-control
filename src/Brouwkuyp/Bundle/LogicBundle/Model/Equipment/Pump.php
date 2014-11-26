@@ -11,7 +11,6 @@ class Pump
 {
     const STATE_ON          = 'on';
     const STATE_OFF         = 'off';
-    const STATE_AUTOMATIC   = 'automatic';
 
     const MODE_AUTOMATIC    = 'automatic';
     const MODE_MANUAL       = 'manual';
@@ -25,8 +24,20 @@ class Pump
     {
         return [
             self::STATE_ON,
-            self::STATE_OFF,
-            self::STATE_AUTOMATIC
+            self::STATE_OFF
+        ];
+    }
+
+    /**
+     * Returns possible pump modes
+     *
+     * @return array
+     */
+    public static function getPossibleModes()
+    {
+        return [
+            self::MODE_AUTOMATIC,
+            self::MODE_MANUAL
         ];
     }
 }

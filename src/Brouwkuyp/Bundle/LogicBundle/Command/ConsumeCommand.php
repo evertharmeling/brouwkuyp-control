@@ -23,7 +23,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ConsumeCommand extends ContainerAwareCommand
 {
-    const PERSISTENCE_PERIOD = 5;
+    const PERSISTENCE_PERIOD = 4;
 
     /** @var OutputInterface */
     private $output;
@@ -78,8 +78,8 @@ class ConsumeCommand extends ContainerAwareCommand
             );
         };
 
-        $manager->consume($callback, 'brewery.#.masher.#');
-//        $manager->consume($callback, 'brewery.#');
+//        $manager->consume($callback, 'brewery.#.masher.#');
+        $manager->consume($callback, 'brewery.#');
 
         while ($manager->receive()) {
             $manager->wait();
@@ -97,9 +97,17 @@ class ConsumeCommand extends ContainerAwareCommand
         if ((time() - $this->startTime) > self::PERSISTENCE_PERIOD) {
             foreach ($this->logs as $topic => $data) {
                 $log = new Log();
-                $log
-                    ->setTopic($topic)
-                    ->setValue(round(array_sum($data) / count($data), 2))
+                $log->setTopic($topic);
+
+                if (is_numeric($data[0])) {
+                    $log->setValue(round(array_sum($data) / count($data), 2));
+                } else {
+                    $countValues = array_count_values($data);
+                    arsort($countValues);
+                    $log->setValue(key($countValues));
+                    $countValues = [];
+                }
+
                 ;
                 $this->getEntityManager()->persist($log);
             }
