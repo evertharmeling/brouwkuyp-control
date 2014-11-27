@@ -6,8 +6,6 @@ use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Pump;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\BrewControlManager;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
 use Brouwkuyp\Bundle\ServiceBundle\Test\AMQP\AMQPTestCase;
-use PhpAmqpLib\Connection\AMQPStreamConnection;
-use PhpAmqpLib\Message\AMQPMessage;
 
 /**
  * @author Evert Harmeling <evertharmeling@gmail.com>

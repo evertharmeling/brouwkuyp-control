@@ -4,10 +4,7 @@ namespace Brouwkuyp\Bundle\LogicBundle\Command;
 
 use Brouwkuyp\Bundle\ServiceBundle\Entity\Log;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\ORMException;
 use PhpAmqpLib\Message\AMQPMessage;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -21,11 +18,22 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Evert Harmeling <evertharmeling@gmail.com>
  */
-class ConsumeCommand extends ContainerAwareCommand
+class ConsumeCommand extends BaseCommand
 {
-    /** @var EntityManager */
-    private $em;
+    const PERSISTENCE_PERIOD = 4;
 
+    /** @var OutputInterface */
+    private $output;
+
+    /** @var integer */
+    private $startTime;
+
+    /** @var array */
+    private $logs;
+
+    /**
+     * Configure command
+     */
     protected function configure()
     {
         $this
@@ -41,57 +49,68 @@ class ConsumeCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('<info>We are gonna receive messages!</info>');
+        $this->output = $output;
+        $this->startTime = time();
+        $this->getEntityManager()->getConnection()->getConfiguration()->setSQLLogger(null);
+
+        $this->output->writeln('<info>We are gonna receive messages!</info>');
 
         /** @var Manager $manager */
         $manager = $this->getContainer()->get('brouwkuyp_service.amqp.manager');
         $callback = function (AMQPMessage $msg) use ($output) {
 
-            $log = new Log();
-            $log
-                ->setTopic($msg->delivery_info['routing_key'])
-                ->setValue($msg->body)
-            ;
+            $topic = $msg->delivery_info['routing_key'];
+            $value = $msg->body;
 
-            $this->getEntityManager()->persist($log);
-            try {
-                $this->getEntityManager()->flush();
-            } catch (\Exception $e) {
-                // in case more than one message is sent and logged, which results in a primary key constraint
-            }
+            $this->logs[$topic][] = $value;
 
-            $output->writeln(
+            $this->output->writeln(
                 sprintf("<info>Message received: </info>%s: %s : %s",
                     (new \DateTime())->format('H:i:s'),
-                    $msg->delivery_info['routing_key'], $msg->body)
+                    $topic,
+                    $value
+                )
             );
         };
 
-        $manager->consume($callback, 'brewery.#.masher.#');
+//        $manager->consume($callback, 'brewery.#.masher.#');
+        $manager->consume($callback, 'brewery.#');
 
         while ($manager->receive()) {
             $manager->wait();
+            $this->persistLogs();
         }
 
         $manager->close();
     }
 
     /**
-     * Because the EntityManager gets closed when there's an error, it needs to be created again
-     *
-     * @return EntityManager
-     * @throws ORMException
+     * Persist logs to database on a defined period basis
      */
-    private function getEntityManager()
+    private function persistLogs()
     {
-        if (!$this->em) {
-            $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        }
+        if ((time() - $this->startTime) > self::PERSISTENCE_PERIOD) {
+            foreach ($this->logs as $topic => $data) {
+                $log = new Log();
+                $log->setTopic($topic);
 
-        if (!$this->em->isOpen()) {
-            $this->em = $this->em->create($this->em->getConnection(), $this->em->getConfiguration());
-        }
+                if (is_numeric($data[0])) {
+                    $log->setValue(round(array_sum($data) / count($data), 2));
+                } else {
+                    $countValues = array_count_values($data);
+                    arsort($countValues);
+                    $log->setValue(key($countValues));
+                    $countValues = [];
+                }
 
-        return $this->em;
+                ;
+                $this->getEntityManager()->persist($log);
+            }
+
+            $this->flush();
+
+            $this->logs = [];
+            $this->startTime = time();
+        }
     }
 }

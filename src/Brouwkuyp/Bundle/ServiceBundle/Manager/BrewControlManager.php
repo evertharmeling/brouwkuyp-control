@@ -18,4 +18,10 @@ abstract class BrewControlManager implements BrewControlManagerInterface
      * @return bool
      */
     abstract public function setPumpState($value);
+
+    /**
+     * @param  string $value
+     * @return bool
+     */
+    abstract public function setPumpMode($value);
 }

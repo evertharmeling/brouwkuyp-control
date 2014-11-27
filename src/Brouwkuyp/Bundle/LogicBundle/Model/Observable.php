@@ -2,8 +2,6 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
-use Brouwkuyp\Bundle\LogicBundle\Model\ObservableInterface;
-use Brouwkuyp\Bundle\LogicBundle\Model\ObserverInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 abstract class Observable implements ObservableInterface
@@ -16,7 +14,7 @@ abstract class Observable implements ObservableInterface
 
     /**
      *
-     * @param ObserverInterface $observer            
+     * @param ObserverInterface $observer
      */
     public function registerObserver(ObserverInterface $observer)
     {
@@ -28,7 +26,7 @@ abstract class Observable implements ObservableInterface
 
     /**
      *
-     * @param ObserverInterface $observer            
+     * @param ObserverInterface $observer
      */
     public function unregisterObserver(ObserverInterface $observer)
     {
@@ -44,8 +42,7 @@ abstract class Observable implements ObservableInterface
          * ObserverInterface
          */
         if (!is_null($this->observers)) {
-            foreach ( $this->observers as $observer )
-            {
+            foreach ($this->observers as $observer) {
                 $observer->notify();
             }
         }

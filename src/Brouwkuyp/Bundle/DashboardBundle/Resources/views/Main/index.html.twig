@@ -4,10 +4,12 @@
     <div id="graph"
          data-url="{{ path('logs_current_recipe') }}"
          data-rabbit-mq-host="{{ rabbit_mq_host }}"
-         data-topic-hlt-curr="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_HLT_CURR_TEMP') }}"
-         data-topic-mlt-curr="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_MLT_CURR_TEMP') }}"
-         data-topic-mlt-set="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_MASHER_SET_TEMP') }}"
-         data-topic-blt-curr="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_BLT_CURR_TEMP') }}"
+         data-topic-hlt-curr-temp="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_HLT_CURR_TEMP') }}"
+         data-topic-mlt-curr-temp="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_MLT_CURR_TEMP') }}"
+         data-topic-mlt-set-temp="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_MASHER_SET_TEMP') }}"
+         data-topic-blt-curr-temp="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_BLT_CURR_TEMP') }}"
+         data-topic-pump-curr-state="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_PUMP_CURR_STATE') }}"
+         data-topic-pump-curr-mode="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_PUMP_CURR_MODE') }}"
             ></div>
     <div id="graph-footer">
         <div class="row">
@@ -26,12 +28,12 @@
                     <table id="switches">
                         <tbody>
                             <tr>
-                                <td><label for="pump_automatic">Pomp auto</label></td>
-                                <td><div class="toggle-pump"><label for="pump_automatic">Pomp</label></div></td>
+                                <td><label for="pump_mode">Pomp auto</label></td>
+                                <td><div class="toggle-pump"><label for="pump_mode">Pomp</label></div></td>
                             </tr>
                             <tr>
-                                <td><div class="switch"><input type="checkbox" checked="checked" name="pump_automatic" id="pump_automatic" /><label for="pump_automatic"></label></div></td>
-                                <td><div class="switch toggle-pump"><input type="checkbox" name="pump" id="pump" data-url="{{ path('async_pump') }}"/><label for="pump"></label></div></td>
+                                <td><div class="switch"><input type="checkbox" checked="checked" name="pump_mode" id="pump_mode" data-url="{{ path('async_pump_mode') }}"/><label for="pump_mode"></label></div></td>
+                                <td><div class="switch toggle-pump"><input type="checkbox" name="pump_state" id="pump_state" data-url="{{ path('async_pump_state') }}"/><label for="pump_state"></label></div></td>
                             </tr>
                         </tbody>
                     </table>

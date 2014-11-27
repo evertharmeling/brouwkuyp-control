@@ -23,6 +23,7 @@ class Procedure implements ExecutableInterface
     protected $name;
 
     /**
+     *
      * @var ControlRecipe
      */
     protected $controlRecipe;
@@ -95,7 +96,7 @@ class Procedure implements ExecutableInterface
      */
     public function addUnitprocedure(UnitProcedure $unitProcedure)
     {
-        $this->unitProcedures[] = $unitProcedure;
+        $this->unitProcedures [] = $unitProcedure;
 
         return $this;
     }
@@ -121,13 +122,14 @@ class Procedure implements ExecutableInterface
     }
 
     /**
+     *
      * @see ExecutableInterface::start()
      */
     public function start()
     {
-        echo "  Procedure::start \n";
+        echo 'Procedure::start' . PHP_EOL;
 
-        if (! $this->started) {
+        if (!$this->started) {
             // Set flag that we are started
             $this->started = true;
 
@@ -144,8 +146,6 @@ class Procedure implements ExecutableInterface
      */
     public function execute()
     {
-        echo "  Procedure::execute \n";
-
         if (!$this->isStarted()) {
             throw new \Exception('Procedure not started');
         }
@@ -168,13 +168,15 @@ class Procedure implements ExecutableInterface
             }
         }
         // Execute
-        if (!$this->finished && $this->getCurrentUnitProcedure()->isStarted()) {
+        if (!$this->finished &&
+                 $this->getCurrentUnitProcedure()->isStarted()) {
             // Perform unit procedure
             $this->getCurrentUnitProcedure()->execute();
         }
     }
 
     /**
+     *
      * @return UnitProcedure|false
      */
     public function getCurrentUnitProcedure()

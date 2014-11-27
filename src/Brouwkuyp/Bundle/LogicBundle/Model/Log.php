@@ -11,10 +11,14 @@ class Log
 {
     // @todo move
     const TOPIC_MASHER_SET_TEMP = 'brewery.brewhouse01.masher.set_temp';
-    const TOPIC_HLT_CURR_TEMP = 'brewery.brewhouse01.masher.hlt.curr_temp';
-    const TOPIC_MLT_CURR_TEMP = 'brewery.brewhouse01.masher.mlt.curr_temp';
-    const TOPIC_MLT_SET_TEMP = 'brewery.brewhouse01.masher.mlt.set_temp';
-    const TOPIC_BLT_CURR_TEMP = 'brewery.brewhouse01.boiler.curr_temp';
+    const TOPIC_HLT_CURR_TEMP   = 'brewery.brewhouse01.masher.hlt.curr_temp';
+    const TOPIC_MLT_CURR_TEMP   = 'brewery.brewhouse01.masher.mlt.curr_temp';
+    const TOPIC_MLT_SET_TEMP    = 'brewery.brewhouse01.masher.mlt.set_temp';
+
+    const TOPIC_BLT_CURR_TEMP   = 'brewery.brewhouse01.boiler.curr_temp';
+
+    const TOPIC_PUMP_CURR_STATE = 'brewery.brewhouse01.pump.curr_state';
+    const TOPIC_PUMP_CURR_MODE  = 'brewery.brewhouse01.pump.curr_mode';
 
     /**
      * @var string

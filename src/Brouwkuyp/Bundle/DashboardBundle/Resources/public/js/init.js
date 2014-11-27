@@ -49,13 +49,13 @@ var chart = {
                     var $value = parseFloat(log.value);
 
                     switch (log.topic) {
-                        case $data.topicHltCurr:
+                        case $data.topicHltCurrTemp:
                             $hltLogs[$hltLogs.length] = [log.time, $value];
                             break;
-                        case $data.topicMltCurr:
+                        case $data.topicMltCurrTemp:
                             $mltLogs[$mltLogs.length] = [log.time, $value];
                             break;
-                        case $data.topicBltCurr:
+                        case $data.topicBltCurrTemp:
                             $bltLogs[$bltLogs.length] = [log.time, $value];
                             break;
                         default:
@@ -137,7 +137,8 @@ var chart = {
                         enabled: false
                     },
                     global: {
-                        useUTC: false
+                        useUTC: false,
+                        timezoneOffset: 60
                     },
                     series: [
                         {
@@ -176,29 +177,43 @@ var client = {
 
         function onConnect() {
             $data = $el.data();
+            var $baseUrl = "/topic/";
 
             // HLT
-            $client.subscribe("/topic/" + $data.topicHltCurr, function (d) {
+            $client.subscribe($baseUrl + $data.topicHltCurrTemp, function (d) {
                 var $value = parseFloat(d.body);
                 addToGraph($el, 0, $value);
                 updateTemperature('hlt', $value);
             });
             // MLT
-            $client.subscribe("/topic/" + $data.topicMltCurr, function (d) {
+            $client.subscribe($baseUrl + $data.topicMltCurrTemp, function (d) {
                 var $value = parseFloat(d.body);
                 addToGraph($el, 1, $value);
                 updateTemperature('mlt', $value);
             });
-            $client.subscribe("/topic/" + $data.topicMltSet, function (d) {
+            $client.subscribe($baseUrl + $data.topicMltSetTemp, function (d) {
                 var $value = parseFloat(d.body);
                 updateTemperature('mlt', $value, 'set');
                 // @todo store set temps and be able to add plotBands (maisch steps)
             });
             // BLT
-            $client.subscribe("/topic/" + $data.topicBltCurr, function (d) {
+            $client.subscribe($baseUrl + $data.topicBltCurrTemp, function (d) {
                 var $value = parseFloat(d.body);
                 addToGraph($el, 2, $value);
                 updateTemperature('blt', $value);
+            });
+            // PUMP
+            $client.subscribe($baseUrl + $data.topicPumpCurrMode, function (d) {
+                if (d.body == 'automatic') {
+                    toggleCheckbox($('#pump_mode'), true);
+                    $('.toggle-pump').hide();
+                } else {
+                    toggleCheckbox($('#pump_mode'), false);
+                    $('.toggle-pump').show();
+                }
+            });
+            $client.subscribe($baseUrl + $data.topicPumpCurrState, function (d) {
+                toggleCheckbox($('#pump_state'), (d.body == 'on'));
             });
         }
 
@@ -210,6 +225,14 @@ var client = {
         function updateTemperature($sensor, $temperature, $action) {
             $action = typeof $action !== 'undefined' ? $action : 'curr';
             $('#temp-' + $action + '-' + $sensor).text($temperature + ' °C');
+        }
+
+        function toggleCheckbox($el, $state) {
+            if ($state) {
+                $el.prop('checked', true);
+            } else {
+                $el.prop('checked', false);
+            }
         }
     },
 
@@ -224,31 +247,40 @@ var client = {
 
 var pumpSwitches = {
     init: function () {
-        var $pumpAutomatic = $('#pump_automatic'),
-            $pump = $('#pump'),
-            $pumpData = $pump.data();
+        var $pumpMode = $('#pump_mode'),
+            $pumpState = $('#pump_state'),
+            $pumpModeData = $pumpMode.data(),
+            $pumpStateData = $pumpState.data(),
+            $postData = {};
 
-        $pumpAutomatic.on('click', function(e) {
-            $('.toggle-pump').toggle();
-            if ($pumpAutomatic.is(':checked')) {
-                $.post(
-                    $pumpData.url,
-                    {
-                        'pump_state': 'automatic'
-                    },
-                    function(response) {
-                        //console.log(response);
-                    }
-                );
+        $pumpMode.on('click', function(e) {
+            if ($pumpMode.is(':checked')) {
+                $postData = { 'mode': 'automatic' };
+                $('.toggle-pump').hide();
+            } else {
+                $postData = { 'mode': 'manual' };
+                $('.toggle-pump').show();
             }
+
+            $.post(
+                $pumpModeData.url,
+                $postData,
+                function(response) {
+                    //console.log(response);
+                }
+            );
         });
 
-        $pump.on('click', function(e) {
+        $pumpState.on('click', function(e) {
+            if ($pumpState.is(':checked')) {
+                $postData = { 'state': 'on' };
+            } else {
+                $postData = { 'state': 'off' };
+            }
+
             $.post(
-                $pumpData.url,
-                {
-                    'pump_state': $pump.is(':checked')
-                },
+                $pumpStateData.url,
+                $postData,
                 function(response) {
                     //console.log(response);
                 }

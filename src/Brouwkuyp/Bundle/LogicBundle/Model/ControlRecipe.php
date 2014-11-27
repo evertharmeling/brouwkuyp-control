@@ -49,7 +49,7 @@ class ControlRecipe implements ExecutableInterface
      */
     public function start()
     {
-        echo " ControlRecipe::start 1\n";
+        echo 'ControlRecipe::start' . PHP_EOL;
         if (is_null($this->procedure)) {
             throw new \Exception('No Procedure for this Recipe');
         }
@@ -68,16 +68,10 @@ class ControlRecipe implements ExecutableInterface
      */
     public function execute()
     {
-        echo " ControlRecipe::execute \n";
-        if (is_null($this->procedure)) {
-            throw new \Exception('No procedure for this Recipe');
-        }
-
         if (!$this->procedure->isFinished()) {
             $this->procedure->execute();
         } else {
-            // procedure finished!
-            // @TODO
+            echo 'ControlRecipe is done' . PHP_EOL;
         }
     }
 
@@ -87,11 +81,7 @@ class ControlRecipe implements ExecutableInterface
      */
     public function isStarted()
     {
-        if (!is_null($this->getProcedure())) {
-            return $this->getProcedure()->isStarted();
-        }
-
-        return false;
+        return $this->getProcedure()->isStarted();
     }
 
     /**
@@ -100,11 +90,7 @@ class ControlRecipe implements ExecutableInterface
      */
     public function isFinished()
     {
-        if (!is_null($this->procedure)) {
-            return $this->procedure->isFinished();
-        }
-
-        return false;
+        return $this->procedure->isFinished();
     }
 
     /**

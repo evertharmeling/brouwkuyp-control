@@ -52,8 +52,8 @@ class Manager
     }
 
     /**
-     * @param AMQPMessage $message
-     * @param string $routingKey
+     * @param  AMQPMessage $message
+     * @param  string      $routingKey
      * @return bool
      */
     public function publish(AMQPMessage $message, $routingKey = '')
@@ -107,6 +107,7 @@ class Manager
     public function close()
     {
         $this->channel->close();
+
         return (bool) $this->conn->close();
     }
 

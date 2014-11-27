@@ -19,9 +19,10 @@ use Symfony\Component\Stopwatch\Stopwatch;
 class Phase extends Observable implements ExecutableInterface
 {
     use ExecutableTrait;
-
-    const CONTROL_TEMP      = 'control_temp';
-    const ADD_INGREDIENTS   = 'add_ingredients';
+    const CONTROL_TEMP = 'control_temp';
+    const ADD_INGREDIENTS = 'add_ingredients';
+    const PRINT_TIMES = 10;
+    const NOTIFY_TIMES = 30;
 
     /**
      *
@@ -46,20 +47,20 @@ class Phase extends Observable implements ExecutableInterface
      * @var Operation
      */
     protected $operation;
-    
+
     /**
      * Wanted duration in seconds
-     * 
+     *
      * @var integer
      */
     protected $duration;
-    
+
     /**
-     * Timer for monitoring the duration
-     * 
-     * @var Stopwatch
+     * Counter for the times being executed
+     *
+     * @var integer
      */
-    protected $timer;
+    private $executed;
 
     /**
      * Set name
@@ -103,10 +104,10 @@ class Phase extends Observable implements ExecutableInterface
     {
         return $this->value;
     }
-    
+
     /**
      * Get duration
-     * 
+     *
      * @return integer
      */
     public function getDuration()
@@ -142,10 +143,11 @@ class Phase extends Observable implements ExecutableInterface
      */
     public function start()
     {
-        echo "      Phase::start: '" . $this->name . "'\n";
+        echo sprintf('Phase::start %s', $this->name) . PHP_EOL;
         if (!$this->started) {
             // Set flag that we are started
             $this->started = true;
+            $this->executed = 0;
             $this->timer = new Stopwatch();
             $this->timer->start('started');
             $this->notifyObservers();
@@ -157,20 +159,33 @@ class Phase extends Observable implements ExecutableInterface
      */
     public function execute()
     {
-        echo "     Phase::execute: '" . $this->name . PHP_EOL;
+        $this->printPhaseExecution();
         if ($this->started) {
-            echo sprintf("      duration: '%d'", $this->getDurationSeconds()) . PHP_EOL;
-            if($this->getDurationSeconds() > $this->duration){
+            if ($this->getDurationSeconds() > $this->duration) {
                 $this->finished = true;
+            } else {
+                if (($this->executed % Phase::NOTIFY_TIMES) == 0) {
+                    $this->notifyObservers();
+                }
             }
-        } else{
+        } else {
             throw new \Exception('Phase not started');
         }
+        $this->executed++;
     }
-    
+
     private function getDurationSeconds()
     {
         $timerEvent = $this->timer->lap('started');
-        return ($timerEvent->getDuration()/1000);
+
+        return ($timerEvent->getDuration() / 1000);
+    }
+
+    private function printPhaseExecution()
+    {
+        if (($this->executed % Phase::PRINT_TIMES) == 0) {
+            echo sprintf('Phase::execute %s (%4d/%4d)', $this->name,
+                    $this->getDurationSeconds(), $this->duration) . PHP_EOL;
+        }
     }
 }

@@ -128,7 +128,7 @@ class Operation implements ExecutableInterface
      */
     public function start()
     {
-        echo "     Operation::start: '" . $this->name . "'\n";
+        echo sprintf('Operation::start %s', $this->name) . PHP_EOL;
         if (!$this->started) {
             // Set flag that we are started
             $this->started = true;
@@ -145,7 +145,6 @@ class Operation implements ExecutableInterface
      */
     public function execute()
     {
-        echo "    Operation::execute: '" . $this->name . "'\n";
         if (!$this->started) {
             throw new \Exception('Operation not started');
         }
@@ -173,7 +172,7 @@ class Operation implements ExecutableInterface
             $this->phases->current()->execute();
         }
     }
-    
+
     /**
      * @return Phase|false
      */

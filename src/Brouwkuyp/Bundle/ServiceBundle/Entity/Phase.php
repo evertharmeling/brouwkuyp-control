@@ -79,4 +79,60 @@ class Phase extends BasePhase
     {
         return $this->value;
     }
+
+    /**
+     * Set name
+     *
+     * @param  string $name
+     * @return Phase
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set duration
+     *
+     * @param  integer $duration
+     * @return Phase
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return integer
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    /**
+     * Get operation
+     *
+     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\Operation
+     */
+    public function getOperation()
+    {
+        return $this->operation;
+    }
 }

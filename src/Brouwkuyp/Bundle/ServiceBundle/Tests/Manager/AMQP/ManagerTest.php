@@ -5,7 +5,6 @@ namespace Brouwkuyp\Bundle\ServiceBundle\Tests\Manager\AMQP;
 use Brouwkuyp\Bundle\LogicBundle\Model\Log;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
 use Brouwkuyp\Bundle\ServiceBundle\Test\AMQP\AMQPTestCase;
-use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
 /**
@@ -30,6 +29,6 @@ class ManagerTest extends AMQPTestCase
 
     public function testPublish()
     {
-        $this->assertTrue($this->manager->publish(new AMQPMessage(80), Log::TOPIC_MLT_SET_TEMP));
+        $this->assertTrue($this->manager->publish(new AMQPMessage(80), Log::TOPIC_MASHER_SET_TEMP));
     }
 }
