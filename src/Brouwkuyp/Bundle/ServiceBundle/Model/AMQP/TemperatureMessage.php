@@ -15,6 +15,10 @@ class TemperatureMessage extends AMQPMessage
      */
     public function __construct($value, array $properties = null)
     {
+        if (!is_numeric($value)) {
+            throw new \InvalidArgumentException("Value needs to be numeric");
+        }
+
         parent::__construct(floatval($value), $properties);
     }
 }
