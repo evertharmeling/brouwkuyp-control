@@ -19,10 +19,11 @@ class BrewCommand extends BaseCommand
 {
     protected function configure()
     {
-        $this->setName('brouwkuyp:brew')->setDescription(
-                'Start the brewing of beer!');
-        $this->addArgument('recipe', InputArgument::REQUIRED,
-                'Recipe to load');
+        $this
+            ->setName('brouwkuyp:brew')
+            ->setDescription('Start the brewing of beer!')
+            ->addArgument('recipe', InputArgument::REQUIRED, 'Recipe to load')
+        ;
     }
 
     /**
