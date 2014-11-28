@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
  *
  * @author Evert Harmeling <evertharmeling@gmail.com>
  */
-class BaseCommand extends ContainerAwareCommand
+abstract class BaseCommand extends ContainerAwareCommand
 {
     /**
      * @var EntityManager
