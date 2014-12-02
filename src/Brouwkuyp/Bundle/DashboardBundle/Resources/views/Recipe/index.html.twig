@@ -11,7 +11,7 @@
         <tbody>
         {% for recipe in recipes %}
         <tr>
-            <td><a href="#">{{ recipe.name }}</a></td>
+            <td><a href="{{ path('recipe_detail', recipe.routeParams) }}">{{ recipe.name }}</a></td>
         </tr>
         {% else %}
         <tr>

@@ -19,10 +19,12 @@ use Symfony\Component\Stopwatch\Stopwatch;
 class Phase extends Observable implements ExecutableInterface
 {
     use ExecutableTrait;
-    const CONTROL_TEMP = 'control_temp';
-    const ADD_INGREDIENTS = 'add_ingredients';
-    const PRINT_TIMES = 10;
-    const NOTIFY_TIMES = 30;
+
+    const CONTROL_TEMP      = 'control_temp';
+    const ADD_INGREDIENTS   = 'add_ingredients';
+
+    const PRINT_TIMES       = 10;
+    const NOTIFY_TIMES      = 30;
 
     /**
      *
@@ -61,6 +63,11 @@ class Phase extends Observable implements ExecutableInterface
      * @var integer
      */
     private $executed;
+
+    /**
+     * @var Stopwatch
+     */
+    private $timer;
 
     /**
      * Set name
@@ -148,8 +155,10 @@ class Phase extends Observable implements ExecutableInterface
             // Set flag that we are started
             $this->started = true;
             $this->executed = 0;
+
             $this->timer = new Stopwatch();
             $this->timer->start('started');
+
             $this->notifyObservers();
         }
     }
@@ -160,20 +169,23 @@ class Phase extends Observable implements ExecutableInterface
     public function execute()
     {
         $this->printPhaseExecution();
-        if ($this->started) {
-            if ($this->getDurationSeconds() > $this->duration) {
-                $this->finished = true;
-            } else {
-                if (($this->executed % Phase::NOTIFY_TIMES) == 0) {
-                    $this->notifyObservers();
-                }
-            }
-        } else {
+
+        if (!$this->started) {
             throw new \Exception('Phase not started');
         }
+
+        if ($this->getDurationSeconds() > $this->duration) {
+            $this->finished = true;
+        } elseif (($this->executed % Phase::NOTIFY_TIMES) == 0) {
+            $this->notifyObservers();
+        }
+
         $this->executed++;
     }
 
+    /**
+     * @return float
+     */
     private function getDurationSeconds()
     {
         $timerEvent = $this->timer->lap('started');

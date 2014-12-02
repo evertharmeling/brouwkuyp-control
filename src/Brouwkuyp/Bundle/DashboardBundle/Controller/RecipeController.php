@@ -2,6 +2,7 @@
 
 namespace Brouwkuyp\Bundle\DashboardBundle\Controller;
 
+use Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe;
 use Brouwkuyp\Bundle\ServiceBundle\Repository\ControlRecipeRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,6 +18,16 @@ class RecipeController extends Controller
 
         return [
             'recipes' => $recipes
+        ];
+    }
+
+    /**
+     * @Template
+     */
+    public function detailAction(ControlRecipe $recipe)
+    {
+        return [
+            'recipe' => $recipe
         ];
     }
 

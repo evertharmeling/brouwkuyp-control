@@ -8,13 +8,11 @@ namespace Brouwkuyp\Bundle\LogicBundle\Model;
 class ControlRecipe implements ExecutableInterface
 {
     /**
-     *
      * @var string
      */
     protected $name;
 
     /**
-     *
      * @var Procedure
      */
     protected $procedure;

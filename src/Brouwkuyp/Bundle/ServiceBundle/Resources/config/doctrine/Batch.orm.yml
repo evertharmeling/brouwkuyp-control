@@ -15,6 +15,8 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Batch:
             column:         creation_at
 
     manyToOne:
-        control_recipe:
-            targetEntity: ControlRecipe
-            mappedBy: batch
+        controlRecipe:
+            targetEntity:   ControlRecipe
+            mappedBy:       batch
+            joinColumn:
+                name:       control_recipe_id
