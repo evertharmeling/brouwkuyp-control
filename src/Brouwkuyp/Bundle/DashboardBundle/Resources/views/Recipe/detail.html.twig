@@ -3,5 +3,75 @@
 {% block content %}
 <div class="table-responsive">
     <h1>{{ recipe.name }}</h1>
+    <h2>{{ recipe.procedure.name }}</h2>
+
+    {% if recipe.procedure.unitProcedures|length %}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <td>Naam</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for unitProcedure in recipe.procedure.unitProcedures %}
+                <tr>
+                    <td>
+                        <em>{{ unitProcedure.name }}</em>
+                        {% if unitProcedure.operations|length %}
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <td>Naam</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for operation in unitProcedure.operations %}
+                                    <tr>
+                                        <td>
+                                            <em>{{ operation.name }}</em>
+                                            {% if operation.phases|length %}
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <td>Naam</td>
+                                                        <td>Waarde</td>
+                                                        <td>Tijd</td>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for phase in operation.phases %}
+                                                        <tr>
+                                                            <td>{{ phase.name }}</td>
+                                                            <td>{{ renderPhaseValue(phase) }}</td>
+                                                            <td>{{ phase.duration|minutes }} min.</td>
+                                                        </tr>
+                                                    {% else %}
+                                                        <tr>
+                                                            <td>Er zijn nog geen phases ingevoerd</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td>Er zijn nog geen operations ingevoerd</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>Er zijn nog geen unit procedures ingevoerd</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 </div>
 {% endblock %}
