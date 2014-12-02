@@ -20,7 +20,7 @@ class S88Extension extends \Twig_Extension
     }
 
     /**
-     * @param Phase $phase
+     * @param  Phase  $phase
      * @return string
      */
     public function renderPhaseValue(Phase $phase)

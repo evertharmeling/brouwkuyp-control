@@ -41,7 +41,7 @@ class ManagerTest extends AMQPTestCase
 
     public function testInvalidLogger()
     {
-        $this->setExpectedException(get_class(new \PHPUnit_Framework_Error("",0,"",1)));
+        $this->setExpectedException(get_class(new \PHPUnit_Framework_Error("", 0, "", 1)));
         $this->manager->setLogger(new \stdClass());
         $this->assertNotInstanceOf('Psr\Log\LoggerInterface', $this->manager->getLogger());
     }

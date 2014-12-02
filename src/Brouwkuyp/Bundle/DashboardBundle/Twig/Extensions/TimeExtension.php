@@ -18,7 +18,7 @@ class TimeExtension extends \Twig_Extension
     }
 
     /**
-     * @param integer $seconds
+     * @param  integer $seconds
      * @return integer
      */
     public function filterMinutes($seconds)
