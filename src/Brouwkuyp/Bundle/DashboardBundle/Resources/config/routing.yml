@@ -6,6 +6,12 @@ recipe_index:
     path:       /recepten
     defaults:   { _controller: BrouwkuypDashboardBundle:Recipe:index }
 
+recipe_detail:
+    path:       /recept/{id}
+    defaults:   { _controller: BrouwkuypDashboardBundle:Recipe:detail }
+    requirements:
+        id:     \d+
+
 brewing_index:
     path:       /brouwsels
     defaults:   { _controller: BrouwkuypDashboardBundle:Brewing:index }

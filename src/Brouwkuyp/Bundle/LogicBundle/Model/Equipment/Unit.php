@@ -54,7 +54,7 @@ class Unit
      * Add UnitProcedure
      *
      * @param  UnitProcedure $unitProcedure
-     * @return Procedure
+     * @return Unit
      */
     public function addUnitprocedure(UnitProcedure $unitProcedure)
     {

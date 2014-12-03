@@ -11,11 +11,11 @@
         <tbody>
         {% for recipe in recipes %}
         <tr>
-            <td><a href="#">{{ recipe.name }}</a></td>
+            <td><a href="{{ path('recipe_detail', recipe.routeParams) }}">{{ recipe.name }}</a></td>
         </tr>
         {% else %}
         <tr>
-            <td>Nog geen recepten ingevoerd</td>
+            <td>Er zijn nog geen recepten ingevoerd</td>
         </tr>
         {% endfor %}
         </tbody>

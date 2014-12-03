@@ -75,7 +75,7 @@ class Operation implements ExecutableInterface
      */
     public function addPhase(Phase $phase)
     {
-        $this->phases [] = $phase;
+        $this->phases[] = $phase;
 
         return $this;
     }

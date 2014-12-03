@@ -2,6 +2,8 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
+use Symfony\Component\Stopwatch\Stopwatch;
+
 /**
  * Batch
  */
@@ -11,7 +13,12 @@ class Batch implements ExecutableInterface
      *
      * @var ControlRecipe
      */
-    protected $control_recipe;
+    protected $controlRecipe;
+
+    /**
+     * @var MasterRecipe
+     */
+    protected $masterRecipe;
 
     /**
      * Timer for monitoring the duration
@@ -22,7 +29,7 @@ class Batch implements ExecutableInterface
 
     /**
      * Creation date and time
-     * @var DateTime
+     * @var \DateTime
      */
     protected $createdAt;
 
@@ -32,7 +39,7 @@ class Batch implements ExecutableInterface
      */
     public function __construct(ControlRecipe $recipe)
     {
-        $this->control_recipe = $recipe;
+        $this->controlRecipe = $recipe;
     }
 
     /**
@@ -43,15 +50,15 @@ class Batch implements ExecutableInterface
     public function start()
     {
         echo 'Batch::start' . PHP_EOL;
-        if (is_null($this->control_recipe)) {
+        if (is_null($this->controlRecipe)) {
             throw new \Exception('No Recipe for this Batch');
         }
 
-        if ($this->control_recipe->isFinished()) {
+        if ($this->controlRecipe->isFinished()) {
             throw new \Exception('Procedure already finished');
         }
 
-        $this->control_recipe->start();
+        $this->controlRecipe->start();
     }
 
     /**
@@ -61,12 +68,12 @@ class Batch implements ExecutableInterface
      */
     public function execute()
     {
-        if (is_null($this->control_recipe)) {
+        if (is_null($this->controlRecipe)) {
             throw new \Exception('No Recipe for this Batch');
         }
 
-        if (!$this->control_recipe->isFinished()) {
-            $this->control_recipe->execute();
+        if (!$this->controlRecipe->isFinished()) {
+            $this->controlRecipe->execute();
         } else {
             echo 'Batch is done' . PHP_EOL;
         }
@@ -78,7 +85,7 @@ class Batch implements ExecutableInterface
      */
     public function isStarted()
     {
-        return $this->control_recipe->isStarted();
+        return $this->controlRecipe->isStarted();
     }
 
     /**
@@ -87,29 +94,62 @@ class Batch implements ExecutableInterface
      */
     public function isFinished()
     {
-        return $this->control_recipe->isFinished();
+        return $this->controlRecipe->isFinished();
     }
 
     /**
-     * Set ControlRecipe
+     * Set controlRecipe
      *
-     * @param  ControlRecipe $recipe
+     * @param  ControlRecipe $controlRecipe
      * @return Batch
      */
-    public function setRecipe(ControlRecipe $recipe)
+    public function setControlRecipe(ControlRecipe $controlRecipe = null)
     {
-        $this->control_recipe = $recipe;
+        $this->controlRecipe = $controlRecipe;
 
         return $this;
     }
 
     /**
-     * Get ControlRecipe
+     * Get controlRecipe
      *
-     * @return Recipe
+     * @return ControlRecipe
+     */
+    public function getControlRecipe()
+    {
+        return $this->controlRecipe;
+    }
+
+    /**
+     * Is this method necessary or could we just use the getControlRecipe in the BatchManager?
+     *
+     * @return ControlRecipe
      */
     public function getRecipe()
     {
-        return $this->control_recipe;
+        return $this->getControlRecipe();
+    }
+
+    /**
+     * Set master_recipe
+     *
+     * @param  MasterRecipe $masterRecipe
+     * @return Batch
+     */
+    public function setMasterRecipe(MasterRecipe $masterRecipe = null)
+    {
+        $this->masterRecipe = $masterRecipe;
+
+        return $this;
+    }
+
+    /**
+     * Get master_recipe
+     *
+     * @return MasterRecipe
+     */
+    public function getMasterRecipe()
+    {
+        return $this->masterRecipe;
     }
 }

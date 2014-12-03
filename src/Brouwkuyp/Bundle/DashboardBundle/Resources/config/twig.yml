@@ -1,0 +1,11 @@
+services:
+
+    brouwkuyp_dashboard.twig.extensions.time:
+        class: Brouwkuyp\Bundle\DashboardBundle\Twig\Extensions\TimeExtension
+        tags:
+            - { name: twig.extension }
+
+    brouwkuyp_dashboard.twig.extensions.s88:
+        class: Brouwkuyp\Bundle\DashboardBundle\Twig\Extensions\S88Extension
+        tags:
+            - { name: twig.extension }

@@ -81,35 +81,12 @@ class ControlRecipe extends BaseControlRecipe
     }
 
     /**
-     * Set name
-     *
-     * @param  string        $name
-     * @return ControlRecipe
+     * @return array
      */
-    public function setName($name)
+    public function getRouteParams()
     {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Get procedure
-     *
-     * @return \Brouwkuyp\Bundle\ServiceBundle\Entity\Procedure
-     */
-    public function getProcedure()
-    {
-        return $this->procedure;
+        return [
+            'id' => $this->getId()
+        ];
     }
 }

@@ -104,7 +104,7 @@ var chart = {
                             width: 2,
                             color: '#088A68',
                             label: {
-                                text: 'Alpha amylase'
+                                text: 'Beta amylase'
                             }
                         }, {
                             value: 72,
@@ -112,7 +112,7 @@ var chart = {
                             width: 2,
                             color: '#088A68',
                             label: {
-                                text: 'Beta amylase'
+                                text: 'Alpha amylase'
                             }
                         }, {
                             value: 78,
