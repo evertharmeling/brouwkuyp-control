@@ -3,7 +3,9 @@
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
 use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
+use Brouwkuyp\Bundle\LogicBundle\Traits\BatchElementTrait;
 use Symfony\Component\Stopwatch\Stopwatch;
+use Symfony\Component\Stopwatch\StopwatchEvent;
 
 /**
  * Phase
@@ -16,47 +18,47 @@ use Symfony\Component\Stopwatch\Stopwatch;
  * All other elements (procedures, unit procedures, and operations)
  * simply group, organize, and direct phases.
  */
-class Phase extends Observable implements ExecutableInterface
+class Phase extends Observable implements ExecutableInterface, BatchElementInterface
 {
     use ExecutableTrait;
-
-    const CONTROL_TEMP      = 'control_temp';
-    const ADD_INGREDIENTS   = 'add_ingredients';
-
-    const PRINT_TIMES       = 10;
-    const NOTIFY_TIMES      = 30;
-
+    use BatchElementTrait;
+    const REACH_TEMP = 'reach_temp';
+    const CONTROL_TEMP = 'control_temp';
+    const ADD_INGREDIENTS = 'add_ingredients';
+    const PRINT_TIMES = 4;
+    const NOTIFY_TIMES = 30;
+    
     /**
      *
      * @var string
      */
     protected $name;
-
+    
     /**
      *
      * @var string
      */
     protected $type;
-
+    
     /**
      *
      * @var integer
      */
     protected $value;
-
+    
     /**
      *
      * @var Operation
      */
     protected $operation;
-
+    
     /**
      * Wanted duration in seconds
      *
      * @var integer
      */
     protected $duration;
-
+    
     /**
      * Counter for the times being executed
      *
@@ -72,13 +74,13 @@ class Phase extends Observable implements ExecutableInterface
     /**
      * Set name
      *
-     * @param  string $name
+     * @param string $name            
      * @return Phase
      */
     public function setName($name)
     {
         $this->name = $name;
-
+        
         return $this;
     }
 
@@ -125,13 +127,13 @@ class Phase extends Observable implements ExecutableInterface
     /**
      * Set operation
      *
-     * @param  Operation $operation
+     * @param Operation $operation            
      * @return Phase
      */
     public function setOperation(Operation $operation = null)
     {
         $this->operation = $operation;
-
+        
         return $this;
     }
 
@@ -152,13 +154,9 @@ class Phase extends Observable implements ExecutableInterface
     {
         echo sprintf('Phase::start %s', $this->name) . PHP_EOL;
         if (!$this->started) {
-            // Set flag that we are started
+            $this->batch->startTimer($this->name, 'start');
             $this->started = true;
             $this->executed = 0;
-
-            $this->timer = new Stopwatch();
-            $this->timer->start('started');
-
             $this->notifyObservers();
         }
     }
@@ -168,9 +166,27 @@ class Phase extends Observable implements ExecutableInterface
      */
     public function execute()
     {
-        $this->printPhaseExecution();
-
-        if (!$this->started) {
+        if ($this->started) {
+            if ($this->finished) {
+                $this->notifyObservers();
+            } else {
+                if (Phase::CONTROL_TEMP == $this->type ||
+                         Phase::ADD_INGREDIENTS == $this->type) {
+                    $this->printPhaseExecution(true);
+                    if ($this->getDurationSeconds() > $this->duration) {
+                        $this->finished = true;
+                    }
+                    if (($this->executed % Phase::NOTIFY_TIMES) == 0) {
+                        $this->notifyObservers();
+                    }
+                } else if (Phase::REACH_TEMP == $this->type) {
+                    $this->printPhaseExecution(false);
+                    $this->notifyObservers();
+                } else {
+                    throw new \Exception('Unknown Phase type');
+                }
+            }
+        } else {
             throw new \Exception('Phase not started');
         }
 
@@ -184,20 +200,24 @@ class Phase extends Observable implements ExecutableInterface
     }
 
     /**
-     * @return float
+     * Function to finish the Phase
      */
-    private function getDurationSeconds()
+    public function setFinished()
     {
-        $timerEvent = $this->timer->lap('started');
-
-        return ($timerEvent->getDuration() / 1000);
+        $this->finished = true;
     }
 
-    private function printPhaseExecution()
+    private function printPhaseExecution($showDuration)
     {
         if (($this->executed % Phase::PRINT_TIMES) == 0) {
-            echo sprintf('Phase::execute %s (%4d/%4d)', $this->name,
-                    $this->getDurationSeconds(), $this->duration) . PHP_EOL;
+            if ($showDuration == true) {
+                echo sprintf('Phase::execute %s (%4d/%4d)', 
+                        $this->name, $this->getDurationSeconds(), 
+                        $this->duration) . PHP_EOL;
+            } else {
+                echo sprintf('Phase::execute %s', $this->name) .
+                         PHP_EOL;
+            }
         }
     }
 }

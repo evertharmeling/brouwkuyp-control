@@ -5,6 +5,7 @@ namespace Brouwkuyp\Bundle\LogicBundle\Command;
 use Brouwkuyp\Bundle\LogicBundle\Manager\BatchManager;
 use Brouwkuyp\Bundle\LogicBundle\Manager\EquipmentManager;
 use Brouwkuyp\Bundle\LogicBundle\Manager\RecipeControlManager;
+use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -45,14 +46,19 @@ class BrewCommand extends BaseCommand
         $rcm = $this->getContainer()->get(
                 'brouwkuyp_logic.manager.recipe_control');
         /**
-         * @var BrewControlManagerInterface
+         * @var BrewControlManagerInterface $bcm
          */
         $bcm = $this->getContainer()->get(
                 'brouwkuyp_service.manager.brew_control');
+        
+        /** @var Manager $am */
+        $am = $this->getContainer()->get(
+                'brouwkuyp_service.amqp.manager');
+        
         /**
          * @var EquipmentManager
          */
-        $equipmentManager = new EquipmentManager($bcm);
+        $equipmentManager = new EquipmentManager($bcm,$am);
 
         $output->writeln(
                 'Loading recipe: ' . $input->getArgument('recipe'));
@@ -66,7 +72,7 @@ class BrewCommand extends BaseCommand
 
         while ($bm->isRunning($batch)) {
             $bm->execute();
-            usleep(500000);
+            usleep(499999);
         }
 
         $output->writeln('Done with recipe');

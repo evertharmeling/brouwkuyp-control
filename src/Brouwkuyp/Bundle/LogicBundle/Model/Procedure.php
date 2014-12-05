@@ -3,6 +3,7 @@
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
 use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
+use Brouwkuyp\Bundle\LogicBundle\Traits\BatchElementTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -12,9 +13,10 @@ use Doctrine\Common\Collections\ArrayCollection;
  * hierarchy. It defines the overall strategy for making a batch.
  * It consists of an ordered set of unit procedures.
  */
-class Procedure implements ExecutableInterface
+class Procedure implements ExecutableInterface,BatchElementInterface
 {
     use ExecutableTrait;
+    use BatchElementTrait;
 
     /**
      *
@@ -130,9 +132,8 @@ class Procedure implements ExecutableInterface
         echo 'Procedure::start' . PHP_EOL;
 
         if (!$this->started) {
-            // Set flag that we are started
+            $this->batch->startTimer($this->name, 'start');
             $this->started = true;
-
             // Start first UnitProcedure
             if ($this->unitProcedures->count()) {
                 $this->unitProcedures->first()->start();

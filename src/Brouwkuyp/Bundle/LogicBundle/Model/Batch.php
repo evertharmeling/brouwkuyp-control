@@ -2,6 +2,7 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
+use Symfony\Component\Stopwatch\StopwatchEvent;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 /**
@@ -39,7 +40,9 @@ class Batch implements ExecutableInterface
      */
     public function __construct(ControlRecipe $recipe)
     {
-        $this->controlRecipe = $recipe;
+        $this->control_recipe = $recipe;
+        $this->setBatch();
+        $this->timer = new Stopwatch();
     }
 
     /**
@@ -98,6 +101,7 @@ class Batch implements ExecutableInterface
     }
 
     /**
+<<<<<<< Updated upstream
      * Set controlRecipe
      *
      * @param  ControlRecipe $controlRecipe
@@ -112,6 +116,9 @@ class Batch implements ExecutableInterface
 
     /**
      * Get controlRecipe
+=======
+     * Get ControlRecipe
+>>>>>>> Stashed changes
      *
      * @return ControlRecipe
      */
@@ -151,5 +158,41 @@ class Batch implements ExecutableInterface
     public function getMasterRecipe()
     {
         return $this->masterRecipe;
+    }
+    
+    /**
+     * Create a timer event
+     * 
+     * @param string $batchElementName
+     * @param string $eventName
+     * @return StopwatchEvent
+     */
+    public function startTimer($batchElementName, $eventName)
+    {
+        return $this->timer->start($batchElementName.":".$eventName);
+    }
+    
+    public function getDuration($batchElementName, $eventName)
+    {
+        $event = $this->timer->lap($batchElementName.":".$eventName);
+        return $event->getDuration();
+    }
+    
+    /**
+     * Sets the batch for all elements.
+     */
+    private function setBatch()
+    {
+        $this->control_recipe->setBatch($this);
+        $this->control_recipe->getProcedure()->setBatch($this);
+        foreach ($this->control_recipe->getProcedure()->getUnitProcedures() as $up) {
+            $up->setBatch($this);
+            foreach ($up->getOperations() as $op) {
+                $op->setBatch($this);
+                foreach ($op->getPhases() as $phase) {
+                    $phase->setBatch($this);
+                }
+            }
+        }
     }
 }
