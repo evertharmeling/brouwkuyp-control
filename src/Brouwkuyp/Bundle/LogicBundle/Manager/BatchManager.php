@@ -106,6 +106,9 @@ class BatchManager implements ObserverInterface
     public function showBatch(Batch $batch = null)
     {
         if (is_null($batch)) {
+            if(is_null($this->batch)) {
+                throw new \Exception('No Batch to show');
+            }
             $batch = $this->batch;
         }
         echo PHP_EOL . "*********************************************" .

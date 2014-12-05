@@ -40,7 +40,7 @@ class Batch implements ExecutableInterface
      */
     public function __construct(ControlRecipe $recipe)
     {
-        $this->control_recipe = $recipe;
+        $this->controlRecipe = $recipe;
         $this->setBatch();
         $this->timer = new Stopwatch();
     }
@@ -101,13 +101,12 @@ class Batch implements ExecutableInterface
     }
 
     /**
-<<<<<<< Updated upstream
      * Set controlRecipe
      *
      * @param  ControlRecipe $controlRecipe
      * @return Batch
      */
-    public function setControlRecipe(ControlRecipe $controlRecipe = null)
+    public function setControlRecipe(ControlRecipe $controlRecipe)
     {
         $this->controlRecipe = $controlRecipe;
 
@@ -116,9 +115,6 @@ class Batch implements ExecutableInterface
 
     /**
      * Get controlRecipe
-=======
-     * Get ControlRecipe
->>>>>>> Stashed changes
      *
      * @return ControlRecipe
      */
@@ -183,9 +179,9 @@ class Batch implements ExecutableInterface
      */
     private function setBatch()
     {
-        $this->control_recipe->setBatch($this);
-        $this->control_recipe->getProcedure()->setBatch($this);
-        foreach ($this->control_recipe->getProcedure()->getUnitProcedures() as $up) {
+        $this->controlRecipe->setBatch($this);
+        $this->controlRecipe->getProcedure()->setBatch($this);
+        foreach ($this->controlRecipe->getProcedure()->getUnitProcedures() as $up) {
             $up->setBatch($this);
             foreach ($up->getOperations() as $op) {
                 $op->setBatch($this);

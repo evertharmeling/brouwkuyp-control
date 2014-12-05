@@ -65,8 +65,9 @@ class Phase extends Observable implements ExecutableInterface, BatchElementInter
      * @var integer
      */
     private $executed;
-
+    
     /**
+     *
      * @var Stopwatch
      */
     private $timer;
@@ -166,6 +167,8 @@ class Phase extends Observable implements ExecutableInterface, BatchElementInter
      */
     public function execute()
     {
+        // TODO: now the Phase and the manager decide when the
+        // Phase is finished. Only one class should have this responsibility
         if ($this->started) {
             if ($this->finished) {
                 $this->notifyObservers();
@@ -189,13 +192,7 @@ class Phase extends Observable implements ExecutableInterface, BatchElementInter
         } else {
             throw new \Exception('Phase not started');
         }
-
-        if ($this->getDurationSeconds() > $this->duration) {
-            $this->finished = true;
-        } elseif (($this->executed % Phase::NOTIFY_TIMES) == 0) {
-            $this->notifyObservers();
-        }
-
+        
         $this->executed++;
     }
 
