@@ -7,6 +7,7 @@ use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\MLT;
 use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Unit;
 use Brouwkuyp\Bundle\LogicBundle\Model\Phase;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface;
+use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
 
 class EquipmentManager
 {
@@ -15,14 +16,29 @@ class EquipmentManager
      * @var BrewControlManagerInterface
      */
     private $bcm;
+    
+    /**
+     * Manager
+     * @var Manager
+     */
+    private $am;
+    
+    /**
+     * MLT
+     * @var MLT 
+     */
+    private $mlt;
 
     /**
-     *
+     * Constructs the EquipmentManager
+     * 
      * @param BrewControlManagerInterface $bcm
+     * @param Manager $am
      */
-    public function __construct(BrewControlManagerInterface $bcm)
+    public function __construct(BrewControlManagerInterface $bcm, Manager $am)
     {
         $this->bcm = $bcm;
+        $this->am = $am;
     }
 
     /**
@@ -48,7 +64,11 @@ class EquipmentManager
         // TODO: cache units and equipment
         // TODO: Unit can have multiple equipment
         if ($unit->getName() == Unit::TYPE_MASHER) {
-            $equipment = new MLT($this->bcm);
+            if(is_null($this->mlt))
+            {
+                $this->mlt = new MLT($this->bcm, $this->am);
+            }
+            $equipment = $this->mlt;
         }
 
         return $equipment;

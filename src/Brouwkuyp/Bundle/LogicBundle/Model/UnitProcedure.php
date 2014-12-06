@@ -2,8 +2,9 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
-use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Unit;
 use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
+use Brouwkuyp\Bundle\LogicBundle\Traits\BatchElementTrait;
+use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Unit;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -16,9 +17,10 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Multiple unit procedures can run concurrently as part of the same
  * procedure, as long as they are active on different units.
  */
-class UnitProcedure implements ExecutableInterface
+class UnitProcedure implements ExecutableInterface,BatchElementInterface
 {
     use ExecutableTrait;
+    use BatchElementTrait;
 
     /**
      *
@@ -163,7 +165,7 @@ class UnitProcedure implements ExecutableInterface
         echo sprintf('UnitProcedure::start, unit: %s',
                 $this->unit->getName()) . PHP_EOL;
         if (!$this->started) {
-            // Set flag that we are started
+            $this->batch->startTimer($this->name, 'start');
             $this->started = true;
 
             // Start first Operation

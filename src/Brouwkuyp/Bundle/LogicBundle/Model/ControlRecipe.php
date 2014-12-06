@@ -2,16 +2,21 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
+use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
+use Brouwkuyp\Bundle\LogicBundle\Traits\BatchElementTrait;
+
 /**
  * ControlRecipe
  */
-class ControlRecipe implements ExecutableInterface
+class ControlRecipe implements ExecutableInterface, BatchElementInterface
 {
+    use ExecutableTrait;
+    use BatchElementTrait;
     /**
      * @var string
      */
     protected $name;
-
+    
     /**
      * @var Procedure
      */
@@ -20,13 +25,13 @@ class ControlRecipe implements ExecutableInterface
     /**
      * Set name
      *
-     * @param  string        $name
+     * @param string $name            
      * @return ControlRecipe
      */
     public function setName($name)
     {
         $this->name = $name;
-
+        
         return $this;
     }
 
@@ -51,11 +56,12 @@ class ControlRecipe implements ExecutableInterface
         if (is_null($this->procedure)) {
             throw new \Exception('No Procedure for this Recipe');
         }
-
+        
         if ($this->procedure->isFinished()) {
             throw new \Exception('Procedure already finished');
         }
-
+        
+        $this->batch->startTimer($this->name, 'start');
         $this->procedure->start();
     }
 
@@ -94,13 +100,13 @@ class ControlRecipe implements ExecutableInterface
     /**
      * Set procedure
      *
-     * @param  Procedure     $procedure
+     * @param Procedure $procedure            
      * @return ControlRecipe
      */
     public function setProcedure(Procedure $procedure = null)
     {
         $this->procedure = $procedure;
-
+        
         return $this;
     }
 

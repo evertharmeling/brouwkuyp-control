@@ -3,6 +3,7 @@
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
 use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
+use Brouwkuyp\Bundle\LogicBundle\Traits\BatchElementTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -14,9 +15,10 @@ use Doctrine\Common\Collections\ArrayCollection;
  * or biological change. Like unit procedures, the standard presumes
  * only one operation is active on a particular unit at a time.
  */
-class Operation implements ExecutableInterface
+class Operation implements ExecutableInterface,BatchElementInterface
 {
     use ExecutableTrait;
+    use BatchElementTrait;
 
     /**
      *
@@ -123,16 +125,14 @@ class Operation implements ExecutableInterface
         return $this->unitProcedure;
     }
 
-    /**
-     * Starts stage
-     */
     public function start()
     {
         echo sprintf('Operation::start %s', $this->name) . PHP_EOL;
         if (!$this->started) {
+            $this->batch->startTimer($this->name, 'start');
             // Set flag that we are started
             $this->started = true;
-
+            
             // Start first UnitProcedure
             if ($this->phases->count()) {
                 $this->phases->first()->start();
