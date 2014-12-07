@@ -1,0 +1,8 @@
+services:
+
+    brouwkuyp_service.listener.batch.start:
+        class: Brouwkuyp\Bundle\ServiceBundle\EventListener\BatchStartListener
+        arguments:
+            - @brouwkuyp_service.amqp.manager.log
+        tags:
+            - { name: kernel.event_listener, event: batch.start, method: onBatchStart }

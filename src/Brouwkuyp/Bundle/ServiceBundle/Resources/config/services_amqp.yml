@@ -22,3 +22,8 @@ services:
         class: Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\BrewControlManager
         arguments:
             - @brouwkuyp_service.amqp.manager
+
+    brouwkuyp_service.amqp.manager.log:
+        class: Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\LogManager
+        arguments:
+            - @brouwkuyp_service.amqp.manager

@@ -41,23 +41,6 @@ class BrewControlManagerTest extends AMQPTestCase
         $this->assertTrue($this->brewControlManager->setPumpMode(Pump::MODE_MANUAL));
     }
 
-    public function testBroadcastDialog()
-    {
-        $this->assertTrue($this->brewControlManager->broadcastDialog('Add ingredients', 'Operator, add the pils malt'));
-        $this->assertTrue($this->brewControlManager->broadcastDialog('Add ingredients', 'Operator, add the wheat malt'));
-        $this->assertTrue($this->brewControlManager->broadcastDialog('Add ingredients', 'Operator, add the oatmeal'));
-    }
-
-    public function testBroadcastLog()
-    {
-        $this->assertTrue($this->brewControlManager->broadcastLog("'Pre heat' at 52°C"));
-        $this->assertTrue($this->brewControlManager->broadcastLog("'Infusion' at 52°C"));
-        $this->assertTrue($this->brewControlManager->broadcastLog("'Beta amylase' at 62°C"));
-        $this->assertTrue($this->brewControlManager->broadcastLog("'Alpha amylase' at 72°C"));
-        $this->assertTrue($this->brewControlManager->broadcastLog("'Stop' at 78°C"));
-        $this->assertTrue($this->brewControlManager->broadcastLog("'Spool' at 80°C"));
-    }
-
     /**
      * @expectedException \InvalidArgumentException
      */
