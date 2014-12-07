@@ -2,6 +2,11 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
+use Brouwkuyp\Bundle\LogicBundle\BrewEvents;
+use Brouwkuyp\Bundle\LogicBundle\Event\EventDispatcherAwareInterface;
+use Brouwkuyp\Bundle\LogicBundle\Event\UnitProcedureFinishEvent;
+use Brouwkuyp\Bundle\LogicBundle\Event\UnitProcedureStartEvent;
+use Brouwkuyp\Bundle\LogicBundle\Traits\EventDispatcherTrait;
 use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
 use Brouwkuyp\Bundle\LogicBundle\Traits\BatchElementTrait;
 use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Unit;
@@ -17,10 +22,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Multiple unit procedures can run concurrently as part of the same
  * procedure, as long as they are active on different units.
  */
-class UnitProcedure implements ExecutableInterface,BatchElementInterface
+class UnitProcedure implements ExecutableInterface, BatchElementInterface, EventDispatcherAwareInterface
 {
     use ExecutableTrait;
     use BatchElementTrait;
+    use EventDispatcherTrait;
 
     /**
      * @var string
@@ -81,7 +87,7 @@ class UnitProcedure implements ExecutableInterface,BatchElementInterface
      */
     public function addOperation(Operation $operation)
     {
-        $this->operations [] = $operation;
+        $this->operations[] = $operation;
 
         return $this;
     }
@@ -157,15 +163,15 @@ class UnitProcedure implements ExecutableInterface,BatchElementInterface
      */
     public function start()
     {
-        echo sprintf('UnitProcedure::start, unit: %s',
-                $this->unit->getName()) . PHP_EOL;
         if (!$this->started) {
             $this->batch->startTimer($this->name, 'start');
-            $this->started = true;
+            $this->setStarted();
 
             // Start first Operation
             if ($this->operations->count()) {
-                $this->operations->first()->start();
+                $operation = $this->operations->first();
+                $operation->setEventDispatcher($this->eventDispatcher);
+                $operation->start();
             }
         }
     }
@@ -180,7 +186,7 @@ class UnitProcedure implements ExecutableInterface,BatchElementInterface
         }
 
         if (!$this->getCurrentOperation()) {
-            $this->finished = true;
+            $this->setFinished();
 
             return;
         }
@@ -189,11 +195,13 @@ class UnitProcedure implements ExecutableInterface,BatchElementInterface
         if ($this->getCurrentOperation()->isFinished()) {
             // Go to next unit procedure if possible
             if ($this->operations->next()) {
-                $this->getCurrentOperation()->start();
+                $operation = $this->getCurrentOperation();
+                $operation->setEventDispatcher($this->eventDispatcher);
+                $operation->start();
             } else {
                 // If last operation is finished
                 // set the finished flag
-                $this->finished = true;
+                $this->setFinished();
             }
         }
         // Execute
@@ -202,6 +210,28 @@ class UnitProcedure implements ExecutableInterface,BatchElementInterface
             // Perform Operation
             $this->getCurrentOperation()->execute();
         }
+    }
+
+    /**
+     * @return Phase
+     */
+    public function setStarted()
+    {
+        $this->started = true;
+        $this->eventDispatcher->dispatch(BrewEvents::UNIT_PROCEDURE_START, new UnitProcedureStartEvent($this));
+
+        return $this;
+    }
+
+    /**
+     * Function to finish the Phase
+     */
+    public function setFinished()
+    {
+        $this->finished = true;
+        $this->eventDispatcher->dispatch(BrewEvents::UNIT_PROCEDURE_FINISH, new UnitProcedureFinishEvent($this));
+
+        return $this;
     }
 
     /**

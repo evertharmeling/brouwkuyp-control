@@ -2,13 +2,13 @@
 
 namespace Brouwkuyp\Bundle\ServiceBundle\EventListener;
 
-use Brouwkuyp\Bundle\LogicBundle\Event\BatchStartEvent;
+use Brouwkuyp\Bundle\LogicBundle\Event\OperationFinishEvent;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\LogManager;
 
 /**
  * @author Evert Harmeling <evertharmeling@gmail.com>
  */
-class BatchStartListener
+class OperationFinishedListener
 {
     /**
      * @var LogManager
@@ -24,11 +24,11 @@ class BatchStartListener
     }
 
     /**
-     * @param BatchStartEvent $event
+     * @param OperationFinishEvent $event
      */
-    public function onBatchStart(BatchStartEvent $event)
+    public function onOperationFinish(OperationFinishEvent $event)
     {
-        $batch = $event->getBatch();
-        $this->logManager->log('Batch started');
+        $operation = $event->getOperation();
+        $this->logManager->log(sprintf("Operation '%s' finished", $operation->getName()));
     }
 }

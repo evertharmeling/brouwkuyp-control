@@ -8,7 +8,7 @@ use Symfony\Component\EventDispatcher\Event;
 /**
  * @author Evert Harmeling <evertharmeling@gmail.com>
  */
-class BatchCompleteEvent extends Event
+class BatchFinishEvent extends Event
 {
     /**
      * @var Batch

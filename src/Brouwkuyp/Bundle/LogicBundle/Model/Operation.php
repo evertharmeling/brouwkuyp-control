@@ -2,6 +2,11 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
+use Brouwkuyp\Bundle\LogicBundle\BrewEvents;
+use Brouwkuyp\Bundle\LogicBundle\Event\EventDispatcherAwareInterface;
+use Brouwkuyp\Bundle\LogicBundle\Event\OperationFinishEvent;
+use Brouwkuyp\Bundle\LogicBundle\Event\OperationStartEvent;
+use Brouwkuyp\Bundle\LogicBundle\Traits\EventDispatcherTrait;
 use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
 use Brouwkuyp\Bundle\LogicBundle\Traits\BatchElementTrait;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,25 +20,23 @@ use Doctrine\Common\Collections\ArrayCollection;
  * or biological change. Like unit procedures, the standard presumes
  * only one operation is active on a particular unit at a time.
  */
-class Operation implements ExecutableInterface,BatchElementInterface
+class Operation implements ExecutableInterface, BatchElementInterface, EventDispatcherAwareInterface
 {
     use ExecutableTrait;
     use BatchElementTrait;
+    use EventDispatcherTrait;
 
     /**
-     *
      * @var string
      */
     protected $name;
 
     /**
-     *
      * @var ArrayCollection
      */
     protected $phases;
 
     /**
-     *
      * @var UnitProcedure
      */
     protected $unitProcedure;
@@ -125,17 +128,21 @@ class Operation implements ExecutableInterface,BatchElementInterface
         return $this->unitProcedure;
     }
 
+    /**
+     * Starts the operation
+     */
     public function start()
     {
-        echo sprintf('Operation::start %s', $this->name) . PHP_EOL;
         if (!$this->started) {
             $this->batch->startTimer($this->name, 'start');
             // Set flag that we are started
-            $this->started = true;
+            $this->setStarted();
             
             // Start first UnitProcedure
             if ($this->phases->count()) {
-                $this->phases->first()->start();
+                $phase = $this->phases->first();
+                $phase->setEventDispatcher($this->eventDispatcher);
+                $phase->start();
             }
         }
     }
@@ -150,27 +157,50 @@ class Operation implements ExecutableInterface,BatchElementInterface
         }
 
         if (!$this->phases->current()) {
-            $this->finished = true;
+            $this->setFinished();
 
             return;
         }
 
         // Start the next phase?
-        if ($this->phases->current()->isFinished()) {
+        if ($this->getCurrentPhase()->isFinished()) {
             // Go to next phase if possible
             if ($this->phases->next()) {
-                $this->phases->current()->start();
+                $this->getCurrentPhase()->setEventDispatcher($this->eventDispatcher);
+                $this->getCurrentPhase()->start();
             } else {
                 // If last phase is finished
                 // set the finished flag
-                $this->finished = true;
+                $this->setFinished();
             }
         }
         // Execute
-        if (!$this->finished && $this->phases->current()->isStarted()) {
+        if (!$this->finished && $this->getCurrentPhase()->isStarted()) {
             // Perform phase
-            $this->phases->current()->execute();
+            $this->getCurrentPhase()->execute();
         }
+    }
+
+    /**
+     * @return Phase
+     */
+    public function setStarted()
+    {
+        $this->started = true;
+        $this->eventDispatcher->dispatch(BrewEvents::OPERATION_START, new OperationStartEvent($this));
+
+        return $this;
+    }
+
+    /**
+     * Function to finish the Phase
+     */
+    public function setFinished()
+    {
+        $this->finished = true;
+        $this->eventDispatcher->dispatch(BrewEvents::OPERATION_FINISH, new OperationFinishEvent($this));
+
+        return $this;
     }
 
     /**

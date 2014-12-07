@@ -2,9 +2,9 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
+use Brouwkuyp\Bundle\LogicBundle\Event\BatchFinishEvent;
 use Symfony\Component\Stopwatch\StopwatchEvent;
 use Brouwkuyp\Bundle\LogicBundle\BrewEvents;
-use Brouwkuyp\Bundle\LogicBundle\Event\BatchCompleteEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\BatchStartEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
@@ -72,6 +72,7 @@ class Batch implements ExecutableInterface
         }
 
         $this->eventDispatcher->dispatch(BrewEvents::BATCH_START, new BatchStartEvent($this));
+        $this->controlRecipe->setEventDispatcher($this->eventDispatcher);
         $this->controlRecipe->start();
     }
 
@@ -89,7 +90,7 @@ class Batch implements ExecutableInterface
         if (!$this->controlRecipe->isFinished()) {
             $this->controlRecipe->execute();
         } else {
-            $this->eventDispatcher->dispatch(BrewEvents::BATCH_COMPLETE, new BatchCompleteEvent($this));
+            $this->eventDispatcher->dispatch(BrewEvents::BATCH_FINISH, new BatchFinishEvent($this));
         }
     }
 

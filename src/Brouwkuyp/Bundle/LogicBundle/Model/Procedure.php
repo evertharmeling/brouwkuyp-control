@@ -2,6 +2,13 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
+use Brouwkuyp\Bundle\LogicBundle\BrewEvents;
+use Brouwkuyp\Bundle\LogicBundle\Event\EventDispatcherAwareInterface;
+use Brouwkuyp\Bundle\LogicBundle\Event\ProcedureFinishEvent;
+use Brouwkuyp\Bundle\LogicBundle\Event\ProcedureStartEvent;
+use Brouwkuyp\Bundle\LogicBundle\Event\UnitProcedureFinishEvent;
+use Brouwkuyp\Bundle\LogicBundle\Event\UnitProcedureStartEvent;
+use Brouwkuyp\Bundle\LogicBundle\Traits\EventDispatcherTrait;
 use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
 use Brouwkuyp\Bundle\LogicBundle\Traits\BatchElementTrait;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,10 +20,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  * hierarchy. It defines the overall strategy for making a batch.
  * It consists of an ordered set of unit procedures.
  */
-class Procedure implements ExecutableInterface,BatchElementInterface
+class Procedure implements ExecutableInterface, BatchElementInterface, EventDispatcherAwareInterface
 {
     use ExecutableTrait;
     use BatchElementTrait;
+    use EventDispatcherTrait;
 
     /**
      * @var string
@@ -124,14 +132,15 @@ class Procedure implements ExecutableInterface,BatchElementInterface
      */
     public function start()
     {
-        echo 'Procedure::start' . PHP_EOL;
-
         if (!$this->started) {
             $this->batch->startTimer($this->name, 'start');
-            $this->started = true;
+            $this->setStarted();
+
             // Start first UnitProcedure
             if ($this->unitProcedures->count()) {
-                $this->unitProcedures->first()->start();
+                $unitProcedure = $this->unitProcedures->first();
+                $unitProcedure->setEventDispatcher($this->eventDispatcher);
+                $unitProcedure->start();
             }
         }
     }
@@ -146,7 +155,7 @@ class Procedure implements ExecutableInterface,BatchElementInterface
         }
 
         if (!$this->getCurrentUnitProcedure()) {
-            $this->finished = true;
+            $this->setFinished();
 
             return;
         }
@@ -155,11 +164,12 @@ class Procedure implements ExecutableInterface,BatchElementInterface
         if ($this->getCurrentUnitProcedure()->isFinished()) {
             // Go to next unit procedure if possible
             if ($this->unitProcedures->next()) {
+                $this->getCurrentUnitProcedure()->setEventDispatcher($this->eventDispatcher);
                 $this->getCurrentUnitProcedure()->start();
             } else {
                 // If last unit procedure is finished
                 // set the finished flag
-                $this->finished = true;
+                $this->setFinished();
             }
         }
         // Execute
@@ -168,6 +178,28 @@ class Procedure implements ExecutableInterface,BatchElementInterface
             // Perform unit procedure
             $this->getCurrentUnitProcedure()->execute();
         }
+    }
+
+    /**
+     * @return Phase
+     */
+    public function setStarted()
+    {
+        $this->started = true;
+        $this->eventDispatcher->dispatch(BrewEvents::PROCEDURE_START, new ProcedureStartEvent($this));
+
+        return $this;
+    }
+
+    /**
+     * Function to finish the Phase
+     */
+    public function setFinished()
+    {
+        $this->finished = true;
+        $this->eventDispatcher->dispatch(BrewEvents::PROCEDURE_FINISH, new ProcedureFinishEvent($this));
+
+        return $this;
     }
 
     /**
