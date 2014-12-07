@@ -6,10 +6,10 @@ use Brouwkuyp\Bundle\LogicBundle\BrewEvents;
 use Brouwkuyp\Bundle\LogicBundle\Event\EventDispatcherAwareInterface;
 use Brouwkuyp\Bundle\LogicBundle\Event\UnitProcedureFinishEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\UnitProcedureStartEvent;
+use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Unit;
+use Brouwkuyp\Bundle\LogicBundle\Traits\BatchElementTrait;
 use Brouwkuyp\Bundle\LogicBundle\Traits\EventDispatcherTrait;
 use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
-use Brouwkuyp\Bundle\LogicBundle\Traits\BatchElementTrait;
-use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Unit;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -213,7 +213,7 @@ class UnitProcedure implements ExecutableInterface, BatchElementInterface, Event
     }
 
     /**
-     * @return Phase
+     * @return UnitProcedure
      */
     public function setStarted()
     {
@@ -224,7 +224,7 @@ class UnitProcedure implements ExecutableInterface, BatchElementInterface, Event
     }
 
     /**
-     * Function to finish the Phase
+     * @return UnitProcedure
      */
     public function setFinished()
     {

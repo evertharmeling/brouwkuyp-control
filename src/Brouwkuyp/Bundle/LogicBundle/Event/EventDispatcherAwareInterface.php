@@ -10,7 +10,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 interface EventDispatcherAwareInterface
 {
     /**
-     * @param EventDispatcherInterface $eventDispatcher
+     * @param  EventDispatcherInterface $eventDispatcher
      * @return $this
      */
     public function setEventDispatcher(EventDispatcherInterface $eventDispatcher);

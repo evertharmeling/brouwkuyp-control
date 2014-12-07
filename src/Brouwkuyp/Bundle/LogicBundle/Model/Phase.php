@@ -6,11 +6,9 @@ use Brouwkuyp\Bundle\LogicBundle\BrewEvents;
 use Brouwkuyp\Bundle\LogicBundle\Event\EventDispatcherAwareInterface;
 use Brouwkuyp\Bundle\LogicBundle\Event\PhaseFinishEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\PhaseStartEvent;
+use Brouwkuyp\Bundle\LogicBundle\Traits\BatchElementTrait;
 use Brouwkuyp\Bundle\LogicBundle\Traits\EventDispatcherTrait;
 use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
-use Brouwkuyp\Bundle\LogicBundle\Traits\BatchElementTrait;
-use Symfony\Component\Stopwatch\Stopwatch;
-use Symfony\Component\Stopwatch\StopwatchEvent;
 
 /**
  * Phase
@@ -35,34 +33,34 @@ class Phase extends Observable implements ExecutableInterface, BatchElementInter
 
     const PRINT_TIMES       = 4;
     const NOTIFY_TIMES      = 30;
-    
+
     /**
      * @var string
      */
     protected $name;
-    
+
     /**
      * @var string
      */
     protected $type;
-    
+
     /**
      * @var integer
      */
     protected $value;
-    
+
     /**
      * @var Operation
      */
     protected $operation;
-    
+
     /**
      * Wanted duration in seconds
      *
      * @var integer
      */
     protected $duration;
-    
+
     /**
      * Counter for the times being executed
      *
@@ -73,13 +71,13 @@ class Phase extends Observable implements ExecutableInterface, BatchElementInter
     /**
      * Set name
      *
-     * @param string $name            
+     * @param  string $name
      * @return Phase
      */
     public function setName($name)
     {
         $this->name = $name;
-        
+
         return $this;
     }
 
@@ -126,13 +124,13 @@ class Phase extends Observable implements ExecutableInterface, BatchElementInter
     /**
      * Set operation
      *
-     * @param Operation $operation            
+     * @param  Operation $operation
      * @return Phase
      */
     public function setOperation(Operation $operation = null)
     {
         $this->operation = $operation;
-        
+
         return $this;
     }
 
@@ -194,7 +192,7 @@ class Phase extends Observable implements ExecutableInterface, BatchElementInter
         } else {
             throw new \Exception('Phase not started');
         }
-        
+
         ++$this->executed;
     }
 
@@ -210,7 +208,7 @@ class Phase extends Observable implements ExecutableInterface, BatchElementInter
     }
 
     /**
-     * Function to finish the Phase
+     * @return Phase
      */
     public function setFinished()
     {
@@ -224,8 +222,8 @@ class Phase extends Observable implements ExecutableInterface, BatchElementInter
     {
         if (($this->executed % Phase::PRINT_TIMES) == 0) {
             if ($showDuration == true) {
-                echo sprintf('Phase::execute %s (%4d/%4d)', 
-                        $this->name, $this->getDurationSeconds(), 
+                echo sprintf('Phase::execute %s (%4d/%4d)',
+                        $this->name, $this->getDurationSeconds(),
                         $this->duration) . PHP_EOL;
             } else {
                 echo sprintf('Phase::execute %s', $this->name) .

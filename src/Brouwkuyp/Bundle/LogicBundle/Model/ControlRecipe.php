@@ -6,9 +6,9 @@ use Brouwkuyp\Bundle\LogicBundle\BrewEvents;
 use Brouwkuyp\Bundle\LogicBundle\Event\ControlRecipeFinishEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\ControlRecipeStartEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\EventDispatcherAwareInterface;
+use Brouwkuyp\Bundle\LogicBundle\Traits\BatchElementTrait;
 use Brouwkuyp\Bundle\LogicBundle\Traits\EventDispatcherTrait;
 use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
-use Brouwkuyp\Bundle\LogicBundle\Traits\BatchElementTrait;
 
 /**
  * ControlRecipe
@@ -23,7 +23,7 @@ class ControlRecipe implements ExecutableInterface, BatchElementInterface, Event
      * @var string
      */
     protected $name;
-    
+
     /**
      * @var Procedure
      */
@@ -32,13 +32,13 @@ class ControlRecipe implements ExecutableInterface, BatchElementInterface, Event
     /**
      * Set name
      *
-     * @param string $name            
+     * @param  string        $name
      * @return ControlRecipe
      */
     public function setName($name)
     {
         $this->name = $name;
-        
+
         return $this;
     }
 
@@ -62,7 +62,7 @@ class ControlRecipe implements ExecutableInterface, BatchElementInterface, Event
         if (is_null($this->procedure)) {
             throw new \Exception('No Procedure for this Recipe');
         }
-        
+
         if ($this->procedure->isFinished()) {
             throw new \Exception('Procedure already finished');
         }
@@ -109,13 +109,13 @@ class ControlRecipe implements ExecutableInterface, BatchElementInterface, Event
     /**
      * Set procedure
      *
-     * @param Procedure $procedure            
+     * @param  Procedure     $procedure
      * @return ControlRecipe
      */
     public function setProcedure(Procedure $procedure = null)
     {
         $this->procedure = $procedure;
-        
+
         return $this;
     }
 

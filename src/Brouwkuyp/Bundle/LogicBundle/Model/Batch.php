@@ -2,12 +2,12 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
-use Brouwkuyp\Bundle\LogicBundle\Event\BatchFinishEvent;
-use Symfony\Component\Stopwatch\StopwatchEvent;
 use Brouwkuyp\Bundle\LogicBundle\BrewEvents;
+use Brouwkuyp\Bundle\LogicBundle\Event\BatchFinishEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\BatchStartEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
+use Symfony\Component\Stopwatch\StopwatchEvent;
 
 /**
  * Batch
@@ -165,25 +165,26 @@ class Batch implements ExecutableInterface
     {
         return $this->masterRecipe;
     }
-    
+
     /**
      * Create a timer event
-     * 
-     * @param string $batchElementName
-     * @param string $eventName
+     *
+     * @param  string         $batchElementName
+     * @param  string         $eventName
      * @return StopwatchEvent
      */
     public function startTimer($batchElementName, $eventName)
     {
-        return $this->timer->start($batchElementName.":".$eventName);
+        return $this->timer->start($batchElementName . ":" . $eventName);
     }
-    
+
     public function getDuration($batchElementName, $eventName)
     {
-        $event = $this->timer->lap($batchElementName.":".$eventName);
+        $event = $this->timer->lap($batchElementName . ":" . $eventName);
+
         return $event->getDuration();
     }
-    
+
     /**
      * @todo should not be necessary because of the relation
      *

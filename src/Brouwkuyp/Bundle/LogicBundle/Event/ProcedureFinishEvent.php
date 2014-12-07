@@ -2,7 +2,6 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Event;
 
-use Brouwkuyp\Bundle\LogicBundle\Model\Batch;
 use Brouwkuyp\Bundle\LogicBundle\Model\Procedure;
 use Symfony\Component\EventDispatcher\Event;
 

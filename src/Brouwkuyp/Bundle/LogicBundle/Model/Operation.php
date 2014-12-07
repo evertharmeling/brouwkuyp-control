@@ -6,9 +6,9 @@ use Brouwkuyp\Bundle\LogicBundle\BrewEvents;
 use Brouwkuyp\Bundle\LogicBundle\Event\EventDispatcherAwareInterface;
 use Brouwkuyp\Bundle\LogicBundle\Event\OperationFinishEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\OperationStartEvent;
+use Brouwkuyp\Bundle\LogicBundle\Traits\BatchElementTrait;
 use Brouwkuyp\Bundle\LogicBundle\Traits\EventDispatcherTrait;
 use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
-use Brouwkuyp\Bundle\LogicBundle\Traits\BatchElementTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -137,7 +137,7 @@ class Operation implements ExecutableInterface, BatchElementInterface, EventDisp
             $this->batch->startTimer($this->name, 'start');
             // Set flag that we are started
             $this->setStarted();
-            
+
             // Start first UnitProcedure
             if ($this->phases->count()) {
                 $phase = $this->phases->first();
@@ -182,7 +182,7 @@ class Operation implements ExecutableInterface, BatchElementInterface, EventDisp
     }
 
     /**
-     * @return Phase
+     * @return Operation
      */
     public function setStarted()
     {
@@ -193,7 +193,7 @@ class Operation implements ExecutableInterface, BatchElementInterface, EventDisp
     }
 
     /**
-     * Function to finish the Phase
+     * @return Operation
      */
     public function setFinished()
     {
