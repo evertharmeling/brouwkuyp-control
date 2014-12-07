@@ -3,9 +3,11 @@
 namespace Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP;
 
 use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManager as BaseBrewControlManager;
-use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\PumpModeMessage;
-use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\PumpStateMessage;
-use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\TemperatureMessage;
+use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\Message\DialogMessage;
+use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\Message\LogMessage;
+use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\Message\PumpModeMessage;
+use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\Message\PumpStateMessage;
+use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\Message\TemperatureMessage;
 
 /**
  * @author Evert Harmeling <evertharmeling@gmail.com>
@@ -13,9 +15,12 @@ use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\TemperatureMessage;
 class BrewControlManager extends BaseBrewControlManager
 {
     // @todo dynamic route, because current class does not have knowledge about the whole infrastructure
-    const ROUTE_MASHER_SET_TEMP = 'brewery.brewhouse01.masher.set_temp';
-    const ROUTE_PUMP_SET_MODE = 'brewery.brewhouse01.pump.set_mode';
-    const ROUTE_PUMP_SET_STATE = 'brewery.brewhouse01.pump.set_state';
+    const ROUTE_MASHER_SET_TEMP     = 'brewery.brewhouse01.masher.set_temp';
+    const ROUTE_PUMP_SET_MODE       = 'brewery.brewhouse01.pump.set_mode';
+    const ROUTE_PUMP_SET_STATE      = 'brewery.brewhouse01.pump.set_state';
+
+    const ROUTE_BROADCAST_DIALOG    = 'brewery.brewhouse01.broadcast.dialog';
+    const ROUTE_BROADCAST_LOG       = 'brewery.brewhouse01.broadcast.log';
 
     /**
      * @var Manager
@@ -55,5 +60,24 @@ class BrewControlManager extends BaseBrewControlManager
     public function setPumpState($value)
     {
         return $this->amqpManager->publish(new PumpStateMessage($value), self::ROUTE_PUMP_SET_STATE);
+    }
+
+    /**
+     * @param string $title
+     * @param string $text
+     * @return bool
+     */
+    public function broadcastDialog($title, $text)
+    {
+        return $this->amqpManager->publish(new DialogMessage($title, $text), self::ROUTE_BROADCAST_DIALOG);
+    }
+
+    /**
+     * @param string $text
+     * @return bool
+     */
+    public function broadcastLog($text)
+    {
+        return $this->amqpManager->publish(new LogMessage($text), self::ROUTE_BROADCAST_LOG);
     }
 }

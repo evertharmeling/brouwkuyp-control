@@ -1,6 +1,6 @@
 <?php
 
-namespace Brouwkuyp\Bundle\ServiceBundle\Model\AMQP;
+namespace Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\Message;
 
 use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Pump;
 use PhpAmqpLib\Message\AMQPMessage;
