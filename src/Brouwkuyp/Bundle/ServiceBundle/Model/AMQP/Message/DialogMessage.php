@@ -16,8 +16,8 @@ class DialogMessage extends AMQPMessage
      */
     public function __construct($title, $text, array $properties = null)
     {
-        if (!is_string($title) && !is_string($text)) {
-            throw new \InvalidArgumentException(sprintf("'title' and 'text' must be of type string"));
+        if (!is_scalar($title) && !is_scalar($text)) {
+            throw new \InvalidArgumentException(sprintf("'title' and 'text' must be a scalar"));
         }
 
         parent::__construct(json_encode([

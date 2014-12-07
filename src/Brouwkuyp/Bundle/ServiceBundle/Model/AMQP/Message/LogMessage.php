@@ -15,8 +15,8 @@ class LogMessage extends AMQPMessage
      */
     public function __construct($text, array $properties = null)
     {
-        if (!is_string($text)) {
-            throw new \InvalidArgumentException(sprintf("'text' must be of type string"));
+        if (!is_scalar($text)) {
+            throw new \InvalidArgumentException(sprintf("'text' must be of a scalar"));
         }
 
         parent::__construct($text, $properties);
