@@ -2,12 +2,12 @@
 
 namespace Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\Message;
 
-use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Pump;
+use PhpAmqpLib\Message\AMQPMessage;
 
 /**
  * @author Evert Harmeling <evertharmeling@gmail.com>
  */
-class PumpStateMessage extends TextMessage
+class TextMessage extends AMQPMessage
 {
     /**
      * @param string $value
@@ -15,8 +15,8 @@ class PumpStateMessage extends TextMessage
      */
     public function __construct($value, array $properties = null)
     {
-        if (!in_array($value, Pump::getPossibleStates())) {
-            throw new \InvalidArgumentException(sprintf("'%s' is not a valid pump state", $value));
+        if (!is_string($value)) {
+            throw new \InvalidArgumentException(sprintf("The passed value must be of type string"));
         }
 
         parent::__construct($value, $properties);

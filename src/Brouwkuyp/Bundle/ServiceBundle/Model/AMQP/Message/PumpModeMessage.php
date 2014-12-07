@@ -3,12 +3,11 @@
 namespace Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\Message;
 
 use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Pump;
-use PhpAmqpLib\Message\AMQPMessage;
 
 /**
  * @author Evert Harmeling <evertharmeling@gmail.com>
  */
-class PumpModeMessage extends AMQPMessage
+class PumpModeMessage extends TextMessage
 {
     /**
      * @param string $value
