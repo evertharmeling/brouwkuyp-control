@@ -29,25 +29,21 @@ class Phase extends Observable implements ExecutableInterface, BatchElementInter
     const NOTIFY_TIMES = 30;
     
     /**
-     *
      * @var string
      */
     protected $name;
     
     /**
-     *
      * @var string
      */
     protected $type;
     
     /**
-     *
      * @var integer
      */
     protected $value;
     
     /**
-     *
      * @var Operation
      */
     protected $operation;

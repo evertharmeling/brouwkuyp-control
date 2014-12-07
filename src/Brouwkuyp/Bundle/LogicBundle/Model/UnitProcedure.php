@@ -23,25 +23,21 @@ class UnitProcedure implements ExecutableInterface,BatchElementInterface
     use BatchElementTrait;
 
     /**
-     *
      * @var string
      */
     protected $name;
 
     /**
-     *
      * @var ArrayCollection
      */
     protected $operations;
 
     /**
-     *
      * @var Procedure
      */
     protected $procedure;
 
     /**
-     *
      * @var Unit
      */
     protected $unit;
@@ -157,7 +153,6 @@ class UnitProcedure implements ExecutableInterface,BatchElementInterface
     }
 
     /**
-     *
      * @see ExecutableInterface::start()
      */
     public function start()
@@ -176,7 +171,6 @@ class UnitProcedure implements ExecutableInterface,BatchElementInterface
     }
 
     /**
-     *
      * @see ExecutableInterface::execute()
      */
     public function execute()
@@ -211,7 +205,6 @@ class UnitProcedure implements ExecutableInterface,BatchElementInterface
     }
 
     /**
-     *
      * @return Operation|false
      */
     public function getCurrentOperation()

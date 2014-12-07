@@ -19,13 +19,11 @@ class Procedure implements ExecutableInterface,BatchElementInterface
     use BatchElementTrait;
 
     /**
-     *
      * @var string
      */
     protected $name;
 
     /**
-     *
      * @var ControlRecipe
      */
     protected $controlRecipe;
@@ -37,8 +35,6 @@ class Procedure implements ExecutableInterface,BatchElementInterface
      */
     protected $unitProcedures;
 
-    /**
-     */
     public function __construct()
     {
         $this->unitProcedures = new ArrayCollection();
@@ -124,7 +120,6 @@ class Procedure implements ExecutableInterface,BatchElementInterface
     }
 
     /**
-     *
      * @see ExecutableInterface::start()
      */
     public function start()
@@ -142,7 +137,6 @@ class Procedure implements ExecutableInterface,BatchElementInterface
     }
 
     /**
-     *
      * @see ExecutableInterface::execute()
      */
     public function execute()
@@ -177,7 +171,6 @@ class Procedure implements ExecutableInterface,BatchElementInterface
     }
 
     /**
-     *
      * @return UnitProcedure|false
      */
     public function getCurrentUnitProcedure()

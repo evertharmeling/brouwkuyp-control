@@ -37,18 +37,19 @@ class Batch implements ExecutableInterface
     protected $timer;
 
     /**
-     * Creation date and time
      * @var \DateTime
      */
     protected $createdAt;
 
     /**
      * Construct the batch corresponding to the selected Recipe.
-     * @param ControlRecipe $recipe
+     *
+     * @param ControlRecipe            $controlRecipe
+     * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(ControlRecipe $recipe, EventDispatcherInterface $eventDispatcher)
+    public function __construct(ControlRecipe $controlRecipe, EventDispatcherInterface $eventDispatcher)
     {
-        $this->controlRecipe = $recipe;
+        $this->controlRecipe = $controlRecipe;
         $this->eventDispatcher = $eventDispatcher;
 
         $this->setBatch();

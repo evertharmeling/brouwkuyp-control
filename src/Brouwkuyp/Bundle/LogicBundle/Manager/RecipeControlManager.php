@@ -11,13 +11,11 @@ use Brouwkuyp\Bundle\ServiceBundle\Repository\ControlRecipeRepository;
 class RecipeControlManager
 {
     /**
-     *
      * @var ControlRecipeRepository
      */
     private $controlRecipeRepository;
 
     /**
-     *
      * @param ControlRecipeRepository $controlRecipeRepository
      */
     public function __construct(ControlRecipeRepository $controlRecipeRepository)
@@ -34,7 +32,6 @@ class RecipeControlManager
      */
     public function load($id)
     {
-        echo sprintf("RecipeControlManager::load id: '%s'", $id) . PHP_EOL;
         /** @var ControlRecipe $recipe */
         $recipe = $this->controlRecipeRepository->find($id);
 
