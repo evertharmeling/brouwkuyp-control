@@ -6,7 +6,7 @@ use Brouwkuyp\Bundle\LogicBundle\Model\Batch;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * @author Evert Harmeling <evert.harmeling@freshheads.com>
+ * @author Evert Harmeling <evertharmeling@gmail.com>
  */
 class BatchStartEvent extends Event
 {

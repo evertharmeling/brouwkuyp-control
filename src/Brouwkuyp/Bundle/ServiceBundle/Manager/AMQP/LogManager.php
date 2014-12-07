@@ -6,7 +6,7 @@ use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\Message\DialogMessage;
 use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\Message\LogMessage;
 
 /**
- * @author Evert Harmeling <evert.harmeling@freshheads.com>
+ * @author Evert Harmeling <evertharmeling@gmail.com>
  */
 class LogManager
 {

@@ -6,7 +6,7 @@ use Brouwkuyp\Bundle\LogicBundle\Event\BatchStartEvent;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\LogManager;
 
 /**
- * @author Evert Harmeling <evert.harmeling@freshheads.com>
+ * @author Evert Harmeling <evertharmeling@gmail.com>
  */
 class BatchStartListener
 {

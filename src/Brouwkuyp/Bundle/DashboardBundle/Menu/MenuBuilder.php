@@ -8,7 +8,7 @@ use Knp\Menu\ItemInterface;
 /**
  * MenuBuilder
  *
- * @author Evert Harmeling <evert.harmeling@freshheads.com>
+ * @author Evert Harmeling <evertharmeling@gmail.com>
  */
 class MenuBuilder
 {
