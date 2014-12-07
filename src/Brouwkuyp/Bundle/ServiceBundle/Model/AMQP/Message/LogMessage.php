@@ -11,7 +11,7 @@ class LogMessage extends AMQPMessage
 {
     /**
      * @param string $text
-     * @param array $properties
+     * @param array  $properties
      */
     public function __construct($text, array $properties = null)
     {

@@ -12,7 +12,7 @@ class DialogMessage extends AMQPMessage
     /**
      * @param string $title
      * @param string $text
-     * @param array $properties
+     * @param array  $properties
      */
     public function __construct($title, $text, array $properties = null)
     {

@@ -63,8 +63,8 @@ class BrewControlManager extends BaseBrewControlManager
     }
 
     /**
-     * @param string $title
-     * @param string $text
+     * @param  string $title
+     * @param  string $text
      * @return bool
      */
     public function broadcastDialog($title, $text)
@@ -73,7 +73,7 @@ class BrewControlManager extends BaseBrewControlManager
     }
 
     /**
-     * @param string $text
+     * @param  string $text
      * @return bool
      */
     public function broadcastLog($text)
