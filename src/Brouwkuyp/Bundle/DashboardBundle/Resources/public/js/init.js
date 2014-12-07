@@ -265,10 +265,6 @@ var client = {
                 $el.prop('checked', false);
             }
         }
-
-        function clearHighlight() {
-            $('.highlighted').removeClass('highlighted');
-        };
     },
 
     onError: function(e) {
