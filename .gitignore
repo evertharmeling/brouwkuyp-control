@@ -8,6 +8,7 @@
 /bin/
 /build/
 /composer.phar
+/components
 /node_modules
 /vendor/
 .buildpath

@@ -27,7 +27,7 @@
         "stof/doctrine-extensions-bundle": "1.1.*",
         "braincrafted/bootstrap-bundle": "2.1.*",
         "twbs/bootstrap": "~3.2",
-        "jquery/jquery": "1.11.*",
+        "components/jquery": "1.11.*",
         "knplabs/knp-menu-bundle": "~2.0"
     },
     "require-dev": {
@@ -69,18 +69,5 @@
         "branch-alias": {
             "dev-master": "2.5-dev"
         }
-    },
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "jquery/jquery",
-                "version": "1.11.1",
-                "dist": {
-                    "url": "http://code.jquery.com/jquery-1.11.1.js",
-                    "type": "file"
-                }
-            }
-        }
-    ]
+    }
 }
