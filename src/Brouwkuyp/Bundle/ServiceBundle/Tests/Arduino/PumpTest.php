@@ -6,9 +6,9 @@ use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Pump;
 use Brouwkuyp\Bundle\LogicBundle\Model\Log;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\BrewControlManager;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
-use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\PumpModeMessage;
-use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\PumpStateMessage;
-use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\TemperatureMessage;
+use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\Message\PumpModeMessage;
+use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\Message\PumpStateMessage;
+use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\Message\TemperatureMessage;
 use Brouwkuyp\Bundle\ServiceBundle\Test\AMQP\AMQPTestCase;
 
 /**

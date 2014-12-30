@@ -5,6 +5,7 @@
     <testsuites>
         <testsuite name="BrouwkuypServiceBundle">
             <directory suffix="Test.php">./Tests</directory>
+            <exclude>./Tests/Arduino</exclude>
         </testsuite>
     </testsuites>
 

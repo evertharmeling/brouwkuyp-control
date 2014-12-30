@@ -6,55 +6,51 @@ use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\EquipmentInterface;
 use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\MLT;
 use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Unit;
 use Brouwkuyp\Bundle\LogicBundle\Model\Phase;
-use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
+use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface;
 
 class EquipmentManager
 {
     /**
-     *
      * @var BrewControlManagerInterface
      */
-    private $bcm;
-    
+    private $brewControlManager;
+
     /**
-     * Manager
      * @var Manager
      */
-    private $am;
-    
+    private $amqpManager;
+
     /**
-     * MLT
-     * @var MLT 
+     * @var MLT
      */
     private $mlt;
 
     /**
      * Constructs the EquipmentManager
-     * 
-     * @param BrewControlManagerInterface $bcm
-     * @param Manager $am
+     *
+     * @param BrewControlManagerInterface $brewControlManager
+     * @param Manager                     $amqpManager
      */
-    public function __construct(BrewControlManagerInterface $bcm, Manager $am)
+    public function __construct(BrewControlManagerInterface $brewControlManager, Manager $amqpManager)
     {
-        $this->bcm = $bcm;
-        $this->am = $am;
+        $this->brewControlManager = $brewControlManager;
+        $this->amqpManager = $amqpManager;
     }
 
     /**
-     * Performs the Task needed for the given PHase
+     * Performs the Task needed for the given phase
      *
      * @param Phase $phase
      */
     public function performTaskFor(Phase $phase)
     {
-        /** @var EquipmentInterface */
+        /** @var EquipmentInterface $equipment */
         $equipment = $this->getEquipmentOf($phase->getOperation()->getUnitProcedure()->getUnit());
         $equipment->performTask($phase);
     }
 
     /**
-     *
      * @param  Unit               $unit
      * @return EquipmentInterface
      */
@@ -64,9 +60,8 @@ class EquipmentManager
         // TODO: cache units and equipment
         // TODO: Unit can have multiple equipment
         if ($unit->getName() == Unit::TYPE_MASHER) {
-            if(is_null($this->mlt))
-            {
-                $this->mlt = new MLT($this->bcm, $this->am);
+            if (is_null($this->mlt)) {
+                $this->mlt = new MLT($this->brewControlManager, $this->amqpManager);
             }
             $equipment = $this->mlt;
         }

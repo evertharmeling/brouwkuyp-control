@@ -2,8 +2,12 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
-use Symfony\Component\Stopwatch\StopwatchEvent;
+use Brouwkuyp\Bundle\LogicBundle\BrewEvents;
+use Brouwkuyp\Bundle\LogicBundle\Event\BatchFinishEvent;
+use Brouwkuyp\Bundle\LogicBundle\Event\BatchStartEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
+use Symfony\Component\Stopwatch\StopwatchEvent;
 
 /**
  * Batch
@@ -11,10 +15,14 @@ use Symfony\Component\Stopwatch\Stopwatch;
 class Batch implements ExecutableInterface
 {
     /**
-     *
      * @var ControlRecipe
      */
     protected $controlRecipe;
+
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
 
     /**
      * @var MasterRecipe
@@ -29,18 +37,21 @@ class Batch implements ExecutableInterface
     protected $timer;
 
     /**
-     * Creation date and time
      * @var \DateTime
      */
     protected $createdAt;
 
     /**
      * Construct the batch corresponding to the selected Recipe.
-     * @param ControlRecipe $recipe
+     *
+     * @param ControlRecipe            $controlRecipe
+     * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(ControlRecipe $recipe)
+    public function __construct(ControlRecipe $controlRecipe, EventDispatcherInterface $eventDispatcher)
     {
-        $this->controlRecipe = $recipe;
+        $this->controlRecipe = $controlRecipe;
+        $this->eventDispatcher = $eventDispatcher;
+
         $this->setBatch();
         $this->timer = new Stopwatch();
     }
@@ -52,7 +63,6 @@ class Batch implements ExecutableInterface
      */
     public function start()
     {
-        echo 'Batch::start' . PHP_EOL;
         if (is_null($this->controlRecipe)) {
             throw new \Exception('No Recipe for this Batch');
         }
@@ -61,6 +71,8 @@ class Batch implements ExecutableInterface
             throw new \Exception('Procedure already finished');
         }
 
+        $this->eventDispatcher->dispatch(BrewEvents::BATCH_START, new BatchStartEvent($this));
+        $this->controlRecipe->setEventDispatcher($this->eventDispatcher);
         $this->controlRecipe->start();
     }
 
@@ -78,12 +90,11 @@ class Batch implements ExecutableInterface
         if (!$this->controlRecipe->isFinished()) {
             $this->controlRecipe->execute();
         } else {
-            echo 'Batch is done' . PHP_EOL;
+            $this->eventDispatcher->dispatch(BrewEvents::BATCH_FINISH, new BatchFinishEvent($this));
         }
     }
 
     /**
-     *
      * @see ExecutableInterface::isStarted()
      */
     public function isStarted()
@@ -92,7 +103,6 @@ class Batch implements ExecutableInterface
     }
 
     /**
-     *
      * @see ExecutableInterface::isFinished()
      */
     public function isFinished()
@@ -155,26 +165,29 @@ class Batch implements ExecutableInterface
     {
         return $this->masterRecipe;
     }
-    
+
     /**
      * Create a timer event
-     * 
-     * @param string $batchElementName
-     * @param string $eventName
+     *
+     * @param  string         $batchElementName
+     * @param  string         $eventName
      * @return StopwatchEvent
      */
     public function startTimer($batchElementName, $eventName)
     {
-        return $this->timer->start($batchElementName.":".$eventName);
+        return $this->timer->start($batchElementName . ":" . $eventName);
     }
-    
+
     public function getDuration($batchElementName, $eventName)
     {
-        $event = $this->timer->lap($batchElementName.":".$eventName);
+        $event = $this->timer->lap($batchElementName . ":" . $eventName);
+
         return $event->getDuration();
     }
-    
+
     /**
+     * @todo should not be necessary because of the relation
+     *
      * Sets the batch for all elements.
      */
     private function setBatch()

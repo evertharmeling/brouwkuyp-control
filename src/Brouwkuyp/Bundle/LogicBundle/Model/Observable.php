@@ -7,13 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 abstract class Observable implements ObservableInterface
 {
     /**
-     *
      * @var ArrayCollection
      */
     protected $observers;
 
     /**
-     *
      * @param ObserverInterface $observer
      */
     public function registerObserver(ObserverInterface $observer)
@@ -25,7 +23,6 @@ abstract class Observable implements ObservableInterface
     }
 
     /**
-     *
      * @param ObserverInterface $observer
      */
     public function unregisterObserver(ObserverInterface $observer)

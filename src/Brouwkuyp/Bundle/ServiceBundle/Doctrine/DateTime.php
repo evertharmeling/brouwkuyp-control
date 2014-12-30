@@ -5,7 +5,7 @@ namespace Brouwkuyp\Bundle\ServiceBundle\Doctrine;
 /**
  * Custom DateTime class to support having a datetime as primary key
  *
- * @author Evert Harmeling <evert.harmeling@freshheads.com>
+ * @author Evert Harmeling <evertharmeling@gmail.com>
  */
 class DateTime extends \DateTime
 {

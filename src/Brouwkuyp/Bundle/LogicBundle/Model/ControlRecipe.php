@@ -2,21 +2,28 @@
 
 namespace Brouwkuyp\Bundle\LogicBundle\Model;
 
-use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
+use Brouwkuyp\Bundle\LogicBundle\BrewEvents;
+use Brouwkuyp\Bundle\LogicBundle\Event\ControlRecipeFinishEvent;
+use Brouwkuyp\Bundle\LogicBundle\Event\ControlRecipeStartEvent;
+use Brouwkuyp\Bundle\LogicBundle\Event\EventDispatcherAwareInterface;
 use Brouwkuyp\Bundle\LogicBundle\Traits\BatchElementTrait;
+use Brouwkuyp\Bundle\LogicBundle\Traits\EventDispatcherTrait;
+use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
 
 /**
  * ControlRecipe
  */
-class ControlRecipe implements ExecutableInterface, BatchElementInterface
+class ControlRecipe implements ExecutableInterface, BatchElementInterface, EventDispatcherAwareInterface
 {
     use ExecutableTrait;
     use BatchElementTrait;
+    use EventDispatcherTrait;
+
     /**
      * @var string
      */
     protected $name;
-    
+
     /**
      * @var Procedure
      */
@@ -25,13 +32,13 @@ class ControlRecipe implements ExecutableInterface, BatchElementInterface
     /**
      * Set name
      *
-     * @param string $name            
+     * @param  string        $name
      * @return ControlRecipe
      */
     public function setName($name)
     {
         $this->name = $name;
-        
+
         return $this;
     }
 
@@ -52,16 +59,18 @@ class ControlRecipe implements ExecutableInterface, BatchElementInterface
      */
     public function start()
     {
-        echo 'ControlRecipe::start' . PHP_EOL;
         if (is_null($this->procedure)) {
             throw new \Exception('No Procedure for this Recipe');
         }
-        
+
         if ($this->procedure->isFinished()) {
             throw new \Exception('Procedure already finished');
         }
-        
+
+        $this->eventDispatcher->dispatch(BrewEvents::CONTROL_RECIPE_START, new ControlRecipeStartEvent($this));
         $this->batch->startTimer($this->name, 'start');
+
+        $this->procedure->setEventDispatcher($this->eventDispatcher);
         $this->procedure->start();
     }
 
@@ -75,7 +84,7 @@ class ControlRecipe implements ExecutableInterface, BatchElementInterface
         if (!$this->procedure->isFinished()) {
             $this->procedure->execute();
         } else {
-            echo 'ControlRecipe is done' . PHP_EOL;
+            $this->eventDispatcher->dispatch(BrewEvents::CONTROL_RECIPE_FINISH, new ControlRecipeFinishEvent($this));
         }
     }
 
@@ -100,13 +109,13 @@ class ControlRecipe implements ExecutableInterface, BatchElementInterface
     /**
      * Set procedure
      *
-     * @param Procedure $procedure            
+     * @param  Procedure     $procedure
      * @return ControlRecipe
      */
     public function setProcedure(Procedure $procedure = null)
     {
         $this->procedure = $procedure;
-        
+
         return $this;
     }
 

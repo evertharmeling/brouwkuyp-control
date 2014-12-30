@@ -1,14 +1,13 @@
 <?php
 
-namespace Brouwkuyp\Bundle\ServiceBundle\Model\AMQP;
+namespace Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\Message;
 
 use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Pump;
-use PhpAmqpLib\Message\AMQPMessage;
 
 /**
  * @author Evert Harmeling <evertharmeling@gmail.com>
  */
-class PumpModeMessage extends AMQPMessage
+class PumpStateMessage extends TextMessage
 {
     /**
      * @param string $value
@@ -16,8 +15,8 @@ class PumpModeMessage extends AMQPMessage
      */
     public function __construct($value, array $properties = null)
     {
-        if (!in_array($value, Pump::getPossibleModes())) {
-            throw new \InvalidArgumentException(sprintf("'%s' is not a valid pump mode", $value));
+        if (!in_array($value, Pump::getPossibleStates())) {
+            throw new \InvalidArgumentException(sprintf("'%s' is not a valid pump state", $value));
         }
 
         parent::__construct($value, $properties);

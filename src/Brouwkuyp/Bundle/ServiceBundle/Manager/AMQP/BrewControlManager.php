@@ -2,20 +2,20 @@
 
 namespace Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP;
 
-use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManager as BaseBrewControlManager;
-use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\PumpModeMessage;
-use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\PumpStateMessage;
-use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\TemperatureMessage;
+use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface;
+use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\Message\PumpModeMessage;
+use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\Message\PumpStateMessage;
+use Brouwkuyp\Bundle\ServiceBundle\Model\AMQP\Message\TemperatureMessage;
 
 /**
  * @author Evert Harmeling <evertharmeling@gmail.com>
  */
-class BrewControlManager extends BaseBrewControlManager
+class BrewControlManager implements BrewControlManagerInterface
 {
     // @todo dynamic route, because current class does not have knowledge about the whole infrastructure
-    const ROUTE_MASHER_SET_TEMP = 'brewery.brewhouse01.masher.set_temp';
-    const ROUTE_PUMP_SET_MODE = 'brewery.brewhouse01.pump.set_mode';
-    const ROUTE_PUMP_SET_STATE = 'brewery.brewhouse01.pump.set_state';
+    const ROUTE_MASHER_SET_TEMP     = 'brewery.brewhouse01.masher.set_temp';
+    const ROUTE_PUMP_SET_MODE       = 'brewery.brewhouse01.pump.set_mode';
+    const ROUTE_PUMP_SET_STATE      = 'brewery.brewhouse01.pump.set_state';
 
     /**
      * @var Manager

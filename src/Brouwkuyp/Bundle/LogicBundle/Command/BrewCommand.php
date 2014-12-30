@@ -5,6 +5,10 @@ namespace Brouwkuyp\Bundle\LogicBundle\Command;
 use Brouwkuyp\Bundle\LogicBundle\Manager\BatchManager;
 use Brouwkuyp\Bundle\LogicBundle\Manager\EquipmentManager;
 use Brouwkuyp\Bundle\LogicBundle\Manager\RecipeControlManager;
+use Brouwkuyp\Bundle\LogicBundle\Model\Batch;
+use Brouwkuyp\Bundle\LogicBundle\Model\Operation;
+use Brouwkuyp\Bundle\LogicBundle\Model\Phase;
+use Brouwkuyp\Bundle\LogicBundle\Model\UnitProcedure;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface;
 use Symfony\Component\Console\Input\InputArgument;
@@ -40,41 +44,78 @@ class BrewCommand extends BaseCommand
 
         $output->writeln(PHP_EOL);
         $output->writeln('Creating RecipeControlManager');
-        /**
-         * @var RecipeControlManager $rcm
-         */
-        $rcm = $this->getContainer()->get(
-                'brouwkuyp_logic.manager.recipe_control');
-        /**
-         * @var BrewControlManagerInterface $bcm
-         */
-        $bcm = $this->getContainer()->get(
-                'brouwkuyp_service.manager.brew_control');
-        
-        /** @var Manager $am */
-        $am = $this->getContainer()->get(
-                'brouwkuyp_service.amqp.manager');
-        
-        /**
-         * @var EquipmentManager
-         */
-        $equipmentManager = new EquipmentManager($bcm,$am);
 
-        $output->writeln(
-                'Loading recipe: ' . $input->getArgument('recipe'));
-        /**
-         *
-         * @var BatchManager $bm
-         */
-        $bm = new BatchManager($this->getEntityManager(), $equipmentManager);
-        $batch = $bm->createBatch($rcm->load($input->getArgument('recipe')));
-        $bm->start($batch);
+        /** @var RecipeControlManager $recipeControlManager */
+        $recipeControlManager = $this->getContainer()->get('brouwkuyp_logic.manager.recipe_control');
+        /** @var BrewControlManagerInterface $brewControlManager */
+        $brewControlManager = $this->getContainer()->get('brouwkuyp_service.manager.brew_control');
+        /** @var Manager $amqpManager */
+        $amqpManager = $this->getContainer()->get('brouwkuyp_service.amqp.manager');
 
-        while ($bm->isRunning($batch)) {
-            $bm->execute();
-            usleep(499999);
+        /** @var EquipmentManager */
+        $equipmentManager = new EquipmentManager($brewControlManager, $amqpManager);
+
+        $output->writeln('Loading recipe: ' . $input->getArgument('recipe'));
+        /** @var BatchManager $batchManager */
+        $batchManager = new BatchManager($this->getEntityManager(), $equipmentManager);
+        $batch = $batchManager->createBatch($recipeControlManager->load($input->getArgument('recipe')), $this->getContainer()->get('event_dispatcher'));
+
+        $this->outputBatch($batch);
+        $batchManager->start($batch);
+
+        while ($batchManager->isRunning($batch)) {
+            $batchManager->execute();
+            usleep(500000);
         }
 
         $output->writeln('Done with recipe');
+    }
+
+    /**
+     * @param Batch $batch
+     */
+    private function outputBatch(Batch $batch)
+    {
+        echo PHP_EOL . "*********************************************" .
+            PHP_EOL;
+        echo sprintf("Recipe: '%s'", $batch->getRecipe()->getName()) .
+            PHP_EOL;
+        echo sprintf(" Procedure: '%s'",
+                $batch->getRecipe()->getProcedure()->getName()) .
+            PHP_EOL;
+        echo "  UnitProcedures: " . PHP_EOL;
+        /**
+         *
+         * @var UnitProcedure $up
+         */
+        foreach ($batch->getRecipe()->getProcedure()->getUnitProcedures() as $up) {
+            echo sprintf("   UP: '%s'", $up->getName()) . PHP_EOL;
+            echo sprintf("    Unit: '%s'", $up->getUnit()->getName()) .
+                PHP_EOL;
+            echo "    Operations: " . PHP_EOL;
+            /**
+             *
+             * @var Operation $op
+             */
+            foreach ($up->getOperations() as $op) {
+                echo sprintf("     OP: '%s'", $op->getName()) . PHP_EOL;
+                /**
+                 *
+                 * @var Phase $phase
+                 */
+                foreach ($op->getPhases() as $phase) {
+                    echo sprintf("      Phase:  '%s'",
+                            $phase->getName()) . PHP_EOL;
+                    echo sprintf("       type:  '%s'",
+                            $phase->getType()) . PHP_EOL;
+                    echo sprintf("       value: '%s'",
+                            $phase->getValue()) . PHP_EOL;
+                    echo sprintf("       duration: '%s'",
+                            $phase->getDuration()) . PHP_EOL;
+                }
+            }
+        }
+        echo "*********************************************" . PHP_EOL .
+            PHP_EOL;
     }
 }

@@ -185,6 +185,7 @@ var client = {
                 addToGraph($el, 0, $value);
                 updateTemperature('hlt', $value);
             });
+
             // MLT
             $client.subscribe($baseUrl + $data.topicMltCurrTemp, function (d) {
                 var $value = parseFloat(d.body);
@@ -196,12 +197,14 @@ var client = {
                 updateTemperature('mlt', $value, 'set');
                 // @todo store set temps and be able to add plotBands (maisch steps)
             });
+
             // BLT
             $client.subscribe($baseUrl + $data.topicBltCurrTemp, function (d) {
                 var $value = parseFloat(d.body);
                 addToGraph($el, 2, $value);
                 updateTemperature('blt', $value);
             });
+
             // PUMP
             $client.subscribe($baseUrl + $data.topicPumpCurrMode, function (d) {
                 if (d.body == 'automatic') {
@@ -214,6 +217,34 @@ var client = {
             });
             $client.subscribe($baseUrl + $data.topicPumpCurrState, function (d) {
                 toggleCheckbox($('#pump_state'), (d.body == 'on'));
+            });
+
+            // BROADCASTING
+            $client.subscribe($baseUrl + $data.topicBroadcastDialog, function (d) {
+                message = JSON.parse(d.body);
+                bootbox.dialog({
+                    title: message.title,
+                    message: message.text,
+                    buttons: {
+                        cancel: {
+                            label: "Cancel",
+                            className: "btn-cancel",
+                            callback: function(result) {
+                                console.log(result);
+                            }
+                        },
+                        confirm: {
+                            label: "Confirm",
+                            className: "btn-success",
+                            callback: function(result) {
+                                console.log(result);
+                            }
+                        }
+                    }
+                });
+            });
+            $client.subscribe($baseUrl + $data.topicBroadcastLog, function (d) {
+                $('#log-list').prepend('<li><span>' + d.body + '</span></li>');
             });
         }
 
