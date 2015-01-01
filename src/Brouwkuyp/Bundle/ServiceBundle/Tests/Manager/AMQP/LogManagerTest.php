@@ -25,9 +25,9 @@ class LogManagerTest extends AMQPTestCase
 
     public function testBroadcastDialog()
     {
-        $this->assertTrue($this->logManager->dialog('Add ingredients', 'Operator, add the pils malt'));
-        $this->assertTrue($this->logManager->dialog('Add ingredients', 'Operator, add the wheat malt'));
-        $this->assertTrue($this->logManager->dialog('Add ingredients', 'Operator, add the oatmeal'));
+        $this->assertTrue($this->logManager->dialog('Add ingredients', 'Operator, add the pils malt', 'phase.1'));
+        $this->assertTrue($this->logManager->dialog('Add ingredients', 'Operator, add the wheat malt', 'phase.2'));
+        $this->assertTrue($this->logManager->dialog('Add ingredients', 'Operator, add the oatmeal', 'phase.3'));
     }
 
     public function testBroadcastLog()

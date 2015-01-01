@@ -122,7 +122,7 @@ class Log
     }
 
     /**
-     * @param Batch $batch
+     * @param  Batch $batch
      * @return Log
      */
     public function setBatch($batch)

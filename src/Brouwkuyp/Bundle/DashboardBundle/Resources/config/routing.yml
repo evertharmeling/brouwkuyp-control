@@ -22,10 +22,15 @@ logs_current_recipe:
 
 async_pump_state:
     path:       /async/pump/state
-    defaults:   { _controller: BrouwkuypDashboardBundle:Async:pumpState }
+    defaults:   { _controller: brouwkuyp_dashboard.controller.async:pumpStateAction }
     methods:    [ POST ]
 
 async_pump_mode:
     path:       /async/pump/mode
-    defaults:   { _controller: BrouwkuypDashboardBundle:Async:pumpMode }
+    defaults:   { _controller: brouwkuyp_dashboard.controller.async:pumpModeAction }
+    methods:    [ POST ]
+
+async_log:
+    path:       /async/log
+    defaults:   { _controller: brouwkuyp_dashboard.controller.async:logAction }
     methods:    [ POST ]

@@ -1,0 +1,7 @@
+services:
+
+    brouwkuyp_dashboard.controller.async:
+        class: Brouwkuyp\Bundle\DashboardBundle\Controller\AsyncController
+        arguments:
+            - @brouwkuyp_service.manager.brew_control
+            - @doctrine.orm.entity_manager

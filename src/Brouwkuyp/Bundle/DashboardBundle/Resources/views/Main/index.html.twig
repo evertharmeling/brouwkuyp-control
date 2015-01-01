@@ -3,7 +3,8 @@
 {% block content %}
     <div class="row">
         <div class="col-md-10" id="graph"
-             data-url="{{ path('logs_current_recipe') }}"
+             data-url-current-recipe="{{ path('logs_current_recipe') }}"
+             data-url-log="{{ path('async_log') }}"
              data-rabbit-mq-host="{{ rabbit_mq_host }}"
              data-topic-hlt-curr-temp="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_HLT_CURR_TEMP') }}"
              data-topic-mlt-curr-temp="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_MLT_CURR_TEMP') }}"

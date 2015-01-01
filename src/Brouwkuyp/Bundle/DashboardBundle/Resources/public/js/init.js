@@ -42,7 +42,7 @@ var chart = {
             $bltLogs = [];
 
         $.ajax({
-            url: $data.url,
+            url: $data.urlCurrentRecipe,
             async: false,
             success: function(response) {
                 $(response.data).each(function (key, log) {
@@ -222,7 +222,6 @@ var client = {
             // BROADCASTING
             $client.subscribe($baseUrl + $data.topicBroadcastDialog, function (d) {
                 message = JSON.parse(d.body);
-                console.log(message);
                 bootbox.dialog({
                     title: message.title,
                     message: message.text,
@@ -231,14 +230,29 @@ var client = {
                             label: "Cancel",
                             className: "btn-cancel",
                             callback: function(result) {
-                                console.log(result);
+                                // @todo fix message.identifier, message keeps being overwritten when prompting multiple dialogs
+                                $.post(
+                                    $data.urlLog,
+                                    { 'log': { 'topic': message.identifier, 'value': 'cancelled' } },
+                                    function(response) {
+                                        //console.log(response);
+                                    }
+                                );
                             }
                         },
                         confirm: {
                             label: "Confirm",
                             className: "btn-success",
-                            callback: function(result) {
-                                console.log(result);
+                            data: message,
+                            callback: function(result, message) {
+                                // @todo fix message.identifier, message keeps being overwritten when prompting multiple dialogs
+                                $.post(
+                                    $data.urlLog,
+                                    { 'log': { 'topic': message.identifier, 'value': 'confirmed' } },
+                                    function(response) {
+                                        //console.log(response);
+                                    }
+                                );
                             }
                         }
                     }

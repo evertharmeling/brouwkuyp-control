@@ -2,13 +2,35 @@
 
 namespace Brouwkuyp\Bundle\DashboardBundle\Controller;
 
+use Brouwkuyp\Bundle\ServiceBundle\Entity\Log;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class AsyncController extends Controller
+/**
+ * @author Evert Harmeling <evert.harmeling@freshheads.com>
+ */
+class AsyncController
 {
+    /**
+     * @var BrewControlManagerInterface
+     */
+    private $brewControlManager;
+
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
+    public function __construct(
+        BrewControlManagerInterface $brewControlManager,
+        EntityManager $entityManager
+    ) {
+        $this->brewControlManager = $brewControlManager;
+        $this->entityManager = $entityManager;
+    }
+
     /**
      * @return JsonResponse
      */
@@ -20,7 +42,7 @@ class AsyncController extends Controller
         ];
 
         if ($request->request->has('state')) {
-            if ($this->getBrewControlManager()->setPumpState($request->request->get('state'))) {
+            if ($this->brewControlManager->setPumpState($request->request->get('state'))) {
                 $data['message'] = 'success';
             } else {
                 $data['message'] = 'error';
@@ -43,7 +65,7 @@ class AsyncController extends Controller
         ];
 
         if ($request->request->has('mode')) {
-            if ($this->getBrewControlManager()->setPumpMode($request->request->get('mode'))) {
+            if ($this->brewControlManager->setPumpMode($request->request->get('mode'))) {
                 $data['message'] = 'success';
             } else {
                 $data['message'] = 'error';
@@ -56,10 +78,24 @@ class AsyncController extends Controller
     }
 
     /**
-     * @return BrewControlManagerInterface
+     * @param  Request      $request
+     * @return JsonResponse
      */
-    private function getBrewControlManager()
+    public function logAction(Request $request)
     {
-        return $this->container->get('brouwkuyp_service.manager.brew_control');
+        if ($request->request->has('log')) {
+            $data = $request->request->get('log');
+
+            $log = new Log();
+            $log
+                ->setTopic($data['topic'])
+                ->setValue($data['value'])
+            ;
+
+            $this->entityManager->persist($log);
+            $this->entityManager->flush($log);
+        }
+
+        return JsonResponse::create();
     }
 }
