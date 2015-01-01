@@ -32,7 +32,7 @@ class Operation implements ExecutableInterface, BatchElementInterface, EventDisp
     protected $name;
 
     /**
-     * @var ArrayCollection
+     * @var ArrayCollection|Phase[]
      */
     protected $phases;
 
@@ -98,7 +98,7 @@ class Operation implements ExecutableInterface, BatchElementInterface, EventDisp
     /**
      * Get phase
      *
-     * @return ArrayCollection
+     * @return ArrayCollection|Phase[]
      */
     public function getPhases()
     {

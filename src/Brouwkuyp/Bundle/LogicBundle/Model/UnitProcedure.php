@@ -34,7 +34,7 @@ class UnitProcedure implements ExecutableInterface, BatchElementInterface, Event
     protected $name;
 
     /**
-     * @var ArrayCollection
+     * @var ArrayCollection|Operation[]
      */
     protected $operations;
 
@@ -105,7 +105,7 @@ class UnitProcedure implements ExecutableInterface, BatchElementInterface, Event
     /**
      * Get operation
      *
-     * @return ArrayCollection
+     * @return ArrayCollection|Operation[]
      */
     public function getOperations()
     {
