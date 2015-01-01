@@ -6,9 +6,6 @@ use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\EquipmentInterface;
 use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\MLT;
 use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Unit;
 use Brouwkuyp\Bundle\LogicBundle\Model\Phase;
-use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
-use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class EquipmentManager
 {

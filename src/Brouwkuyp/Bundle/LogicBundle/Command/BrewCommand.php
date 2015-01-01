@@ -3,14 +3,12 @@
 namespace Brouwkuyp\Bundle\LogicBundle\Command;
 
 use Brouwkuyp\Bundle\LogicBundle\Manager\BatchManager;
-use Brouwkuyp\Bundle\LogicBundle\Manager\EquipmentManager;
 use Brouwkuyp\Bundle\LogicBundle\Manager\RecipeControlManager;
 use Brouwkuyp\Bundle\LogicBundle\Model\Batch;
 use Brouwkuyp\Bundle\LogicBundle\Model\Operation;
 use Brouwkuyp\Bundle\LogicBundle\Model\Phase;
 use Brouwkuyp\Bundle\LogicBundle\Model\UnitProcedure;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
-use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

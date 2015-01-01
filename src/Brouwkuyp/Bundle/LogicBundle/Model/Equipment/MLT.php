@@ -31,8 +31,8 @@ class MLT implements EquipmentInterface
 
     /**
      * @param BrewControlManagerInterface $brewControlManager
-     * @param Manager $amqpManager
-     * @param EventDispatcherInterface $eventDispatcher
+     * @param Manager                     $amqpManager
+     * @param EventDispatcherInterface    $eventDispatcher
      */
     public function __construct(BrewControlManagerInterface $brewControlManager, Manager $amqpManager, EventDispatcherInterface $eventDispatcher)
     {

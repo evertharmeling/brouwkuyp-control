@@ -172,7 +172,7 @@ class BroadcastListener
     }
 
     /**
-     * @param object $object
+     * @param  object $object
      * @return string
      */
     private function getIdentifier($object)
