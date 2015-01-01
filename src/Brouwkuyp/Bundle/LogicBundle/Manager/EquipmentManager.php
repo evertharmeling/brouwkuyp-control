@@ -8,34 +8,21 @@ use Brouwkuyp\Bundle\LogicBundle\Model\Equipment\Unit;
 use Brouwkuyp\Bundle\LogicBundle\Model\Phase;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class EquipmentManager
 {
-    /**
-     * @var BrewControlManagerInterface
-     */
-    private $brewControlManager;
-
-    /**
-     * @var Manager
-     */
-    private $amqpManager;
-
     /**
      * @var MLT
      */
     private $mlt;
 
     /**
-     * Constructs the EquipmentManager
-     *
-     * @param BrewControlManagerInterface $brewControlManager
-     * @param Manager                     $amqpManager
+     * @param MLT $mlt
      */
-    public function __construct(BrewControlManagerInterface $brewControlManager, Manager $amqpManager)
+    public function __construct(MLT $mlt)
     {
-        $this->brewControlManager = $brewControlManager;
-        $this->amqpManager = $amqpManager;
+        $this->mlt = $mlt;
     }
 
     /**
@@ -56,16 +43,10 @@ class EquipmentManager
      */
     private function getEquipmentOf(Unit $unit)
     {
-        $equipment = null;
         // TODO: cache units and equipment
         // TODO: Unit can have multiple equipment
         if ($unit->getName() == Unit::TYPE_MASHER) {
-            if (is_null($this->mlt)) {
-                $this->mlt = new MLT($this->brewControlManager, $this->amqpManager);
-            }
-            $equipment = $this->mlt;
+            return $this->mlt;
         }
-
-        return $equipment;
     }
 }

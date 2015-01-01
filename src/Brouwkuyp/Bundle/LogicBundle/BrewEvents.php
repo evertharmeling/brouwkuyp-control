@@ -118,6 +118,26 @@ final class BrewEvents
     const PHASE_START = 'phase.start';
 
     /**
+     * The phase.status event is thrown on every second when a phase is executed
+     *
+     * The event listener receives an
+     * Brouwkuyp\Bundle\LogicBundle\Event\PhaseStatusEvent instance.
+     *
+     * @var string
+     */
+    const PHASE_STATUS = 'phase.status';
+
+    /**
+     * The phase.temperature_reached event is thrown when the phase 'reach_temp' reached the desired temperature
+     *
+     * The event listener receives an
+     * Brouwkuyp\Bundle\LogicBundle\Event\PhaseTemperatureReachedEvent instance.
+     *
+     * @var string
+     */
+    const PHASE_TEMPERATURE_REACHED = 'phase.temperature_reached';
+
+    /**
      * The phase.finish event is thrown each time a phase finish in the system.
      *
      * The event listener receives an

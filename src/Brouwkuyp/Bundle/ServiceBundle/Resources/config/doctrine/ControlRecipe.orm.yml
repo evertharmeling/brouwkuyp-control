@@ -14,11 +14,10 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe:
             type:       string
             length:     120
         version:
-            type: 	integer
-            length:	2
+            type: 	    integer
         remarks:
-            type:	string
-            length:	255
+            type:	    text
+            nullable:   true
 
     oneToOne:
         procedure:

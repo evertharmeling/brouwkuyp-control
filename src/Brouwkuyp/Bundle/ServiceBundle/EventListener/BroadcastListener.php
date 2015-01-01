@@ -10,10 +10,13 @@ use Brouwkuyp\Bundle\LogicBundle\Event\OperationFinishEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\OperationStartEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\PhaseFinishEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\PhaseStartEvent;
+use Brouwkuyp\Bundle\LogicBundle\Event\PhaseStatusEvent;
+use Brouwkuyp\Bundle\LogicBundle\Event\PhaseTemperatureReachedEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\ProcedureFinishEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\ProcedureStartEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\UnitProcedureFinishEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\UnitProcedureStartEvent;
+use Brouwkuyp\Bundle\LogicBundle\Model\Phase;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\LogManager;
 
 /**
@@ -89,6 +92,32 @@ class BroadcastListener
     }
 
     /**
+     * @param PhaseStatusEvent $event
+     */
+    public function onPhaseStatus(PhaseStatusEvent $event)
+    {
+        $phase = $event->getPhase();
+
+        switch ($phase->getType()) {
+            case Phase::CONTROL_TEMP:
+                $this->logManager->log(sprintf("Phase '%s' : %d/%d", $phase->getName(), $event->getElapsedTime(), $phase->getDuration()));
+                break;
+            case Phase::ADD_INGREDIENTS:
+                $this->logManager->dialog('Voeg ingrediënten toe', $phase->getName(), $this->getIdentifier($phase));
+                break;
+        }
+    }
+
+    /**
+     * @param PhaseTemperatureReachedEvent $event
+     */
+    public function onPhaseTemperatureReached(PhaseTemperatureReachedEvent $event)
+    {
+        $phase = $event->getPhase();
+        $this->logManager->log(sprintf("Phase '%s' temperature '%d' reached", $phase->getName(), $phase->getValue()));
+    }
+
+    /**
      * @param PhaseFinishEvent $event
      */
     public function onPhaseFinish(PhaseFinishEvent $event)
@@ -140,5 +169,16 @@ class BroadcastListener
     {
         $batch = $event->getBatch();
         $this->logManager->log('Batch finished');
+    }
+
+    /**
+     * @param object $object
+     * @return string
+     */
+    private function getIdentifier($object)
+    {
+        $reflection = new \ReflectionClass($object);
+
+        return sprintf("%s.%d", strtolower($reflection->getShortName()), $object->getId());
     }
 }

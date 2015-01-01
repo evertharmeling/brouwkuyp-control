@@ -91,6 +91,7 @@ class BatchManager implements ObserverInterface
         if (is_null($batch)) {
             $batch = $this->batch;
         }
+
         $batch->execute();
     }
 
@@ -111,16 +112,15 @@ class BatchManager implements ObserverInterface
     /**
      * Checks if the batch is still in operation
      *
-     * @param  Batch $batch
      * @return bool
      */
-    public function isRunning(Batch $batch = null)
+    public function isRunning()
     {
-        if (is_null($batch)) {
-            $batch = $this->batch;
+        if (is_null($this->batch)) {
+            throw new \RuntimeException("You haven't started a batch yet!");
         }
 
-        return ($batch->isStarted() && !$batch->isFinished());
+        return ($this->batch->isStarted() && !$this->batch->isFinished());
     }
 
     /**

@@ -222,6 +222,7 @@ var client = {
             // BROADCASTING
             $client.subscribe($baseUrl + $data.topicBroadcastDialog, function (d) {
                 message = JSON.parse(d.body);
+                console.log(message);
                 bootbox.dialog({
                     title: message.title,
                     message: message.text,

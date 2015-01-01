@@ -11,6 +11,8 @@ services:
             - { name: kernel.event_listener, event: unit_procedure.start,   method: onUnitProcedureStart }
             - { name: kernel.event_listener, event: operation.start,        method: onOperationStart }
             - { name: kernel.event_listener, event: phase.start,            method: onPhaseStart }
+            - { name: kernel.event_listener, event: phase.status,           method: onPhaseStatus }
+            - { name: kernel.event_listener, event: phase.temperature_reached, method: onPhaseTemperatureReached }
             - { name: kernel.event_listener, event: phase.finish,           method: onPhaseFinish }
             - { name: kernel.event_listener, event: operation.finish,       method: onOperationFinish }
             - { name: kernel.event_listener, event: procedure.finish,       method: onProcedureFinish }

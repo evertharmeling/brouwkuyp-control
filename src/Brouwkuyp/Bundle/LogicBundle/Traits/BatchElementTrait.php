@@ -35,7 +35,7 @@ trait BatchElementTrait
     }
 
     /**
-     * @return \Brouwkuyp\Bundle\LogicBundle\Traits\Batch
+     * @return Batch
      */
     public function getBatch()
     {
