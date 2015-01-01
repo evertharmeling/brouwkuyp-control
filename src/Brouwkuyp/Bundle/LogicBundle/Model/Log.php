@@ -21,6 +21,11 @@ class Log
     const TOPIC_PUMP_CURR_MODE  = 'brewery.brewhouse01.pump.curr_mode';
 
     /**
+     * @var \DateTime
+     */
+    protected $createdAt;
+
+    /**
      * @var string
      */
     protected $topic;
@@ -31,9 +36,9 @@ class Log
     protected $value;
 
     /**
-     * @var \DateTime
+     * @var Batch
      */
-    protected $createdAt;
+    protected $batch;
 
     /**
      * Constructs the object
@@ -48,7 +53,7 @@ class Log
      */
     public function __toString()
     {
-        return (string) sha1($this->getCreatedAt() . $this->getTopic());
+        return (string) sha1($this->getCreatedAt() . $this->getTopic() . $this->getValue());
     }
 
     /**
@@ -104,6 +109,25 @@ class Log
     public function setValue($value)
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return Batch
+     */
+    public function getBatch()
+    {
+        return $this->batch;
+    }
+
+    /**
+     * @param Batch $batch
+     * @return Log
+     */
+    public function setBatch($batch)
+    {
+        $this->batch = $batch;
 
         return $this;
     }

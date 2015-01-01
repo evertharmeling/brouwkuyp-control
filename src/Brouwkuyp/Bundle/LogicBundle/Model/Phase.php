@@ -169,7 +169,10 @@ class Phase extends Observable implements ExecutableInterface, BatchElementInter
             if ($this->finished) {
                 $this->notifyObservers();
             } else {
-                $this->eventDispatcher->dispatch(BrewEvents::PHASE_STATUS, new PhaseStatusEvent($this, $this->getDurationSeconds()));
+
+                if (fmod($this->executed, Phase::PRINT_TIMES) == 0) {
+                    $this->eventDispatcher->dispatch(BrewEvents::PHASE_STATUS, new PhaseStatusEvent($this, $this->getDurationSeconds()));
+                }
 
                 switch ($this->type) {
                     case Phase::CONTROL_TEMP:
@@ -177,7 +180,7 @@ class Phase extends Observable implements ExecutableInterface, BatchElementInter
                         if ($this->getDurationSeconds() > $this->duration) {
                             $this->setFinished();
                         }
-                        if (($this->executed % Phase::NOTIFY_TIMES) == 0) {
+                        if (fmod($this->executed, Phase::NOTIFY_TIMES) == 0) {
                             $this->notifyObservers();
                         }
                         break;

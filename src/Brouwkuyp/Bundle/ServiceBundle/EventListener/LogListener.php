@@ -10,31 +10,30 @@ use Brouwkuyp\Bundle\LogicBundle\Event\OperationFinishEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\OperationStartEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\PhaseFinishEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\PhaseStartEvent;
-use Brouwkuyp\Bundle\LogicBundle\Event\PhaseStatusEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\PhaseTemperatureReachedEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\ProcedureFinishEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\ProcedureStartEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\UnitProcedureFinishEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\UnitProcedureStartEvent;
-use Brouwkuyp\Bundle\LogicBundle\Model\Phase;
-use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\LogManager;
+use Brouwkuyp\Bundle\ServiceBundle\Entity\Log;
+use Doctrine\ORM\EntityManager;
 
 /**
  * @author Evert Harmeling <evertharmeling@gmail.com>
  */
-class BroadcastListener
+class LogListener
 {
     /**
-     * @var LogManager
+     * @var EntityManager
      */
-    private $logManager;
+    private $entityManager;
 
     /**
-     * @param LogManager $logManager
+     * @param EntityManager $entityManager
      */
-    public function __construct(LogManager $logManager)
+    public function __construct(EntityManager $entityManager)
     {
-        $this->logManager = $logManager;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -43,7 +42,7 @@ class BroadcastListener
     public function onBatchStart(BatchStartEvent $event)
     {
         $batch = $event->getBatch();
-        $this->logManager->log('Batch started');
+        $this->log('batch.start', $batch->getId(), $batch);
     }
 
     /**
@@ -52,7 +51,7 @@ class BroadcastListener
     public function onControlRecipeStart(ControlRecipeStartEvent $event)
     {
         $controlRecipe = $event->getControlRecipe();
-        $this->logManager->log('Control recipe started');
+        $this->log('control_recipe.start', $controlRecipe->getId(), $controlRecipe->getBatch());
     }
 
     /**
@@ -61,7 +60,7 @@ class BroadcastListener
     public function onProcedureStart(ProcedureStartEvent $event)
     {
         $procedure = $event->getProcedure();
-        $this->logManager->log(sprintf("Procedure '%s' started", $procedure->getName()));
+        $this->log('procedure.start', $procedure->getId(), $procedure->getBatch());
     }
 
     /**
@@ -70,7 +69,7 @@ class BroadcastListener
     public function onUnitProcedureStart(UnitProcedureStartEvent $event)
     {
         $unitProcedure = $event->getUnitProcedure();
-        $this->logManager->log(sprintf("Unit procedure '%s' started", $unitProcedure->getName()));
+        $this->log('unit_procedure.start', $unitProcedure->getId(), $unitProcedure->getBatch());
     }
 
     /**
@@ -79,7 +78,7 @@ class BroadcastListener
     public function onOperationStart(OperationStartEvent $event)
     {
         $operation = $event->getOperation();
-        $this->logManager->log(sprintf("Operation '%s' started", $operation->getName()));
+        $this->log('operation.start', $operation->getId(), $operation->getBatch());
     }
 
     /**
@@ -88,24 +87,7 @@ class BroadcastListener
     public function onPhaseStart(PhaseStartEvent $event)
     {
         $phase = $event->getPhase();
-        $this->logManager->log(sprintf("Phase '%s' to '%s' started", $phase->getName(), $phase->getValue()));
-    }
-
-    /**
-     * @param PhaseStatusEvent $event
-     */
-    public function onPhaseStatus(PhaseStatusEvent $event)
-    {
-        $phase = $event->getPhase();
-
-        switch ($phase->getType()) {
-            case Phase::CONTROL_TEMP:
-                $this->logManager->log(sprintf("Phase '%s' : %d / %d seconds (%d min)", $phase->getName(), $event->getElapsedTime(), $phase->getDuration(), $phase->getDuration() / 60));
-                break;
-            case Phase::ADD_INGREDIENTS:
-                $this->logManager->dialog('Voeg ingrediënten toe', $phase->getName(), $this->getIdentifier($phase));
-                break;
-        }
+        $this->log('phase.start', $phase->getId(), $phase->getBatch());
     }
 
     /**
@@ -114,7 +96,7 @@ class BroadcastListener
     public function onPhaseTemperatureReached(PhaseTemperatureReachedEvent $event)
     {
         $phase = $event->getPhase();
-        $this->logManager->log(sprintf("Phase '%s' temperature '%d' reached", $phase->getName(), $phase->getValue()));
+        $this->log('phase.temperature_reached', $phase->getId(), $phase->getBatch());
     }
 
     /**
@@ -123,7 +105,7 @@ class BroadcastListener
     public function onPhaseFinish(PhaseFinishEvent $event)
     {
         $phase = $event->getPhase();
-        $this->logManager->log(sprintf("Phase '%s' finished", $phase->getName()));
+        $this->log('phase.finish', $phase->getId(), $phase->getBatch());
     }
 
     /**
@@ -132,7 +114,7 @@ class BroadcastListener
     public function onOperationFinish(OperationFinishEvent $event)
     {
         $operation = $event->getOperation();
-        $this->logManager->log(sprintf("Operation '%s' finished", $operation->getName()));
+        $this->log('operation.finish', $operation->getId(), $operation->getBatch());
     }
 
     /**
@@ -141,7 +123,7 @@ class BroadcastListener
     public function onUnitProcedureFinish(UnitProcedureFinishEvent $event)
     {
         $unitProcedure = $event->getUnitProcedure();
-        $this->logManager->log(sprintf("Unit procedure '%s' finished", $unitProcedure->getName()));
+        $this->log('unit_procedure.finish', $unitProcedure->getId(), $unitProcedure->getBatch());
     }
 
     /**
@@ -150,7 +132,7 @@ class BroadcastListener
     public function onProcedureFinish(ProcedureFinishEvent $event)
     {
         $procedure = $event->getProcedure();
-        $this->logManager->log(sprintf("Procedure '%s' finished", $procedure->getName()));
+        $this->log('procedure.finish', $procedure->getId(), $procedure->getBatch());
     }
 
     /**
@@ -159,7 +141,7 @@ class BroadcastListener
     public function onControlRecipeFinish(ControlRecipeFinishEvent $event)
     {
         $controlRecipe = $event->getControlRecipe();
-        $this->logManager->log('Control recipe finished');
+        $this->log('control_recipe.finish', $controlRecipe->getId(), $controlRecipe->getBatch());
     }
 
     /**
@@ -168,17 +150,24 @@ class BroadcastListener
     public function onBatchFinish(BatchFinishEvent $event)
     {
         $batch = $event->getBatch();
-        $this->logManager->log('Batch finished');
+        $this->log('batch.finish', $batch->getId(), $batch);
     }
 
     /**
-     * @param  object $object
-     * @return string
+     * @param string $identifier
+     * @param string $value
+     * @param null   $batch
      */
-    private function getIdentifier($object)
+    private function log($identifier, $value, $batch = null)
     {
-        $reflection = new \ReflectionClass($object);
+        $log = new Log();
+        $log
+            ->setTopic($identifier)
+            ->setValue($value)
+            ->setBatch($batch)
+        ;
 
-        return sprintf("%s.%d", strtolower($reflection->getShortName()), $object->getId());
+        $this->entityManager->persist($log);
+        $this->entityManager->flush();
     }
 }

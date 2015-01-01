@@ -12,8 +12,10 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Log:
         topic:
             type:       string
             length:     120
-
-    fields:
         value:
             type:       string
-            length:     20
+            length:     120
+
+    manyToOne:
+        batch:
+            targetEntity:   Batch

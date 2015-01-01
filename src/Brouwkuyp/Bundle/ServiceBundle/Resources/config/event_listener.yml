@@ -19,3 +19,22 @@ services:
             - { name: kernel.event_listener, event: unit_procedure.finish,  method: onUnitProcedureFinish }
             - { name: kernel.event_listener, event: control_recipe.finish,  method: onControlRecipeFinish }
             - { name: kernel.event_listener, event: batch.finish,           method: onBatchFinish }
+
+    brouwkuyp_service.listener.log:
+        class: Brouwkuyp\Bundle\ServiceBundle\EventListener\LogListener
+        arguments:
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: kernel.event_listener, event: batch.start,            method: onBatchStart }
+            - { name: kernel.event_listener, event: control_recipe.start,   method: onControlRecipeStart }
+            - { name: kernel.event_listener, event: procedure.start,        method: onProcedureStart }
+            - { name: kernel.event_listener, event: unit_procedure.start,   method: onUnitProcedureStart }
+            - { name: kernel.event_listener, event: operation.start,        method: onOperationStart }
+            - { name: kernel.event_listener, event: phase.start,            method: onPhaseStart }
+            - { name: kernel.event_listener, event: phase.temperature_reached, method: onPhaseTemperatureReached }
+            - { name: kernel.event_listener, event: phase.finish,           method: onPhaseFinish }
+            - { name: kernel.event_listener, event: operation.finish,       method: onOperationFinish }
+            - { name: kernel.event_listener, event: procedure.finish,       method: onProcedureFinish }
+            - { name: kernel.event_listener, event: unit_procedure.finish,  method: onUnitProcedureFinish }
+            - { name: kernel.event_listener, event: control_recipe.finish,  method: onControlRecipeFinish }
+            - { name: kernel.event_listener, event: batch.finish,           method: onBatchFinish }

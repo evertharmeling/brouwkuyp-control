@@ -59,7 +59,7 @@ class ConsumeCommand extends BaseCommand
         $manager = $this->getContainer()->get('brouwkuyp_service.amqp.manager');
         $callback = function (AMQPMessage $msg) use ($output) {
 
-            $topic = $msg->delivery_info['routing_key'];
+            $topic = (string) $msg->delivery_info['routing_key'];
             $value = $msg->body;
 
             $this->logs[$topic][] = $value;
