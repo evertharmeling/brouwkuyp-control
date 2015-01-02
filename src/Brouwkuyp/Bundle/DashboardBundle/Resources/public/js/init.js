@@ -244,7 +244,7 @@ var client = {
                             label: "Confirm",
                             className: "btn-success",
                             data: message,
-                            callback: function(result, message) {
+                            callback: function(result) {
                                 // @todo fix message.identifier, message keeps being overwritten when prompting multiple dialogs
                                 $.post(
                                     $data.urlLog,

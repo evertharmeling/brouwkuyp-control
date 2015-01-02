@@ -58,6 +58,8 @@ class BrewCommand extends BaseCommand
         while ($batchManager->isRunning()) {
             $batchManager->execute();
             usleep(500000);
+
+            $output->writeln(sprintf('%s: memory usage: %.2f MB', (new \DateTime())->format('H:i:s'), memory_get_usage() / 1024 / 1024));
         }
 
         $output->writeln('Done with recipe');
