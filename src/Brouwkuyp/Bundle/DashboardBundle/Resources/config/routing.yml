@@ -14,7 +14,7 @@ recipe_detail:
 
 brewing_index:
     path:       /brouwsels
-    defaults:   { _controller: BrouwkuypDashboardBundle:Brewing:index }
+    defaults:   { _controller: brouwkuyp_dashboard.controller.batch:indexAction }
 
 logs_current_recipe:
     path:       /data/logs/current

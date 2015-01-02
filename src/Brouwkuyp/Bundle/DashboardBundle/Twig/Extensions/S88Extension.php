@@ -26,6 +26,7 @@ class S88Extension extends \Twig_Extension
     public function renderPhaseValue(Phase $phase)
     {
         switch ($phase->getType()) {
+            case Phase::REACH_TEMP:
             case Phase::CONTROL_TEMP:
                 return $phase->getValue() . ' °C';
             case Phase::ADD_INGREDIENTS:

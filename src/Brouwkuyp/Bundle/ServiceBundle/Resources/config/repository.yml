@@ -15,3 +15,8 @@ services:
         parent: brouwkuyp_service.repository
         arguments:
             - Brouwkuyp\Bundle\ServiceBundle\Entity\Log
+
+    brouwkuyp_service.repository.batch:
+        parent: brouwkuyp_service.repository
+        arguments:
+            - Brouwkuyp\Bundle\ServiceBundle\Entity\Batch

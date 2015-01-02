@@ -2,8 +2,6 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Log:
     type: entity
     table: log
     repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\LogRepository
-    options:
-        engine: MyISAM
 
     id:
         createdAt:

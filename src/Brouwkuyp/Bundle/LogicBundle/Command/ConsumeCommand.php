@@ -74,6 +74,7 @@ class ConsumeCommand extends BaseCommand
         };
 
 //        $manager->consume($callback, 'brewery.#.masher.#');
+//        $manager->consume($callback, 'brewery.#.boiler.#');
         $manager->consume($callback, 'brewery.#');
 
         while ($manager->receive()) {

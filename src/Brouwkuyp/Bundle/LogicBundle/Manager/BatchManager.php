@@ -60,7 +60,6 @@ class BatchManager implements ObserverInterface
     public function createBatch(ControlRecipe $recipe, EventDispatcherInterface $eventDispatcher)
     {
         $this->batch = new Batch($recipe, $eventDispatcher);
-        $this->batch->setCreatedAt(new DateTime());
         $this->entityManager->persist($this->batch);
         $this->entityManager->flush();
 
