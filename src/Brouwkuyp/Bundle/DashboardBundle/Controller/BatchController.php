@@ -2,6 +2,7 @@
 
 namespace Brouwkuyp\Bundle\DashboardBundle\Controller;
 
+use Brouwkuyp\Bundle\ServiceBundle\Entity\Batch;
 use Brouwkuyp\Bundle\ServiceBundle\Repository\BatchRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -22,6 +23,7 @@ class BatchController
 
     /**
      * @Template
+     * @return array
      */
     public function indexAction()
     {
@@ -29,6 +31,18 @@ class BatchController
 
         return [
             'batches' => $batches
+        ];
+    }
+
+    /**
+     * @param Batch $batch
+     * @Template
+     * @return array
+     */
+    public function detailAction(Batch $batch)
+    {
+        return [
+            'batch' => $batch
         ];
     }
 }

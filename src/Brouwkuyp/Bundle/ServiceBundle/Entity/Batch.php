@@ -54,4 +54,14 @@ class Batch extends BaseBatch
     {
         return $this->createdAt;
     }
+
+    /**
+     * @return array
+     */
+    public function getRouteParams()
+    {
+        return [
+            'id' => $this->getId()
+        ];
+    }
 }

@@ -10,3 +10,8 @@ services:
         class: Brouwkuyp\Bundle\DashboardBundle\Controller\BatchController
         arguments:
             - @brouwkuyp_service.repository.batch
+
+    brouwkuyp_dashboard.controller.data:
+        class: Brouwkuyp\Bundle\DashboardBundle\Controller\DataController
+        arguments:
+            - @brouwkuyp_service.repository.log

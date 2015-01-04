@@ -11,15 +11,15 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Procedure:
 
     fields:
         name:
-            type:       string
-            length:     120
+            type:           string
+            length:         120
 
     oneToOne:
         controlRecipe:
-            targetEntity: ControlRecipe
-            mappedBy: procedure
+            targetEntity:   ControlRecipe
+            mappedBy:       procedure
 
     oneToMany:
         unitProcedures:
-            targetEntity: UnitProcedure
-            mappedBy: procedure
+            targetEntity:   UnitProcedure
+            mappedBy:       procedure

@@ -11,10 +11,10 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Unit:
 
     fields:
         name:
-            type:       string
-            length:     120
+            type:           string
+            length:         120
 
     oneToMany:
         unitProcedures:
-            targetEntity: UnitProcedure
-            mappedBy: unit
+            targetEntity:   UnitProcedure
+            mappedBy:       unit

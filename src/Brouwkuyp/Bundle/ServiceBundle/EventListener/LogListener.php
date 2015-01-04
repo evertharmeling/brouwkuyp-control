@@ -162,6 +162,7 @@ class LogListener
     {
         $log = new Log();
         $log
+            ->setType(Log::TYPE_S88)
             ->setTopic($identifier)
             ->setValue($value)
             ->setBatch($batch)

@@ -39,27 +39,52 @@ var chart = {
 
         var $hltLogs = [],
             $mltLogs = [],
-            $bltLogs = [];
+            $bltLogs = [],
+            $verticalLines = [];
 
         $.ajax({
-            url: $data.urlCurrentRecipe,
+            url: $data.urlLogs,
             async: false,
             success: function(response) {
                 $(response.data).each(function (key, log) {
                     var $value = parseFloat(log.value);
 
-                    switch (log.topic) {
-                        case $data.topicHltCurrTemp:
-                            $hltLogs[$hltLogs.length] = [log.time, $value];
-                            break;
-                        case $data.topicMltCurrTemp:
-                            $mltLogs[$mltLogs.length] = [log.time, $value];
-                            break;
-                        case $data.topicBltCurrTemp:
-                            $bltLogs[$bltLogs.length] = [log.time, $value];
-                            break;
-                        default:
-                            break;
+                    if (!isNaN($value)) {
+                        switch (log.topic) {
+                            case $data.topicHltCurrTemp:
+                                $hltLogs[$hltLogs.length] = [log.time, $value];
+                                break;
+                            case $data.topicMltCurrTemp:
+                                $mltLogs[$mltLogs.length] = [log.time, $value];
+                                break;
+                            case $data.topicBltCurrTemp:
+                                $bltLogs[$bltLogs.length] = [log.time, $value];
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    if (log.type == 'pump' && new RegExp('[a-z\\.]+(set_state|set_mode)').test(log.topic)) {
+                        $verticalLines.push({
+                            value: log.time,
+                            width: 1,
+                            color: 'red',
+                            dashStyle: 'dash',
+                            label: {
+                                text: log.topic + ' : ' + log.value
+                            }
+                        });
+                    } else if(log.type == 's88' && new RegExp('[a-z]+\\.[a-z]+').test(log.topic)) {
+                        $verticalLines.push({
+                            value: log.time,
+                            width: 1,
+                            color: 'purple',
+                            dashStyle: 'dash',
+                            label: {
+                                text: log.topic
+                            }
+                        });
                     }
                 });
 
@@ -92,7 +117,8 @@ var chart = {
                         text: 'Live temperaturen'
                     },
                     xAxis: {
-                        type: 'time'
+                        type: 'time',
+                        plotLines: $verticalLines
                     },
                     yAxis: {
                         title: {
@@ -163,104 +189,108 @@ var chart = {
 var client = {
     init: function () {
         var $el = $('#graph'),
-            $data = $el.data(),
+            $data = $el.data();
+
+        if ($data.rabbitMqHost) {
+
             $client = Stomp.over(new SockJS("http://" + $data.rabbitMqHost + ":15674/stomp"));
 
-        // RabbitMQ SockJS does not support heartbeats so disable them
-        $client.heartbeat.incoming = 0;
-        $client.heartbeat.outgoing = 0;
+            // RabbitMQ SockJS does not support heartbeats so disable them
+            $client.heartbeat.incoming = 0;
+            $client.heartbeat.outgoing = 0;
 
-        $client.debug = this.onDebug;
+            $client.debug = this.onDebug;
 
-        // Make sure the user has limited access rights
-        $client.connect("guest", "guest", onConnect, this.onError, "/");
+            // Make sure the user has limited access rights
+            $client.connect("guest", "guest", onConnect, this.onError, "/");
 
-        function onConnect() {
-            $data = $el.data();
-            var $baseUrl = "/topic/";
+            function onConnect() {
+                $data = $el.data();
+                var $baseUrl = "/topic/";
 
-            // HLT
-            $client.subscribe($baseUrl + $data.topicHltCurrTemp, function (d) {
-                var $value = parseFloat(d.body);
-                addToGraph($el, 0, $value);
-                updateTemperature('hlt', $value);
-            });
+                // HLT
+                $client.subscribe($baseUrl + $data.topicHltCurrTemp, function (d) {
+                    var $value = parseFloat(d.body);
+                    addToGraph($el, 0, $value);
+                    updateTemperature('hlt', $value);
+                });
 
-            // MLT
-            $client.subscribe($baseUrl + $data.topicMltCurrTemp, function (d) {
-                var $value = parseFloat(d.body);
-                addToGraph($el, 1, $value);
-                updateTemperature('mlt', $value);
-            });
-            $client.subscribe($baseUrl + $data.topicMltSetTemp, function (d) {
-                var $value = parseFloat(d.body);
-                updateTemperature('mlt', $value, 'set');
-                // @todo store set temps and be able to add plotBands (maisch steps)
-            });
+                // MLT
+                $client.subscribe($baseUrl + $data.topicMltCurrTemp, function (d) {
+                    var $value = parseFloat(d.body);
+                    addToGraph($el, 1, $value);
+                    updateTemperature('mlt', $value);
+                });
+                $client.subscribe($baseUrl + $data.topicMltSetTemp, function (d) {
+                    var $value = parseFloat(d.body);
+                    updateTemperature('mlt', $value, 'set');
+                    // @todo store set temps and be able to add plotBands (maisch steps)
+                });
 
-            // BLT
-            $client.subscribe($baseUrl + $data.topicBltCurrTemp, function (d) {
-                var $value = parseFloat(d.body);
-                addToGraph($el, 2, $value);
-                updateTemperature('blt', $value);
-            });
+                // BLT
+                $client.subscribe($baseUrl + $data.topicBltCurrTemp, function (d) {
+                    var $value = parseFloat(d.body);
+                    addToGraph($el, 2, $value);
+                    updateTemperature('blt', $value);
+                });
 
-            // PUMP
-            $client.subscribe($baseUrl + $data.topicPumpCurrMode, function (d) {
-                if (d.body == 'automatic') {
-                    toggleCheckbox($('#pump_mode'), true);
-                    $('.toggle-pump').hide();
-                } else {
-                    toggleCheckbox($('#pump_mode'), false);
-                    $('.toggle-pump').show();
-                }
-            });
-            $client.subscribe($baseUrl + $data.topicPumpCurrState, function (d) {
-                toggleCheckbox($('#pump_state'), (d.body == 'on'));
-            });
-
-            // BROADCASTING
-            $client.subscribe($baseUrl + $data.topicBroadcastDialog, function (d) {
-                message = JSON.parse(d.body);
-                bootbox.dialog({
-                    title: message.title,
-                    message: message.text,
-                    buttons: {
-                        cancel: {
-                            label: "Cancel",
-                            className: "btn-cancel",
-                            callback: function(result) {
-                                // @todo fix message.identifier, message keeps being overwritten when prompting multiple dialogs
-                                $.post(
-                                    $data.urlLog,
-                                    { 'log': { 'topic': message.identifier, 'value': 'cancelled' } },
-                                    function(response) {
-                                        //console.log(response);
-                                    }
-                                );
-                            }
-                        },
-                        confirm: {
-                            label: "Confirm",
-                            className: "btn-success",
-                            data: message,
-                            callback: function(result) {
-                                // @todo fix message.identifier, message keeps being overwritten when prompting multiple dialogs
-                                $.post(
-                                    $data.urlLog,
-                                    { 'log': { 'topic': message.identifier, 'value': 'confirmed' } },
-                                    function(response) {
-                                        //console.log(response);
-                                    }
-                                );
-                            }
-                        }
+                // PUMP
+                $client.subscribe($baseUrl + $data.topicPumpCurrMode, function (d) {
+                    if (d.body == 'automatic') {
+                        toggleCheckbox($('#pump_mode'), true);
+                        $('.toggle-pump').hide();
+                    } else {
+                        toggleCheckbox($('#pump_mode'), false);
+                        $('.toggle-pump').show();
                     }
                 });
-            });
-            $client.subscribe($baseUrl + $data.topicBroadcastLog, function (d) {
-                $('#log-list').prepend('<li><span>' + d.body + '</span></li>');
-            });
+                $client.subscribe($baseUrl + $data.topicPumpCurrState, function (d) {
+                    toggleCheckbox($('#pump_state'), (d.body == 'on'));
+                });
+
+                // BROADCASTING
+                $client.subscribe($baseUrl + $data.topicBroadcastDialog, function (d) {
+                    message = JSON.parse(d.body);
+                    bootbox.dialog({
+                        title: message.title,
+                        message: message.text,
+                        buttons: {
+                            cancel: {
+                                label: "Cancel",
+                                className: "btn-cancel",
+                                callback: function (result) {
+                                    // @todo fix message.identifier, message keeps being overwritten when prompting multiple dialogs
+                                    $.post(
+                                        $data.urlLog,
+                                        {'log': {'topic': message.identifier, 'value': 'cancelled'}},
+                                        function (response) {
+                                            //console.log(response);
+                                        }
+                                    );
+                                }
+                            },
+                            confirm: {
+                                label: "Confirm",
+                                className: "btn-success",
+                                data: message,
+                                callback: function (result) {
+                                    // @todo fix message.identifier, message keeps being overwritten when prompting multiple dialogs
+                                    $.post(
+                                        $data.urlLog,
+                                        {'log': {'topic': message.identifier, 'value': 'confirmed'}},
+                                        function (response) {
+                                            //console.log(response);
+                                        }
+                                    );
+                                }
+                            }
+                        }
+                    });
+                });
+                $client.subscribe($baseUrl + $data.topicBroadcastLog, function (d) {
+                    $('#log-list').prepend('<li><span>' + d.body + '</span></li>');
+                });
+            }
         }
 
         function addToGraph($el, $sensor, $temperature) {
@@ -287,7 +317,7 @@ var client = {
     },
 
     onDebug: function(m) {
-        //console.log("STOMP DEBUG", m);
+        console.log("STOMP DEBUG", m);
     }
 };
 

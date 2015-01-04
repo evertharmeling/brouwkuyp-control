@@ -11,10 +11,10 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Formula:
 
     fields:
         name:
-            type:       string
-            length:     120
+            type:           string
+            length:         120
 
-    oneToOne:
-        controlRecipe:
-            targetEntity: ControlRecipe
-            mappedBy: formula
+#    oneToOne:
+#        controlRecipe:
+#            targetEntity:   ControlRecipe
+#            mappedBy:       formula

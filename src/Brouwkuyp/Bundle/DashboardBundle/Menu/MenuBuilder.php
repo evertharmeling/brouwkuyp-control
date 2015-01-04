@@ -38,7 +38,7 @@ class MenuBuilder
         ]);
 
         $menu->addChild('Recepten', ['route' => 'recipe_index']);
-        $menu->addChild('Brouwsels', ['route' => 'brewing_index']);
+        $menu->addChild('Brouwsels', ['route' => 'batch_index']);
 
         return $menu;
     }

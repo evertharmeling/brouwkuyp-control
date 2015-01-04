@@ -35,6 +35,21 @@ class LogRepository extends EntityRepository
             ->setParameter('date', (new \DateTime())->format('Y-m-d'))
         ;
 
-        return $qb->getQuery()->execute();
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param integer $id
+     * @return array
+     */
+    public function findForBatchId($id)
+    {
+        $qb = $this->getBaseQueryBuilder()
+            ->andWhere('l.batch = :id')
+            ->setParameter('id', $id)
+//            ->setMaxResults(1000)
+        ;
+
+        return $qb->getQuery()->getResult();
     }
 }

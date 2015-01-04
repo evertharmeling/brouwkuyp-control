@@ -10,30 +10,57 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class DataController extends Controller
 {
     /**
+     * @var LogRepository
+     */
+    private $logRepository;
+
+    /**
+     * @param LogRepository $logRepository
+     */
+    public function __construct(LogRepository $logRepository)
+    {
+        $this->logRepository = $logRepository;
+    }
+
+    /**
      * @return JsonResponse
      */
-    public function currentRecipeLogAction()
+    public function currentRecipeLogsAction()
     {
-        $logs = $this->getLogRepository()->findForCurrentRecipe();
+        $logs = $this->logRepository->findForCurrentRecipe();
 
+        return JsonResponse::create(['data' => $this->logsToArray($logs)]);
+    }
+
+    /**
+     * @param integer $id
+     * @return array
+     */
+    public function batchLogsAction($id)
+    {
+        $logs = $this->logRepository->findForBatchId($id);
+
+        return JsonResponse::create(['data' => $this->logsToArray($logs)]);
+
+    }
+
+    /**
+     * @param array $logs
+     * @return array
+     */
+    private function logsToArray(array $logs)
+    {
         $data = [];
         /** @var Log $log */
         foreach ($logs as $key => $log) {
             $data[] = [
+                'type' => $log->getType(),
                 'topic' => $log->getTopic(),
                 'time' => $log->getCreatedAt()->format('U') * 1000,
                 'value' => $log->getValue()
             ];
         }
 
-        return JsonResponse::create(['data' => $data]);
-    }
-
-    /**
-     * @return LogRepository
-     */
-    private function getLogRepository()
-    {
-        return $this->container->get('brouwkuyp_service.repository.log');
+        return $data;
     }
 }

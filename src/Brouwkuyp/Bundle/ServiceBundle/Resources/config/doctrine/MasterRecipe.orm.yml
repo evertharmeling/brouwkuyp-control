@@ -11,5 +11,5 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\MasterRecipe:
 
     fields:
         name:
-            type:       string
-            length:     120
+            type:           string
+            length:         120
