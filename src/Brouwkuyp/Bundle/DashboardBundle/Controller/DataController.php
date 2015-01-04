@@ -33,7 +33,7 @@ class DataController extends Controller
     }
 
     /**
-     * @param integer $id
+     * @param  integer $id
      * @return array
      */
     public function batchLogsAction($id)
@@ -41,11 +41,10 @@ class DataController extends Controller
         $logs = $this->logRepository->findForBatchId($id);
 
         return JsonResponse::create(['data' => $this->logsToArray($logs)]);
-
     }
 
     /**
-     * @param array $logs
+     * @param  array $logs
      * @return array
      */
     private function logsToArray(array $logs)

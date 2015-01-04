@@ -8,7 +8,6 @@ use Brouwkuyp\Bundle\LogicBundle\Model\ObserverInterface;
 use Brouwkuyp\Bundle\LogicBundle\Model\Operation;
 use Brouwkuyp\Bundle\LogicBundle\Model\Phase;
 use Brouwkuyp\Bundle\LogicBundle\Model\UnitProcedure;
-use Brouwkuyp\Bundle\ServiceBundle\Doctrine\DateTime;
 use Brouwkuyp\Bundle\ServiceBundle\Entity\Batch;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

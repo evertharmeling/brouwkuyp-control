@@ -39,7 +39,7 @@ class LogRepository extends EntityRepository
     }
 
     /**
-     * @param integer $id
+     * @param  integer $id
      * @return array
      */
     public function findForBatchId($id)
@@ -48,7 +48,7 @@ class LogRepository extends EntityRepository
             ->andWhere('l.batch = :id')
             ->setParameter('id', $id)
 //            ->setMaxResults(1000)
-        ;
+;
 
         return $qb->getQuery()->getResult();
     }

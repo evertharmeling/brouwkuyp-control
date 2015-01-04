@@ -35,7 +35,7 @@ class BatchController
     }
 
     /**
-     * @param Batch $batch
+     * @param  Batch $batch
      * @Template
      * @return array
      */

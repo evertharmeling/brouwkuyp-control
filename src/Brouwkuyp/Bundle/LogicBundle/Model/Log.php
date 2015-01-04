@@ -121,7 +121,7 @@ class Log
     }
 
     /**
-     * @param mixed $type
+     * @param  mixed $type
      * @return Log
      */
     public function setType($type)
