@@ -62,6 +62,8 @@ class ConsumeCommand extends BaseCommand
             $topic = (string) $msg->delivery_info['routing_key'];
             $value = $msg->body;
 
+            // if temperature probe returns '-127.00' sensor is not connected / other problem
+
             $this->logs[$topic][] = $value;
 
             $this->output->writeln(
