@@ -300,7 +300,7 @@ var client = {
 
         function updateTemperature($sensor, $temperature, $action) {
             $action = typeof $action !== 'undefined' ? $action : 'curr';
-            $('#temp-' + $action + '-' + $sensor).text($temperature + ' °C');
+            $('#temp-' + $action + '-' + $sensor).text($temperature.toFixed(2) + ' °C');
         }
 
         function toggleCheckbox($el, $state) {
@@ -317,7 +317,7 @@ var client = {
     },
 
     onDebug: function(m) {
-        console.log("STOMP DEBUG", m);
+        //console.log("STOMP DEBUG", m);
     }
 };
 
