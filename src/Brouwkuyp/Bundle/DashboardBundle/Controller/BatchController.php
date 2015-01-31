@@ -6,6 +6,9 @@ use Brouwkuyp\Bundle\ServiceBundle\Entity\Batch;
 use Brouwkuyp\Bundle\ServiceBundle\Repository\BatchRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+/**
+ * @author Evert Harmeling <evertharmeling@gmail.com>
+ */
 class BatchController
 {
     /**

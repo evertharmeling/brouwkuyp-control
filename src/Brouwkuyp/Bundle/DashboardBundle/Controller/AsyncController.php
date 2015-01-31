@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * * Holds all async action calls for the project
+ *
  * @author Evert Harmeling <evert.harmeling@freshheads.com>
  */
 class AsyncController

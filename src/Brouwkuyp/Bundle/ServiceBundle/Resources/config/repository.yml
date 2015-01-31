@@ -20,3 +20,8 @@ services:
         parent: brouwkuyp_service.repository
         arguments:
             - Brouwkuyp\Bundle\ServiceBundle\Entity\Batch
+
+    brouwkuyp_service.repository.phase:
+        parent: brouwkuyp_service.repository
+        arguments:
+            - Brouwkuyp\Bundle\ServiceBundle\Entity\Phase

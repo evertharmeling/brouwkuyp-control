@@ -6,8 +6,6 @@ use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 
 /**
- * MenuBuilder
- *
  * @author Evert Harmeling <evertharmeling@gmail.com>
  */
 class MenuBuilder

@@ -3,6 +3,8 @@
 namespace Brouwkuyp\Bundle\ServiceBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * PhaseRepository
@@ -12,4 +14,32 @@ use Doctrine\ORM\EntityRepository;
  */
 class PhaseRepository extends EntityRepository
 {
+    /**
+     * @return QueryBuilder
+     */
+    public function getBaseQueryBuilder()
+    {
+        $qb = $this->createQueryBuilder('p')
+        ;
+
+        return $qb;
+    }
+
+    /**
+     * @return array
+     */
+    public function findForBatchId($id)
+    {
+        return $this->getBaseQueryBuilder()
+            ->select('p')
+            ->innerJoin('p.operation', 'ope')
+            ->innerJoin('ope.unitProcedure', 'upr')
+            ->innerJoin('upr.procedure', 'pro')
+            ->innerJoin('pro.controlRecipe', 'cre')
+            ->innerJoin('cre.batches', 'bat', Expr\Join::WITH, 'bat = :batchId')
+            ->setParameter('batchId', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

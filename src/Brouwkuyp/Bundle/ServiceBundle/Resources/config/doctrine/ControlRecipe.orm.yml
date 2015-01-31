@@ -25,3 +25,8 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe:
             inversedBy:     controlRecipe
 #        formula:
 #            targetEntity: Formula
+
+    oneToMany:
+        batches:
+            targetEntity:   Batch
+            mappedBy:       controlRecipe

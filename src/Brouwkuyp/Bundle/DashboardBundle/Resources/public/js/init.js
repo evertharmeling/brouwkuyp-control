@@ -65,24 +65,24 @@ var chart = {
                         }
                     }
 
-                    if (log.type == 'pump' && new RegExp('[a-z\\.]+(set_state|set_mode)').test(log.topic)) {
+                    if (log.type == 'pump' && new RegExp('[a-z\\.]+(set_state)').test(log.topic)) {
                         $verticalLines.push({
                             value: log.time,
                             width: 1,
                             color: 'red',
                             dashStyle: 'dash',
                             label: {
-                                text: log.topic + ' : ' + log.value
+                                text: log.value
                             }
                         });
-                    } else if(log.type == 's88' && new RegExp('[a-z]+\\.[a-z]+').test(log.topic)) {
+                    } else if(log.type == 's88' && new RegExp('(phase)\\.[a-z]+').test(log.topic)) {
                         $verticalLines.push({
                             value: log.time,
                             width: 1,
                             color: 'purple',
                             dashStyle: 'dash',
                             label: {
-                                text: log.topic
+                                text: log.value
                             }
                         });
                     }
@@ -151,16 +151,19 @@ var chart = {
                         }]
                     },
                     tooltip: {
+                        shared: true,
+                        crosshairs: [true, true],
                         formatter: function() {
-                            return 'Tijd: ' + Highcharts.dateFormat('%H:%M:%S', this.x) +'<br/>'+
-                            'Temp: ' + Highcharts.numberFormat(this.y, 2) + '°C';
+                            var $tooltip = '<strong>Tijd</strong>: ' + Highcharts.dateFormat('%H:%M:%S', this.x) + '<br/>';
+                            $.each(this.points, function (key, object) {
+                                $tooltip += '<strong>' + object.series.name + '</strong>: ' + Highcharts.numberFormat(object.y, 2) + '°C<br/>';
+                            });
+
+                            return $tooltip;
                         }
                     },
                     legend: {
                         enabled: true
-                    },
-                    exporting: {
-                        enabled: false
                     },
                     global: {
                         useUTC: false,
@@ -181,6 +184,28 @@ var chart = {
                         }
                     ]
                 });
+
+                Highcharts.setOptions({
+                    lang: {
+                        loading: 'Laden...',
+                        months: ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'],
+                        weekdays: ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'],
+                        shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
+                        exportButtonTitle: "Exporteren",
+                        printButtonTitle: "Printen",
+                        rangeSelectorFrom: "Van",
+                        rangeSelectorTo: "Tot",
+                        rangeSelectorZoom: "Periode",
+                        downloadPNG: 'Download PNG',
+                        downloadJPEG: 'Download JPEG',
+                        downloadPDF: 'Download PDF',
+                        downloadSVG: 'Download SVG',
+                        resetZoom: 'Reset',
+                        resetZoomTitle: 'Reset',
+                        thousandsSep: '.',
+                        decimalPoint: ','
+                    }
+                })
             }
         });
     }

@@ -21,6 +21,6 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Batch:
     manyToOne:
         controlRecipe:
             targetEntity:   ControlRecipe
-            mappedBy:       batch
+            inversedBy:     batches
             joinColumn:
                 name:       control_recipe_id

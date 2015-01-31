@@ -3,6 +3,7 @@
 namespace Brouwkuyp\Bundle\ServiceBundle\Entity;
 
 use Brouwkuyp\Bundle\LogicBundle\Model\ControlRecipe as BaseControlRecipe;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * ControlRecipe
@@ -23,6 +24,16 @@ class ControlRecipe extends BaseControlRecipe
      * @var string
      */
     protected $remarks;
+
+    /**
+     * @var ArrayCollection|Batch[]
+     */
+    protected $batches;
+
+    public function __construct()
+    {
+        $this->batches = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -78,6 +89,25 @@ class ControlRecipe extends BaseControlRecipe
     public function getRemarks()
     {
         return $this->remarks;
+    }
+
+    /**
+     * @return Batch[]|ArrayCollection
+     */
+    public function getBatches()
+    {
+        return $this->batches;
+    }
+
+    /**
+     * @param  Batch[]|ArrayCollection $batches
+     * @return ControlRecipe
+     */
+    public function setBatches($batches)
+    {
+        $this->batches = $batches;
+
+        return $this;
     }
 
     /**
