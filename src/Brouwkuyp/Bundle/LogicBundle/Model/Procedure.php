@@ -37,7 +37,7 @@ class Procedure implements ExecutableInterface, BatchElementInterface, EventDisp
     /**
      * Collection of UnitProcedure
      *
-     * @var ArrayCollection
+     * @var ArrayCollection|UnitProcedure[]
      */
     protected $unitProcedures;
 
@@ -100,7 +100,7 @@ class Procedure implements ExecutableInterface, BatchElementInterface, EventDisp
      */
     public function addUnitprocedure(UnitProcedure $unitProcedure)
     {
-        $this->unitProcedures [] = $unitProcedure;
+        $this->unitProcedures[] = $unitProcedure;
 
         return $this;
     }
@@ -118,7 +118,7 @@ class Procedure implements ExecutableInterface, BatchElementInterface, EventDisp
     /**
      * Get UnitProcedure
      *
-     * @return ArrayCollection
+     * @return ArrayCollection|UnitProcedure[]
      */
     public function getUnitProcedures()
     {

@@ -2,18 +2,25 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Log:
     type: entity
     table: log
     repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\LogRepository
-    options:
-        engine: MyISAM
 
     id:
         createdAt:
-            column:     created_at
-            type:       brouwkuyp_datetime
+            column:         created_at
+            type:           brouwkuyp_datetime
         topic:
-            type:       string
-            length:     120
+            type:           string
+            length:         120
+        value:
+            type:           string
+            length:         120
 
     fields:
-        value:
-            type:       string
-            length:     20
+        type:
+            type:           string
+            nullable:       true
+            options:
+                comment:    'temperature, s88, pump'
+
+    manyToOne:
+        batch:
+            targetEntity:   Batch

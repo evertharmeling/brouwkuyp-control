@@ -178,6 +178,11 @@ class Batch implements ExecutableInterface
         return $this->timer->start($batchElementName . ":" . $eventName);
     }
 
+    /**
+     * @param $batchElementName
+     * @param $eventName
+     * @return int
+     */
     public function getDuration($batchElementName, $eventName)
     {
         $event = $this->timer->lap($batchElementName . ":" . $eventName);

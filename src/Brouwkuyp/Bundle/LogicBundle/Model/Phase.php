@@ -6,6 +6,7 @@ use Brouwkuyp\Bundle\LogicBundle\BrewEvents;
 use Brouwkuyp\Bundle\LogicBundle\Event\EventDispatcherAwareInterface;
 use Brouwkuyp\Bundle\LogicBundle\Event\PhaseFinishEvent;
 use Brouwkuyp\Bundle\LogicBundle\Event\PhaseStartEvent;
+use Brouwkuyp\Bundle\LogicBundle\Event\PhaseStatusEvent;
 use Brouwkuyp\Bundle\LogicBundle\Traits\BatchElementTrait;
 use Brouwkuyp\Bundle\LogicBundle\Traits\EventDispatcherTrait;
 use Brouwkuyp\Bundle\LogicBundle\Traits\ExecutableTrait;
@@ -149,8 +150,6 @@ class Phase extends Observable implements ExecutableInterface, BatchElementInter
      */
     public function start()
     {
-        $this->eventDispatcher->dispatch(BrewEvents::PHASE_START, new PhaseStartEvent($this));
-
         if (!$this->started) {
             $this->batch->startTimer($this->name, 'start');
             $this->setStarted();
@@ -170,19 +169,21 @@ class Phase extends Observable implements ExecutableInterface, BatchElementInter
             if ($this->finished) {
                 $this->notifyObservers();
             } else {
+                if (fmod($this->executed, Phase::PRINT_TIMES) == 0) {
+                    $this->eventDispatcher->dispatch(BrewEvents::PHASE_STATUS, new PhaseStatusEvent($this, $this->getDurationSeconds()));
+                }
+
                 switch ($this->type) {
                     case Phase::CONTROL_TEMP:
                     case Phase::ADD_INGREDIENTS:
-                        $this->printPhaseExecution(true);
                         if ($this->getDurationSeconds() > $this->duration) {
                             $this->setFinished();
                         }
-                        if (($this->executed % Phase::NOTIFY_TIMES) == 0) {
+                        if (fmod($this->executed, Phase::NOTIFY_TIMES) == 0) {
                             $this->notifyObservers();
                         }
                         break;
                     case Phase::REACH_TEMP:
-                        $this->printPhaseExecution(false);
                         $this->notifyObservers();
                         break;
                     default:
@@ -216,19 +217,5 @@ class Phase extends Observable implements ExecutableInterface, BatchElementInter
         $this->eventDispatcher->dispatch(BrewEvents::PHASE_FINISH, new PhaseFinishEvent($this));
 
         return $this;
-    }
-
-    private function printPhaseExecution($showDuration)
-    {
-        if (($this->executed % Phase::PRINT_TIMES) == 0) {
-            if ($showDuration == true) {
-                echo sprintf('Phase::execute %s (%4d/%4d)',
-                        $this->name, $this->getDurationSeconds(),
-                        $this->duration) . PHP_EOL;
-            } else {
-                echo sprintf('Phase::execute %s', $this->name) .
-                         PHP_EOL;
-            }
-        }
     }
 }

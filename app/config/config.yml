@@ -11,7 +11,7 @@ framework:
         strict_requirements: ~
     form:            ~
     csrf_protection: ~
-    validation:      { enable_annotations: true }
+    validation:      { enable_annotations: false }
     templating:
         engines: ['twig']
         #assets_version: SomeVersionScheme
@@ -91,7 +91,7 @@ stof_doctrine_extensions:
             timestampable:  true
 
 braincrafted_bootstrap:
-    jquery_path: %kernel.root_dir%/../vendor/jquery/jquery/jquery-1.11.1.js
+    jquery_path: %kernel.root_dir%/../components/jquery/jquery.min.js
     customize:
         variables_file: %kernel.root_dir%/../src/Brouwkuyp/Bundle/DashboardBundle/Resources/public/less/variables.less
         bootstrap_output: %kernel.root_dir%/../src/Brouwkuyp/Bundle/DashboardBundle/Resources/public/less/bootstrap.less

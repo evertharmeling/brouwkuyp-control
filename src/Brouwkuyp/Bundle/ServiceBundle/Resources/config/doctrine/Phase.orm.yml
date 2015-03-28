@@ -11,19 +11,19 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Phase:
 
     fields:
         name:
-            type:       string
-            length:     120
+            type:           string
+            length:         120
         type:
-            type:       string
-            length:     50
+            type:           string
+            length:         50
         value:
-            type:       integer
-            length:     10
+            type:           integer
+            length:         10
         duration:
-            type:       integer
-            length:     12
+            type:           integer
+            length:         12
 
     manyToOne:
         operation:
-            targetEntity: Operation
-            inversedBy: phases
+            targetEntity:   Operation
+            inversedBy:     phases

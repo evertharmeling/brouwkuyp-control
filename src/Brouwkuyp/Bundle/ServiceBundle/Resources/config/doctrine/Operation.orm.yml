@@ -11,18 +11,17 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Operation:
 
     fields:
         name:
-            type:       string
-            length:     120
+            type:           string
+            length:         120
 
     oneToMany:
         phases:
-            targetEntity: Phase
-            mappedBy: operation
+            targetEntity:   Phase
+            mappedBy:       operation
 
     manyToOne:
         unitProcedure:
-            targetEntity: UnitProcedure
-            inversedBy: operations
+            targetEntity:   UnitProcedure
+            inversedBy:     operations
             joinColumn:
-                name: unit_procedure_id
-                referencedColumnName: id
+                name:       unit_procedure_id

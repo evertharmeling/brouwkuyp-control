@@ -8,7 +8,6 @@ use Brouwkuyp\Bundle\LogicBundle\Model\ObserverInterface;
 use Brouwkuyp\Bundle\LogicBundle\Model\Operation;
 use Brouwkuyp\Bundle\LogicBundle\Model\Phase;
 use Brouwkuyp\Bundle\LogicBundle\Model\UnitProcedure;
-use Brouwkuyp\Bundle\ServiceBundle\Doctrine\DateTime;
 use Brouwkuyp\Bundle\ServiceBundle\Entity\Batch;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -60,7 +59,6 @@ class BatchManager implements ObserverInterface
     public function createBatch(ControlRecipe $recipe, EventDispatcherInterface $eventDispatcher)
     {
         $this->batch = new Batch($recipe, $eventDispatcher);
-        $this->batch->setCreatedAt(new DateTime());
         $this->entityManager->persist($this->batch);
         $this->entityManager->flush();
 
@@ -91,6 +89,7 @@ class BatchManager implements ObserverInterface
         if (is_null($batch)) {
             $batch = $this->batch;
         }
+
         $batch->execute();
     }
 
@@ -111,16 +110,15 @@ class BatchManager implements ObserverInterface
     /**
      * Checks if the batch is still in operation
      *
-     * @param  Batch $batch
      * @return bool
      */
-    public function isRunning(Batch $batch = null)
+    public function isRunning()
     {
-        if (is_null($batch)) {
-            $batch = $this->batch;
+        if (is_null($this->batch)) {
+            throw new \RuntimeException("You haven't started a batch yet!");
         }
 
-        return ($batch->isStarted() && !$batch->isFinished());
+        return ($this->batch->isStarted() && !$this->batch->isFinished());
     }
 
     /**

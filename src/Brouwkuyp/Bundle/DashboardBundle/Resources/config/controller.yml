@@ -1,0 +1,18 @@
+services:
+
+    brouwkuyp_dashboard.controller.async:
+        class: Brouwkuyp\Bundle\DashboardBundle\Controller\AsyncController
+        arguments:
+            - @brouwkuyp_service.manager.brew_control
+            - @doctrine.orm.entity_manager
+
+    brouwkuyp_dashboard.controller.batch:
+        class: Brouwkuyp\Bundle\DashboardBundle\Controller\BatchController
+        arguments:
+            - @brouwkuyp_service.repository.batch
+
+    brouwkuyp_dashboard.controller.data:
+        class: Brouwkuyp\Bundle\DashboardBundle\Controller\DataController
+        arguments:
+            - @brouwkuyp_service.repository.log
+            - @brouwkuyp_service.repository.phase

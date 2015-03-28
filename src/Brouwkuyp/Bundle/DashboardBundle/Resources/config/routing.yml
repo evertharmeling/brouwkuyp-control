@@ -12,20 +12,33 @@ recipe_detail:
     requirements:
         id:     \d+
 
-brewing_index:
+batch_index:
     path:       /brouwsels
-    defaults:   { _controller: BrouwkuypDashboardBundle:Brewing:index }
+    defaults:   { _controller: brouwkuyp_dashboard.controller.batch:indexAction }
+
+batch_detail:
+    path:       /brouwsel/{id}
+    defaults:   { _controller: brouwkuyp_dashboard.controller.batch:detailAction }
 
 logs_current_recipe:
-    path:       /data/logs/current
-    defaults:   { _controller: BrouwkuypDashboardBundle:Data:currentRecipeLog }
+    path:       /data/logs/recipe/current
+    defaults:   { _controller: brouwkuyp_dashboard.controller.data:currentRecipeLogsAction }
+
+logs_batch:
+    path:       /data/logs/batch/{id}
+    defaults:   { _controller: brouwkuyp_dashboard.controller.data:batchLogsAction }
 
 async_pump_state:
     path:       /async/pump/state
-    defaults:   { _controller: BrouwkuypDashboardBundle:Async:pumpState }
+    defaults:   { _controller: brouwkuyp_dashboard.controller.async:pumpStateAction }
     methods:    [ POST ]
 
 async_pump_mode:
     path:       /async/pump/mode
-    defaults:   { _controller: BrouwkuypDashboardBundle:Async:pumpMode }
+    defaults:   { _controller: brouwkuyp_dashboard.controller.async:pumpModeAction }
+    methods:    [ POST ]
+
+async_log:
+    path:       /async/log
+    defaults:   { _controller: brouwkuyp_dashboard.controller.async:logAction }
     methods:    [ POST ]

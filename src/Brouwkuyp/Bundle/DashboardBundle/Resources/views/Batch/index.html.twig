@@ -10,10 +10,10 @@
         </tr>
         </thead>
         <tbody>
-        {% for recipe in recipes %}
+        {% for batch in batches %}
         <tr>
-            <td>{{ recipe.createdAt|format_date('EE dd-MM-yyyy') }}</td>
-            <td>{{ recipe.name }}</td>
+            <td><a href="{{ path('batch_detail', batch.routeParams) }}">{{ batch.createdAt|date('d-M-Y H:i:s') }}</a></td>
+            <td><a href="{{ path('batch_detail', batch.routeParams) }}">{{ batch.controlRecipe.name }}</a></td>
         </tr>
         {% else %}
         <tr>

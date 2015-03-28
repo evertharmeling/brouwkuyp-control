@@ -59,8 +59,10 @@ class ConsumeCommand extends BaseCommand
         $manager = $this->getContainer()->get('brouwkuyp_service.amqp.manager');
         $callback = function (AMQPMessage $msg) use ($output) {
 
-            $topic = $msg->delivery_info['routing_key'];
+            $topic = (string) $msg->delivery_info['routing_key'];
             $value = $msg->body;
+
+            // if temperature probe returns '-127.00' sensor is not connected / other problem
 
             $this->logs[$topic][] = $value;
 
@@ -74,6 +76,7 @@ class ConsumeCommand extends BaseCommand
         };
 
 //        $manager->consume($callback, 'brewery.#.masher.#');
+//        $manager->consume($callback, 'brewery.#.boiler.#');
         $manager->consume($callback, 'brewery.#');
 
         while ($manager->receive()) {

@@ -7,6 +7,9 @@ use Brouwkuyp\Bundle\ServiceBundle\Repository\ControlRecipeRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+/**
+ * @author Evert Harmeling <evertharmeling@gmail.com>
+ */
 class RecipeController extends Controller
 {
     /**

@@ -10,13 +10,17 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\Batch:
                 strategy:   AUTO
 
     fields:
+        # gedmo fields
         createdAt:
+            column:         created_at
             type:           datetime
-            column:         creation_at
+            gedmo:
+                timestampable:
+                    on:     create
 
     manyToOne:
         controlRecipe:
             targetEntity:   ControlRecipe
-            mappedBy:       batch
+            inversedBy:     batches
             joinColumn:
                 name:       control_recipe_id

@@ -1,85 +1,45 @@
 services:
 
-    brouwkuyp_service.listener.batch.start:
-        class: Brouwkuyp\Bundle\ServiceBundle\EventListener\BatchStartedListener
+    brouwkuyp_service.listener.broadcast:
+        class: Brouwkuyp\Bundle\ServiceBundle\EventListener\BroadcastListener
         arguments:
             - @brouwkuyp_service.amqp.manager.log
         tags:
-            - { name: kernel.event_listener, event: batch.start, method: onBatchStart }
+            - { name: kernel.event_listener, event: batch.start,            method: onBatchStart }
+            - { name: kernel.event_listener, event: control_recipe.start,   method: onControlRecipeStart }
+            - { name: kernel.event_listener, event: procedure.start,        method: onProcedureStart }
+            - { name: kernel.event_listener, event: unit_procedure.start,   method: onUnitProcedureStart }
+            - { name: kernel.event_listener, event: operation.start,        method: onOperationStart }
+            - { name: kernel.event_listener, event: phase.start,            method: onPhaseStart }
+            - { name: kernel.event_listener, event: phase.status,           method: onPhaseStatus }
+            - { name: kernel.event_listener, event: phase.temperature_reached, method: onPhaseTemperatureReached }
+            - { name: kernel.event_listener, event: phase.finish,           method: onPhaseFinish }
+            - { name: kernel.event_listener, event: operation.finish,       method: onOperationFinish }
+            - { name: kernel.event_listener, event: procedure.finish,       method: onProcedureFinish }
+            - { name: kernel.event_listener, event: unit_procedure.finish,  method: onUnitProcedureFinish }
+            - { name: kernel.event_listener, event: control_recipe.finish,  method: onControlRecipeFinish }
+            - { name: kernel.event_listener, event: batch.finish,           method: onBatchFinish }
 
-    brouwkuyp_service.listener.batch.finish:
-        class: Brouwkuyp\Bundle\ServiceBundle\EventListener\BatchFinishedListener
+    brouwkuyp_service.listener.log:
+        class: Brouwkuyp\Bundle\ServiceBundle\EventListener\LogListener
         arguments:
-            - @brouwkuyp_service.amqp.manager.log
+            - @doctrine.orm.entity_manager
         tags:
-            - { name: kernel.event_listener, event: batch.finish, method: onBatchFinish }
+            - { name: kernel.event_listener, event: batch.start,            method: onBatchStart }
+            - { name: kernel.event_listener, event: control_recipe.start,   method: onControlRecipeStart }
+            - { name: kernel.event_listener, event: procedure.start,        method: onProcedureStart }
+            - { name: kernel.event_listener, event: unit_procedure.start,   method: onUnitProcedureStart }
+            - { name: kernel.event_listener, event: operation.start,        method: onOperationStart }
+            - { name: kernel.event_listener, event: phase.start,            method: onPhaseStart }
+            - { name: kernel.event_listener, event: phase.temperature_reached, method: onPhaseTemperatureReached }
+            - { name: kernel.event_listener, event: phase.finish,           method: onPhaseFinish }
+            - { name: kernel.event_listener, event: operation.finish,       method: onOperationFinish }
+            - { name: kernel.event_listener, event: procedure.finish,       method: onProcedureFinish }
+            - { name: kernel.event_listener, event: unit_procedure.finish,  method: onUnitProcedureFinish }
+            - { name: kernel.event_listener, event: control_recipe.finish,  method: onControlRecipeFinish }
+            - { name: kernel.event_listener, event: batch.finish,           method: onBatchFinish }
 
-    brouwkuyp_service.listener.control_recipe.start:
-        class: Brouwkuyp\Bundle\ServiceBundle\EventListener\ControlRecipeStartedListener
-        arguments:
-            - @brouwkuyp_service.amqp.manager.log
+    brouwkuyp_service.subscriber.entity:
+        class: Brouwkuyp\Bundle\ServiceBundle\EventListener\EntitySubscriber
         tags:
-            - { name: kernel.event_listener, event: control_recipe.start, method: onControlRecipeStart }
-
-    brouwkuyp_service.listener.control_recipe.finish:
-        class: Brouwkuyp\Bundle\ServiceBundle\EventListener\ControlRecipeFinishedListener
-        arguments:
-            - @brouwkuyp_service.amqp.manager.log
-        tags:
-            - { name: kernel.event_listener, event: control_recipe.finish, method: onControlRecipeFinish }
-
-    brouwkuyp_service.listener.procedure.start:
-        class: Brouwkuyp\Bundle\ServiceBundle\EventListener\ProcedureStartedListener
-        arguments:
-            - @brouwkuyp_service.amqp.manager.log
-        tags:
-            - { name: kernel.event_listener, event: procedure.start, method: onProcedureStart }
-
-    brouwkuyp_service.listener.procedure.finish:
-        class: Brouwkuyp\Bundle\ServiceBundle\EventListener\ProcedureFinishedListener
-        arguments:
-            - @brouwkuyp_service.amqp.manager.log
-        tags:
-            - { name: kernel.event_listener, event: procedure.finish, method: onProcedureFinish }
-
-    brouwkuyp_service.listener.unit_procedure.start:
-        class: Brouwkuyp\Bundle\ServiceBundle\EventListener\UnitProcedureStartedListener
-        arguments:
-            - @brouwkuyp_service.amqp.manager.log
-        tags:
-            - { name: kernel.event_listener, event: unit_procedure.start, method: onUnitProcedureStart }
-
-    brouwkuyp_service.listener.unit_procedure.finish:
-        class: Brouwkuyp\Bundle\ServiceBundle\EventListener\UnitProcedureFinishedListener
-        arguments:
-            - @brouwkuyp_service.amqp.manager.log
-        tags:
-            - { name: kernel.event_listener, event: unit_procedure.finish, method: onUnitProcedureFinish }
-
-    brouwkuyp_service.listener.operation.start:
-        class: Brouwkuyp\Bundle\ServiceBundle\EventListener\OperationStartedListener
-        arguments:
-            - @brouwkuyp_service.amqp.manager.log
-        tags:
-            - { name: kernel.event_listener, event: operation.start, method: onOperationStart }
-
-    brouwkuyp_service.listener.operation.finish:
-        class: Brouwkuyp\Bundle\ServiceBundle\EventListener\OperationFinishedListener
-        arguments:
-            - @brouwkuyp_service.amqp.manager.log
-        tags:
-            - { name: kernel.event_listener, event: operation.finish, method: onOperationFinish }
-
-    brouwkuyp_service.listener.phase.start:
-        class: Brouwkuyp\Bundle\ServiceBundle\EventListener\PhaseStartedListener
-        arguments:
-            - @brouwkuyp_service.amqp.manager.log
-        tags:
-            - { name: kernel.event_listener, event: phase.start, method: onPhaseStart }
-
-    brouwkuyp_service.listener.phase.finish:
-        class: Brouwkuyp\Bundle\ServiceBundle\EventListener\PhaseFinishedListener
-        arguments:
-            - @brouwkuyp_service.amqp.manager.log
-        tags:
-            - { name: kernel.event_listener, event: phase.finish, method: onPhaseFinish }
+            - { name: doctrine.event_subscriber, connection: default }

@@ -20,6 +20,9 @@ To consume messages sent by the Arduino, be sure to have the consume command run
 Get up to date:
 
 `git pull --rebase upstream develop`
+`composer install`
+
+Composer install ensures that all necessary commands are ran, such as assets and cache clearing etc.
 
 Generate entities
 
@@ -48,4 +51,4 @@ Push to github
 
 `git push origin develop`
 
-Create pull request on github.com
+Create pull request form `develop` to `master` on github.com

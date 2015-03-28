@@ -11,17 +11,22 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe:
 
     fields:
         name:
-            type:       string
-            length:     120
+            type:           string
+            length:         120
         version:
-            type: 	integer
-            length:	2
+            type: 	        integer
         remarks:
-            type:	string
-            length:	255
+            type:	        text
+            nullable:       true
 
     oneToOne:
         procedure:
-            targetEntity: Procedure
+            targetEntity:   Procedure
+            inversedBy:     controlRecipe
 #        formula:
 #            targetEntity: Formula
+
+    oneToMany:
+        batches:
+            targetEntity:   Batch
+            mappedBy:       controlRecipe

@@ -40,8 +40,8 @@ class LogManager
      * @param $text
      * @return bool
      */
-    public function dialog($title, $text)
+    public function dialog($title, $text, $identifier = null)
     {
-        return $this->amqpManager->publish(new DialogMessage($title, $text), self::ROUTE_BROADCAST_DIALOG);
+        return $this->amqpManager->publish(new DialogMessage($title, $text, $identifier), self::ROUTE_BROADCAST_DIALOG);
     }
 }

@@ -3,14 +3,12 @@
 namespace Brouwkuyp\Bundle\LogicBundle\Command;
 
 use Brouwkuyp\Bundle\LogicBundle\Manager\BatchManager;
-use Brouwkuyp\Bundle\LogicBundle\Manager\EquipmentManager;
 use Brouwkuyp\Bundle\LogicBundle\Manager\RecipeControlManager;
 use Brouwkuyp\Bundle\LogicBundle\Model\Batch;
 use Brouwkuyp\Bundle\LogicBundle\Model\Operation;
 use Brouwkuyp\Bundle\LogicBundle\Model\Phase;
 use Brouwkuyp\Bundle\LogicBundle\Model\UnitProcedure;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
-use Brouwkuyp\Bundle\ServiceBundle\Manager\BrewControlManagerInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -47,25 +45,21 @@ class BrewCommand extends BaseCommand
 
         /** @var RecipeControlManager $recipeControlManager */
         $recipeControlManager = $this->getContainer()->get('brouwkuyp_logic.manager.recipe_control');
-        /** @var BrewControlManagerInterface $brewControlManager */
-        $brewControlManager = $this->getContainer()->get('brouwkuyp_service.manager.brew_control');
-        /** @var Manager $amqpManager */
-        $amqpManager = $this->getContainer()->get('brouwkuyp_service.amqp.manager');
-
-        /** @var EquipmentManager */
-        $equipmentManager = new EquipmentManager($brewControlManager, $amqpManager);
 
         $output->writeln('Loading recipe: ' . $input->getArgument('recipe'));
+
         /** @var BatchManager $batchManager */
-        $batchManager = new BatchManager($this->getEntityManager(), $equipmentManager);
+        $batchManager = $this->getContainer()->get('brouwkuyp_logic.manager.batch');
         $batch = $batchManager->createBatch($recipeControlManager->load($input->getArgument('recipe')), $this->getContainer()->get('event_dispatcher'));
 
         $this->outputBatch($batch);
-        $batchManager->start($batch);
+        $batchManager->start();
 
-        while ($batchManager->isRunning($batch)) {
+        while ($batchManager->isRunning()) {
             $batchManager->execute();
             usleep(500000);
+
+            $output->writeln(sprintf('%s: memory usage: %.2f MB', (new \DateTime())->format('H:i:s'), memory_get_usage() / 1024 / 1024));
         }
 
         $output->writeln('Done with recipe');

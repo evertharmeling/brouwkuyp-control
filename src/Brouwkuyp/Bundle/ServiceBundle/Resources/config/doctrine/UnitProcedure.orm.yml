@@ -11,17 +11,18 @@ Brouwkuyp\Bundle\ServiceBundle\Entity\UnitProcedure:
 
     fields:
         name:
-            type:       string
-            length:     120
+            type:           string
+            length:         120
 
     oneToMany:
         operations:
-            targetEntity: Operation
-            mappedBy: unitProcedure
+            targetEntity:   Operation
+            mappedBy:       unitProcedure
 
     manyToOne:
         procedure:
-            targetEntity: Procedure
-            inversedBy: unitProcedures
+            targetEntity:   Procedure
+            inversedBy:     unitProcedures
         unit:
-            targetEntity: Unit
+            targetEntity:   Unit
+            inversedBy:     unitProcedures
