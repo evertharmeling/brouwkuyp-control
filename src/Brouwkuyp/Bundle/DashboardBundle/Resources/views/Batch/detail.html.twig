@@ -1,14 +1,17 @@
 {% extends 'BrouwkuypDashboardBundle::base.html.twig' %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-10 graph--full" id="graph"
-             data-url-logs="{{ path('logs_batch', batch.routeParams) }}"
-             data-topic-hlt-curr-temp="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_HLT_CURR_TEMP') }}"
-             data-topic-mlt-curr-temp="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_MLT_CURR_TEMP') }}"
-             data-topic-blt-curr-temp="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_BLT_CURR_TEMP') }}"
-             data-topic-pump-curr-state="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_PUMP_CURR_STATE') }}"
-             data-topic-pump-curr-mode="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_PUMP_CURR_MODE') }}"
-                ></div>
+    <div class="container-fluid">
+        <div class="row">
+            <h1>Recept: {{ batch.controlRecipe.name }} <span>({{ batch.createdAt|date('d-m-Y') }})</span></h1>
+            <div class="col-md-10 graph--full" id="graph"
+                 data-url-logs="{{ path('logs_batch', batch.routeParams) }}"
+                 data-topic-hlt-curr-temp="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_HLT_CURR_TEMP') }}"
+                 data-topic-mlt-curr-temp="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_MLT_CURR_TEMP') }}"
+                 data-topic-blt-curr-temp="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_BLT_CURR_TEMP') }}"
+                 data-topic-pump-curr-state="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_PUMP_CURR_STATE') }}"
+                 data-topic-pump-curr-mode="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_PUMP_CURR_MODE') }}"
+                    ></div>
+        </div>
     </div>
 {% endblock %}

@@ -14,6 +14,12 @@ interface BrewControlManagerInterface
     public function setMashTemperature($value);
 
     /**
+     * @param  float $value
+     * @return bool
+     */
+    public function setHLTTemperature($value);
+
+    /**
      * @param  string $value
      * @return bool
      */

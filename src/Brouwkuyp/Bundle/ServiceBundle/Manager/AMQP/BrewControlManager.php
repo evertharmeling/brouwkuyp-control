@@ -14,6 +14,7 @@ class BrewControlManager implements BrewControlManagerInterface
 {
     // @todo dynamic route, because current class does not have knowledge about the whole infrastructure
     const ROUTE_MASHER_SET_TEMP     = 'brewery.brewhouse01.masher.set_temp';
+    const ROUTE_MASHER_HLT_SET_TEMP = 'brewery.brewhouse01.masher.hlt.set_temp';
     const ROUTE_PUMP_SET_MODE       = 'brewery.brewhouse01.pump.set_mode';
     const ROUTE_PUMP_SET_STATE      = 'brewery.brewhouse01.pump.set_state';
 
@@ -37,6 +38,15 @@ class BrewControlManager implements BrewControlManagerInterface
     public function setMashTemperature($value)
     {
         return $this->amqpManager->publish(new TemperatureMessage($value), self::ROUTE_MASHER_SET_TEMP);
+    }
+
+    /**
+     * @param float $value
+     * @return bool
+     */
+    public function setHLTTemperature($value)
+    {
+        return $this->amqpManager->publish(new TemperatureMessage($value), self::ROUTE_MASHER_HLT_SET_TEMP);
     }
 
     /**

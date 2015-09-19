@@ -6,6 +6,7 @@ use Brouwkuyp\Bundle\ServiceBundle\Entity\Log;
 use Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager;
 use PhpAmqpLib\Message\AMQPMessage;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -39,6 +40,7 @@ class ConsumeCommand extends BaseCommand
         $this
             ->setName('brouwkuyp:consume')
             ->setDescription('Consuming the data')
+//            ->addOption('persist', InputOption::VALUE_OPTIONAL, 'Whether the logs need to be persisted to database', true)
         ;
     }
 
@@ -81,7 +83,9 @@ class ConsumeCommand extends BaseCommand
 
         while ($manager->receive()) {
             $manager->wait();
-            $this->persistLogs();
+//            if ($input->getOption('persist')) {
+                $this->persistLogs();
+//            }
         }
 
         $manager->close();

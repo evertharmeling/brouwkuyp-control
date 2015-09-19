@@ -274,44 +274,44 @@ var client = {
                 });
 
                 // BROADCASTING
-                $client.subscribe($baseUrl + $data.topicBroadcastDialog, function (d) {
-                    message = JSON.parse(d.body);
-                    bootbox.dialog({
-                        title: message.title,
-                        message: message.text,
-                        buttons: {
-                            cancel: {
-                                label: "Cancel",
-                                className: "btn-cancel",
-                                callback: function (result) {
-                                    // @todo fix message.identifier, message keeps being overwritten when prompting multiple dialogs
-                                    $.post(
-                                        $data.urlLog,
-                                        {'log': {'topic': message.identifier, 'value': 'cancelled'}},
-                                        function (response) {
-                                            //console.log(response);
-                                        }
-                                    );
-                                }
-                            },
-                            confirm: {
-                                label: "Confirm",
-                                className: "btn-success",
-                                data: message,
-                                callback: function (result) {
-                                    // @todo fix message.identifier, message keeps being overwritten when prompting multiple dialogs
-                                    $.post(
-                                        $data.urlLog,
-                                        {'log': {'topic': message.identifier, 'value': 'confirmed'}},
-                                        function (response) {
-                                            //console.log(response);
-                                        }
-                                    );
-                                }
-                            }
-                        }
-                    });
-                });
+                //$client.subscribe($baseUrl + $data.topicBroadcastDialog, function (d) {
+                //    message = JSON.parse(d.body);
+                //    bootbox.dialog({
+                //        title: message.title,
+                //        message: message.text,
+                //        buttons: {
+                //            cancel: {
+                //                label: "Cancel",
+                //                className: "btn-cancel",
+                //                callback: function (result) {
+                //                    // @todo fix message.identifier, message keeps being overwritten when prompting multiple dialogs
+                //                    $.post(
+                //                        $data.urlLog,
+                //                        {'log': {'topic': message.identifier, 'value': 'cancelled'}},
+                //                        function (response) {
+                //                            //console.log(response);
+                //                        }
+                //                    );
+                //                }
+                //            },
+                //            confirm: {
+                //                label: "Confirm",
+                //                className: "btn-success",
+                //                data: message,
+                //                callback: function (result) {
+                //                    // @todo fix message.identifier, message keeps being overwritten when prompting multiple dialogs
+                //                    $.post(
+                //                        $data.urlLog,
+                //                        {'log': {'topic': message.identifier, 'value': 'confirmed'}},
+                //                        function (response) {
+                //                            //console.log(response);
+                //                        }
+                //                    );
+                //                }
+                //            }
+                //        }
+                //    });
+                //});
                 $client.subscribe($baseUrl + $data.topicBroadcastLog, function (d) {
                     $('#log-list').prepend('<li><span>' + d.body + '</span></li>');
                 });
