@@ -1,0 +1,10 @@
+imports:
+     - { resource: config_dev.yml }
+
+parameters:
+    database_host: mysql
+    database_user: root
+
+framework:
+  session:
+      handler_id: ~  # Docker session storage in standard application folder does not work with Docker, fall back on PHP default directory

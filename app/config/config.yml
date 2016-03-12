@@ -29,7 +29,7 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     globals:
-        rabbit_mq_host: %rabbit_mq_host%
+        domain: %domain%
 
 # Assetic Configuration
 assetic:
@@ -38,8 +38,8 @@ assetic:
     bundles:        [ BrouwkuypDashboardBundle ]
     filters:
         less:
-            node:       /usr/local/bin/node
-            node_paths: [/usr/local/lib/node_modules]
+            node:       "%node_path%"
+            node_paths: ["%node_modules_path%"]
             apply_to:   "\.less$"
         cssrewrite: ~
     assets:

@@ -5,7 +5,7 @@
         <div class="col-md-10" id="graph"
              data-url-current-recipe="{{ path('logs_current_recipe') }}"
              data-url-log="{{ path('async_log') }}"
-             data-rabbit-mq-host="{{ rabbit_mq_host }}"
+             data-rabbit-mq-host="{{ domain }}"
              data-topic-hlt-curr-temp="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_HLT_CURR_TEMP') }}"
              data-topic-mlt-curr-temp="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_MLT_CURR_TEMP') }}"
              data-topic-mlt-set-temp="{{ constant('Brouwkuyp\\Bundle\\LogicBundle\\Model\\Log::TOPIC_MASHER_SET_TEMP') }}"

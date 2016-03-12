@@ -18,3 +18,8 @@ parameters:
     debug_redirects:        false
     use_assetic_controller: true
     rabbit_mq_host:     localhost
+
+    node_path:          /usr/local/bin/node
+    node_modules_path:  /usr/local/lib/node_modules
+
+    domain:             localhost

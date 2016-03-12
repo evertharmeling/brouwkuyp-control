@@ -6,7 +6,7 @@ services:
     brouwkuyp_service.amqp.connection:
         class: PhpAmqpLib\Connection\AMQPStreamConnection
         arguments:
-            - localhost
+            - '%rabbit_mq_host%'
             - 5672
             - guest
             - guest

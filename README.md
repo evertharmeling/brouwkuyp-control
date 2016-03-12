@@ -52,3 +52,14 @@ Push to github
 `git push origin develop`
 
 Create pull request form `develop` to `master` on github.com
+
+## Docker
+
+# Extra commands
+
+`yum -y update`
+`yum -y install mlocate`
+`updatedb`
+`locate less`
+`locate node`
+`npm install -g less`
