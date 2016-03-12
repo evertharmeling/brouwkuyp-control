@@ -83,9 +83,7 @@ class ConsumeCommand extends BaseCommand
 
         while ($manager->receive()) {
             $manager->wait();
-//            if ($input->getOption('persist')) {
-                $this->persistLogs();
-//            }
+            $this->persistLogs();
         }
 
         $manager->close();
@@ -110,7 +108,6 @@ class ConsumeCommand extends BaseCommand
                     $countValues = [];
                 }
 
-                ;
                 $this->getEntityManager()->persist($log);
             }
 
