@@ -3,22 +3,22 @@ services:
     brouwkuyp_logic.manager.recipe_control:
         class:  Brouwkuyp\Bundle\LogicBundle\Manager\RecipeControlManager
         arguments:
-            - @brouwkuyp_service.repository.control_recipe
+            - '@brouwkuyp_service.repository.control_recipe'
 
     brouwkuyp_logic.manager.batch:
         class: Brouwkuyp\Bundle\LogicBundle\Manager\BatchManager
         arguments:
-            - @doctrine.orm.entity_manager
-            - @brouwkuyp_logic.manager.equipment
+            - '@doctrine.orm.entity_manager'
+            - '@brouwkuyp_logic.manager.equipment'
 
     brouwkuyp_logic.manager.equipment:
         class: Brouwkuyp\Bundle\LogicBundle\Manager\EquipmentManager
         arguments:
-            - @brouwkuyp_logic.equipment.mlt
+            - '@brouwkuyp_logic.equipment.mlt'
 
     brouwkuyp_logic.equipment.mlt:
         class:  Brouwkuyp\Bundle\LogicBundle\Model\Equipment\MLT
         arguments:
-            - @brouwkuyp_service.manager.brew_control
-            - @brouwkuyp_service.amqp.manager
-            - @event_dispatcher
+            - '@brouwkuyp_service.manager.brew_control'
+            - '@brouwkuyp_service.amqp.manager'
+            - '@event_dispatcher'

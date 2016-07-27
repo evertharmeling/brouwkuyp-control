@@ -5,22 +5,32 @@ namespace Brouwkuyp\Bundle\DashboardBundle\Controller;
 use Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe;
 use Brouwkuyp\Bundle\ServiceBundle\Repository\ControlRecipeRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * @author Evert Harmeling <evertharmeling@gmail.com>
  */
-class RecipeController extends Controller
+class RecipeController
 {
+    /**
+     * @var ControlRecipeRepository
+     */
+    private $controlRecipeRepository;
+
+    /**
+     * @param ControlRecipeRepository $controlRecipeRepository
+     */
+    public function __construct($controlRecipeRepository)
+    {
+        $this->controlRecipeRepository = $controlRecipeRepository;
+    }
+
     /**
      * @Template
      */
     public function indexAction()
     {
-        $recipes = $this->getControlRecipeRepository()->findAll();
-
         return [
-            'recipes' => $recipes
+            'recipes' => $this->controlRecipeRepository->findAll()
         ];
     }
 
@@ -32,13 +42,5 @@ class RecipeController extends Controller
         return [
             'recipe' => $recipe
         ];
-    }
-
-    /**
-     * @return ControlRecipeRepository
-     */
-    private function getControlRecipeRepository()
-    {
-        return $this->container->get('brouwkuyp_service.repository.control_recipe');
     }
 }

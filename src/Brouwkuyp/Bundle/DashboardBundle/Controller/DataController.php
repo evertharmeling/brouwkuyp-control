@@ -47,7 +47,7 @@ class DataController extends Controller
 
     /**
      * @param  integer $id
-     * @return array
+     * @return JsonResponse
      */
     public function batchLogsAction($id)
     {

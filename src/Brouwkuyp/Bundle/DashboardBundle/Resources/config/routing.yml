@@ -4,11 +4,11 @@ home:
 
 recipe_index:
     path:       /recepten
-    defaults:   { _controller: BrouwkuypDashboardBundle:Recipe:index }
+    defaults:   { _controller: brouwkuyp_dashboard.controller.recipe:indexAction }
 
 recipe_detail:
     path:       /recept/{id}
-    defaults:   { _controller: BrouwkuypDashboardBundle:Recipe:detail }
+    defaults:   { _controller: brouwkuyp_dashboard.controller.recipe:detailAction }
     requirements:
         id:     \d+
 

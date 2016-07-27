@@ -1,9 +1,8 @@
 services:
-
     brouwkuyp_service.listener.broadcast:
         class: Brouwkuyp\Bundle\ServiceBundle\EventListener\BroadcastListener
         arguments:
-            - @brouwkuyp_service.amqp.manager.log
+            - '@brouwkuyp_service.amqp.manager.log'
         tags:
             - { name: kernel.event_listener, event: batch.start,            method: onBatchStart }
             - { name: kernel.event_listener, event: control_recipe.start,   method: onControlRecipeStart }
@@ -23,7 +22,7 @@ services:
     brouwkuyp_service.listener.log:
         class: Brouwkuyp\Bundle\ServiceBundle\EventListener\LogListener
         arguments:
-            - @doctrine.orm.entity_manager
+            - '@doctrine.orm.entity_manager'
         tags:
             - { name: kernel.event_listener, event: batch.start,            method: onBatchStart }
             - { name: kernel.event_listener, event: control_recipe.start,   method: onControlRecipeStart }

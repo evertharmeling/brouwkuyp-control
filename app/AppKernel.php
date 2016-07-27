@@ -21,18 +21,18 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-            new Brouwkuyp\Bundle\DashboardBundle\BrouwkuypDashboardBundle(),
-            new Brouwkuyp\Bundle\LogicBundle\BrouwkuypLogicBundle(),
             new Brouwkuyp\Bundle\ServiceBundle\BrouwkuypServiceBundle(),
+            new Brouwkuyp\Bundle\LogicBundle\BrouwkuypLogicBundle(),
+            new Brouwkuyp\Bundle\DashboardBundle\BrouwkuypDashboardBundle(),
         );
 
-        if (in_array($this->getEnvironment(), ['dev', 'test', 'docker'])) {
+        if (in_array($this->getEnvironment(), ['dev', 'test', 'docker'], true)) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
         }
 
-        if (in_array($this->getEnvironment(), ['dev', 'docker'])) {
+        if (in_array($this->getEnvironment(), ['dev', 'docker'], true)) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
         }
 

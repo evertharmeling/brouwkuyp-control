@@ -1,5 +1,4 @@
 services:
-
     brouwkuyp_service.manager.brew_control:
         alias: brouwkuyp_service.amqp.manager.brew_control
 
@@ -14,16 +13,16 @@ services:
     brouwkuyp_service.amqp.manager:
         class: Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\Manager
         arguments:
-            - @brouwkuyp_service.amqp.connection
+            - '@brouwkuyp_service.amqp.connection'
         calls:
-            - [ setLogger, [ @logger ]]
+            - [ setLogger, [ '@logger' ]]
 
     brouwkuyp_service.amqp.manager.brew_control:
         class: Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\BrewControlManager
         arguments:
-            - @brouwkuyp_service.amqp.manager
+            - '@brouwkuyp_service.amqp.manager'
 
     brouwkuyp_service.amqp.manager.log:
         class: Brouwkuyp\Bundle\ServiceBundle\Manager\AMQP\LogManager
         arguments:
-            - @brouwkuyp_service.amqp.manager
+            - '@brouwkuyp_service.amqp.manager'

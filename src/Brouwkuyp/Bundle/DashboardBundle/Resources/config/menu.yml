@@ -1,13 +1,7 @@
 services:
-
     brouwkuyp_dashboard.menu_builder:
         class: Brouwkuyp\Bundle\DashboardBundle\Menu\MenuBuilder
         arguments:
-            - @knp_menu.factory
-
-    brouwkuyp_dashboard.menu.main_menu:
-        class: Knp\Menu\MenuItem
-        factory_service: brouwkuyp_dashboard.menu_builder
-        factory_method: createMainMenu
+            - '@knp_menu.factory'
         tags:
-            - { name: knp_menu.menu, alias: main_menu }
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: main }

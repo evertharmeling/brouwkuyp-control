@@ -5,6 +5,13 @@ parameters:
     database_host: mysql
     database_user: root
 
+    redis_host:             redis
+
+    mailer_host:            mailcatcher
+
+swiftmailer:
+    port: 1025
+
 framework:
-  session:
-      handler_id: ~  # Docker session storage in standard application folder does not work with Docker, fall back on PHP default directory
+    session:
+        handler_id: ~  # Docker session storage in standard application folder does not work with Docker, fall back on PHP default directory

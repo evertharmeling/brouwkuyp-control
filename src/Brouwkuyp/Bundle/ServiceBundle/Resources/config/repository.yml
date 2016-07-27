@@ -1,27 +1,24 @@
 services:
-
-    brouwkuyp_service.repository:
-        abstract: true
-        class: Doctrine\ORM\EntityRepository
-        factory_service: doctrine.orm.entity_manager
-        factory_method: getRepository
-
     brouwkuyp_service.repository.control_recipe:
-        parent: brouwkuyp_service.repository
+        class: Brouwkuyp\Bundle\ServiceBundle\Repository\ControlRecipeRepository
+        factory: ['@doctrine', 'getRepository']
         arguments:
             - Brouwkuyp\Bundle\ServiceBundle\Entity\ControlRecipe
 
     brouwkuyp_service.repository.log:
-        parent: brouwkuyp_service.repository
+        class: Brouwkuyp\Bundle\ServiceBundle\Repository\LogRepository
+        factory: ['@doctrine', 'getRepository']
         arguments:
             - Brouwkuyp\Bundle\ServiceBundle\Entity\Log
 
     brouwkuyp_service.repository.batch:
-        parent: brouwkuyp_service.repository
+        class: Brouwkuyp\Bundle\ServiceBundle\Repository\BatchRepository
+        factory: ['@doctrine', 'getRepository']
         arguments:
             - Brouwkuyp\Bundle\ServiceBundle\Entity\Batch
 
     brouwkuyp_service.repository.phase:
-        parent: brouwkuyp_service.repository
+        class: Brouwkuyp\Bundle\ServiceBundle\Repository\PhaseRepository
+        factory: ['@doctrine', 'getRepository']
         arguments:
             - Brouwkuyp\Bundle\ServiceBundle\Entity\Phase

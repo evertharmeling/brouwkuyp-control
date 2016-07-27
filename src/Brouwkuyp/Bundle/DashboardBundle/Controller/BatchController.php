@@ -30,10 +30,8 @@ class BatchController
      */
     public function indexAction()
     {
-        $batches = $this->batchRepository->findAll();
-
         return [
-            'batches' => $batches
+            'batches' => $this->batchRepository->findAll()
         ];
     }
 

@@ -18,7 +18,7 @@
         <div id="header">
             <h1><a href="{{ path('home') }}">dashboard van de Saeck</a></h1>
             <div>
-                <nav>{{ knp_menu_render('main_menu', { 'currentClass' : 'active' }) }}</nav>
+                <nav>{{ knp_menu_render('main', { 'currentClass' : 'active' }) }}</nav>
             </div>
         </div>
         {% block content %}{% endblock %}

@@ -1,6 +1,6 @@
 Brouwkuyp\Bundle\ServiceBundle\Entity\Procedure:
     type: entity
-    table: `procedure`
+    table: '`procedure`'
     repositoryClass: Brouwkuyp\Bundle\ServiceBundle\Repository\ProcedureRepository
 
     id:

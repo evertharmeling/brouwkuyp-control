@@ -1,5 +1,4 @@
 services:
-
     brouwkuyp_dashboard.twig.extensions.time:
         class: Brouwkuyp\Bundle\DashboardBundle\Twig\Extensions\TimeExtension
         tags:
