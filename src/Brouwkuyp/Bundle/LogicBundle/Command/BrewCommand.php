@@ -98,14 +98,14 @@ class BrewCommand extends BaseCommand
                  * @var Phase $phase
                  */
                 foreach ($op->getPhases() as $phase) {
-                    echo sprintf("      Phase:  '%s'",
+                    echo sprintf("      Phase:  %s",
                             $phase->getName()) . PHP_EOL;
-                    echo sprintf("       type:  '%s'",
+                    echo sprintf("       type:  %s",
                             $phase->getType()) . PHP_EOL;
-                    echo sprintf("       value: '%s'",
+                    echo sprintf("       value: %d degrees celsius",
                             $phase->getValue()) . PHP_EOL;
-                    echo sprintf("       duration: '%s'",
-                            $phase->getDuration()) . PHP_EOL;
+                    echo sprintf("       duration: %d min",
+                            $phase->getDuration() / 60) . PHP_EOL;
                 }
             }
         }
