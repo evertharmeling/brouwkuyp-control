@@ -133,7 +133,7 @@ var chart = {
                                 text: 'Beta amylase'
                             }
                         }, {
-                            value: 72,
+                            value: 70,
                             dashStyle: 'shortdash',
                             width: 2,
                             color: '#088A68',
